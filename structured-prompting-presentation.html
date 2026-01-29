@@ -1,0 +1,1941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Structured Prompting for Language Models</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #000000;
+      --text: #e2e8f0;
+      --text-dim: #64748b;
+      --green: #4ade80;
+      --red: #f87171;
+      --yellow: #fbbf24;
+      --blue: #60a5fa;
+      --purple: #a78bfa;
+      --border: #334155;
+      --font: 'Fira Code', monospace;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      line-height: 1.6;
+    }
+
+    /* Slide container */
+    .slides-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 3rem;
+      display: none;
+      flex-direction: column;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .slide.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    /* State management */
+    .state {
+      display: none;
+      flex-direction: column;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .state.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    /* Attribution */
+    .attribution {
+      position: absolute;
+      bottom: 1.5rem;
+      right: 2rem;
+      color: var(--text-dim);
+      font-size: 12px;
+    }
+
+    /* Typography */
+    .title-large {
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .title-medium {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .subtitle {
+      font-size: 1.125rem;
+      color: var(--text-dim);
+    }
+
+    .text-dim {
+      color: var(--text-dim);
+    }
+
+    .text-green { color: var(--green); }
+    .text-red { color: var(--red); }
+    .text-yellow { color: var(--yellow); }
+    .text-blue { color: var(--blue); }
+    .text-purple { color: var(--purple); }
+
+    .text-small {
+      font-size: 0.875rem;
+    }
+
+    .text-xs {
+      font-size: 0.75rem;
+    }
+
+    .uppercase {
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .bold {
+      font-weight: 600;
+    }
+
+    /* Boxes */
+    .box {
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      margin: 1rem 0;
+    }
+
+    .box-double {
+      border: 3px double var(--text-dim);
+      padding: 2rem;
+    }
+
+    .box-green {
+      border-color: var(--green);
+    }
+
+    .box-red {
+      border-color: var(--red);
+    }
+
+    .box-yellow {
+      border-color: var(--yellow);
+    }
+
+    .box-blue {
+      border-color: var(--blue);
+    }
+
+    /* Title slide centering */
+    .centered {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      height: 100%;
+    }
+
+    /* Blinking cursor */
+    .blink {
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    /* Fade in animation */
+    .fade-in {
+      animation: fadeIn 0.8s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Typewriter effect container */
+    .typewriter {
+      overflow: hidden;
+      white-space: nowrap;
+      animation: typing 2s steps(40) forwards;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    /* Comparison grid */
+    .comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .comparison-col {
+      border: 1px solid var(--border);
+      padding: 1rem;
+    }
+
+    .comparison-col.bad {
+      border-color: var(--red);
+    }
+
+    .comparison-col.good {
+      border-color: var(--green);
+    }
+
+    .comparison-header {
+      padding: 0.5rem;
+      margin: -1rem -1rem 1rem -1rem;
+      font-weight: 600;
+    }
+
+    .comparison-header.bad {
+      background: rgba(248, 113, 113, 0.1);
+      color: var(--red);
+    }
+
+    .comparison-header.good {
+      background: rgba(74, 222, 128, 0.1);
+      color: var(--green);
+    }
+
+    /* Token boxes */
+    .token-sequence {
+      display: flex;
+      gap: 0;
+      margin: 1rem 0;
+    }
+
+    .token-box {
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      background: rgba(51, 65, 85, 0.3);
+    }
+
+    .token-box.active {
+      border-color: var(--green);
+      background: rgba(74, 222, 128, 0.1);
+    }
+
+    .token-box.cursor {
+      animation: blink 1s step-end infinite;
+    }
+
+    /* Probability bars */
+    .prob-bar {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 0.5rem 0;
+      font-size: 0.875rem;
+    }
+
+    .prob-label {
+      width: 80px;
+      text-align: right;
+    }
+
+    .prob-visual {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .prob-blocks {
+      font-family: var(--font);
+      letter-spacing: -2px;
+    }
+
+    .prob-blocks.selected {
+      color: var(--green);
+    }
+
+    .prob-blocks.unselected {
+      color: var(--text-dim);
+    }
+
+    .prob-empty {
+      color: var(--border);
+    }
+
+    .prob-percent {
+      width: 50px;
+      text-align: right;
+    }
+
+    .selected-indicator {
+      color: var(--green);
+      font-size: 0.75rem;
+    }
+
+    /* Animation controls */
+    .anim-controls {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin: 1rem 0;
+    }
+
+    .anim-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.5rem 1rem;
+      font-family: var(--font);
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .anim-btn:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    .anim-btn:focus-visible {
+      outline: 2px solid var(--blue);
+      outline-offset: 2px;
+    }
+
+    /* Copy button */
+    .copy-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      padding: 0.25rem 0.75rem;
+      font-family: var(--font);
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 0.5rem;
+    }
+
+    .copy-btn:hover {
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    .copy-btn.copied {
+      color: var(--green);
+      border-color: var(--green);
+    }
+
+    /* Template box */
+    .template-box {
+      background: rgba(51, 65, 85, 0.2);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      font-size: 0.875rem;
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+
+    /* XML tag highlighting */
+    .tag {
+      color: var(--purple);
+    }
+
+    .tag-content {
+      color: var(--text);
+    }
+
+    /* Context conversation */
+    .turn {
+      margin: 0.75rem 0;
+    }
+
+    .turn-label {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-bottom: 0.25rem;
+    }
+
+    .turn-content {
+      border: 1px solid var(--border);
+      padding: 0.75rem;
+      font-size: 0.875rem;
+    }
+
+    .turn-content.user {
+      border-left: 3px solid var(--blue);
+    }
+
+    .turn-content.ai {
+      border-left: 3px solid var(--green);
+    }
+
+    .token-count {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      text-align: right;
+    }
+
+    .context-total {
+      text-align: center;
+      margin: 1rem 0;
+      padding: 0.5rem;
+      border: 1px solid var(--border);
+      background: rgba(51, 65, 85, 0.2);
+    }
+
+    .sweep-line {
+      height: 2px;
+      background: var(--yellow);
+      margin: 0.5rem 0;
+      animation: sweep 1s ease-out;
+    }
+
+    @keyframes sweep {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    /* Warning box */
+    .warning-box {
+      border: 1px solid var(--yellow);
+      background: rgba(251, 191, 36, 0.1);
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+
+    /* Insight box */
+    .insight-box {
+      border: 1px solid var(--blue);
+      background: rgba(96, 165, 250, 0.1);
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+
+    /* Workflow boxes */
+    .workflow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin: 1.5rem 0;
+      flex-wrap: wrap;
+    }
+
+    .workflow-box {
+      border: 2px solid var(--border);
+      padding: 0.75rem 1.5rem;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .workflow-box.red { border-color: var(--red); color: var(--red); }
+    .workflow-box.yellow { border-color: var(--yellow); color: var(--yellow); }
+    .workflow-box.green { border-color: var(--green); color: var(--green); }
+    .workflow-box.blue { border-color: var(--blue); color: var(--blue); }
+
+    .workflow-arrow {
+      color: var(--text-dim);
+      font-size: 1.5rem;
+    }
+
+    .workflow-vertical {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Pulse animation */
+    .pulse {
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.05); }
+    }
+
+    /* Timer */
+    .timer {
+      color: var(--yellow);
+      font-size: 1.125rem;
+      text-align: center;
+      margin: 1rem 0;
+    }
+
+    /* Mechanism label */
+    .mechanism-label {
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Quote styling */
+    .quote-box {
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--green);
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      font-size: 1.25rem;
+    }
+
+    /* Underline styles */
+    .underline-blue {
+      text-decoration: underline;
+      text-decoration-color: var(--blue);
+      text-underline-offset: 4px;
+    }
+
+    .underline-yellow {
+      text-decoration: underline;
+      text-decoration-color: var(--yellow);
+      text-underline-offset: 4px;
+    }
+
+    .underline-green {
+      text-decoration: underline;
+      text-decoration-color: var(--green);
+      text-underline-offset: 4px;
+    }
+
+    /* Divider */
+    .divider {
+      border-top: 1px solid var(--border);
+      margin: 1.5rem 0;
+    }
+
+    /* Scroll container */
+    .scroll-container {
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 1rem;
+    }
+
+    /* Task header */
+    .task-header {
+      border: 3px double var(--green);
+      padding: 0.75rem 1.5rem;
+      margin-bottom: 1.5rem;
+      display: inline-block;
+    }
+
+    .task-header.yellow {
+      border-color: var(--yellow);
+    }
+
+    /* Navigation hint */
+    .nav-hint {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 2rem;
+      color: var(--text-dim);
+      font-size: 0.75rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 1023px) {
+      .slide {
+        padding: 2rem;
+      }
+
+      body {
+        font-size: 14px;
+      }
+
+      .title-large {
+        font-size: 1.5rem;
+      }
+
+      .title-medium {
+        font-size: 1.25rem;
+      }
+
+      .comparison {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .slide {
+        padding: 1rem;
+      }
+
+      body {
+        font-size: 12px;
+      }
+
+      .title-large {
+        font-size: 1.25rem;
+      }
+
+      .attribution {
+        font-size: 10px;
+      }
+
+      .box-double {
+        padding: 1rem;
+      }
+
+      .workflow {
+        flex-direction: column;
+      }
+
+      .workflow-arrow {
+        transform: rotate(90deg);
+      }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Focus styles */
+    button:focus-visible {
+      outline: 2px solid var(--blue);
+      outline-offset: 2px;
+    }
+
+    /* Summary table */
+    .summary-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+
+    .summary-table th,
+    .summary-table td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .summary-table th {
+      color: var(--text-dim);
+      font-weight: 500;
+    }
+
+    /* Blank underline for commitment */
+    .blank {
+      display: inline-block;
+      min-width: 200px;
+      border-bottom: 1px solid var(--text-dim);
+      margin: 0 0.25rem;
+    }
+
+    .blank-label {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      text-align: center;
+      margin-top: 0.25rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="slides-container">
+
+    <!-- SLIDE 1: Title & Hook -->
+    <div class="slide active" id="slide-1">
+
+      <!-- State 1A: Title Screen -->
+      <div class="state active" id="state-1a">
+        <div class="centered">
+          <div class="box-double" style="max-width: 700px;">
+            <div class="title-large" style="margin-bottom: 1rem;">STRUCTURED PROMPTING FOR LANGUAGE MODELS</div>
+            <div style="border-top: 1px solid var(--text-dim); margin: 1rem 0;"></div>
+            <div class="subtitle">A Technical Workshop for Educators</div>
+          </div>
+          <div style="margin-top: 3rem; color: var(--text-dim);">
+            [ press space to begin ]<span class="blink">█</span>
+          </div>
+        </div>
+        <div class="attribution">Dr. Hari Krishna</div>
+      </div>
+
+      <!-- State 1B: Hook Question -->
+      <div class="state" id="state-1b">
+        <div class="centered">
+          <div style="border: 1px solid var(--border); padding: 0.5rem 1.5rem; margin-bottom: 2rem;">
+            QUICK POLL
+          </div>
+          <div style="max-width: 700px; font-size: 1.25rem; line-height: 1.8;">
+            <p>"Who has tried using ChatGPT or Claude for lesson planning</p>
+            <p>and got something that looked great...</p>
+            <p style="margin-top: 1rem;" class="text-green">...but was useless in your actual classroom?"</p>
+          </div>
+        </div>
+        <div class="attribution">Dr. Hari Krishna</div>
+      </div>
+
+      <!-- State 1C: Core Insight -->
+      <div class="state" id="state-1c">
+        <div class="centered">
+          <div class="text-dim uppercase text-small" style="margin-bottom: 1.5rem;">The One Thing to Remember</div>
+          <div class="quote-box" style="max-width: 750px;">
+            <p>"LLMs <span class="text-blue">predict the next token based on all previous tokens</span>.</p>
+            <p style="margin-top: 1rem;">They <span class="text-yellow">don't plan, don't remember</span>, and <span class="text-green">default to agreeable patterns</span>."</p>
+          </div>
+          <div class="text-dim" style="margin-top: 2rem;">
+            Today you'll learn what this means — and how to use it.
+          </div>
+        </div>
+        <div class="attribution">Dr. Hari Krishna</div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: Token Prediction -->
+    <div class="slide" id="slide-2">
+
+      <!-- State 2A: Mechanism Statement -->
+      <div class="state active" id="state-2a">
+        <div class="mechanism-label text-red">MECHANISM 1 of 3</div>
+        <div class="centered" style="height: auto; flex: 1;">
+          <div class="box" style="max-width: 700px;">
+            <p style="font-size: 1.25rem; text-align: center;">
+              "LLMs <span class="underline-blue">predict the next token based on all previous tokens</span>"
+            </p>
+          </div>
+          <div style="margin-top: 2rem; text-align: center;">
+            <p class="text-dim">What does this actually mean?</p>
+            <p style="margin-top: 1rem;">Let's see it in action.</p>
+          </div>
+        </div>
+        <div class="attribution">Dr. Hari Krishna</div>
+      </div>
+
+      <!-- State 2B: Token Animation -->
+      <div class="state" id="state-2b">
+        <div style="margin-bottom: 1rem;">
+          <div class="title-medium">THE EARLY BIRD</div>
+          <div style="border-top: 1px solid var(--border); width: 150px; margin-top: 0.5rem;"></div>
+        </div>
+
+        <div style="margin: 1rem 0;">
+          <div class="text-dim text-small">Current sequence:</div>
+          <div class="token-sequence" id="token-sequence">
+            <div class="token-box">The</div>
+            <div class="token-box">early</div>
+            <div class="token-box">bird</div>
+            <div class="token-box cursor" id="cursor-token">_</div>
+          </div>
+        </div>
+
+        <div style="margin: 1.5rem 0;">
+          <div class="text-dim text-small">What comes next? The model predicts:</div>
+          <div class="box" style="margin-top: 0.5rem;" id="prob-container">
+            <div class="prob-bar">
+              <span class="prob-label">gets</span>
+              <div class="prob-visual">
+                <span class="prob-blocks selected" id="bar-gets">█████████████░░░░░░░░░░░░░</span>
+                <span class="prob-percent">45%</span>
+                <span class="selected-indicator">← SELECTED</span>
+              </div>
+            </div>
+            <div class="prob-bar">
+              <span class="prob-label">catches</span>
+              <div class="prob-visual">
+                <span class="prob-blocks unselected">██████████░░░░░░░░░░░░░░░░</span>
+                <span class="prob-percent">35%</span>
+              </div>
+            </div>
+            <div class="prob-bar">
+              <span class="prob-label">wakes</span>
+              <div class="prob-visual">
+                <span class="prob-blocks unselected">██░░░░░░░░░░░░░░░░░░░░░░░░</span>
+                <span class="prob-percent">8%</span>
+              </div>
+            </div>
+            <div class="prob-bar">
+              <span class="prob-label">arrives</span>
+              <div class="prob-visual">
+                <span class="prob-blocks unselected">█░░░░░░░░░░░░░░░░░░░░░░░░░</span>
+                <span class="prob-percent">5%</span>
+              </div>
+            </div>
+            <div class="prob-bar">
+              <span class="prob-label">sings</span>
+              <div class="prob-visual">
+                <span class="prob-blocks unselected">█░░░░░░░░░░░░░░░░░░░░░░░░░</span>
+                <span class="prob-percent">4%</span>
+              </div>
+            </div>
+            <div class="prob-bar">
+              <span class="prob-label">[other]</span>
+              <div class="prob-visual">
+                <span class="prob-blocks unselected">░░░░░░░░░░░░░░░░░░░░░░░░░░</span>
+                <span class="prob-percent">3%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="anim-controls">
+          <button class="anim-btn" onclick="tokenAnim.play()" id="play-btn">▶ play</button>
+          <button class="anim-btn" onclick="tokenAnim.pause()" id="pause-btn">⏸ pause</button>
+          <button class="anim-btn" onclick="tokenAnim.reset()">↺ reset</button>
+        </div>
+
+        <div class="text-dim text-xs" style="text-align: center; margin-top: 1rem;">
+          * simplified visualization — real distributions span 50,000+ tokens
+        </div>
+        <div class="attribution">Dr. Hari Krishna</div>
+      </div>
+
+      <!-- State 2C: Insight -->
+      <div class="state" id="state-2c">
+        <div class="title-medium">WHAT THIS MEANS FOR YOUR PROMPTS</div>
+        <div style="border-top: 1px solid var(--border); width: 300px; margin: 0.5rem 0 1.5rem 0;"></div>
+
+        <div class="box">
+          <p>Each token you write shapes what comes next.</p>
+          <p style="margin-top: 1rem;">Early words have cascading influence —</p>
+          <p>like setting GPS before driving.</p>
+
+          <div class="box" style="margin-top: 1.5rem; background: rgba(51, 65, 85, 0.2);">
+            <p><span class="text-red">Vague start</span> ──────────────────────► <span class="text-red">Generic output</span></p>
+            <p style="margin-top: 0.5rem;"><span class="text-green">Specific start</span> ──────────────────────► <span class="text-green">Specific output</span></p>
+          </div>
+        </div>
+
+        <div style="margin-top: 2rem;">
+          <span class="text-red bold">SOLUTION ───►</span>
+          <span class="text-green bold">Context Anchoring</span>
+          <p class="text-dim" style="margin-top: 0.5rem;">(Front-load your specifics. Structure your start.)</p>
+        </div>
+        <div class="attribution">Dr. Hari Krishna</div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: No Memory -->
+    <div class="slide" id="slide-3">
+
+      <!-- State 3A: Mechanism Statement -->
+      <div class="state active" id="state-3a">
+        <div class="mechanism-label text-yellow">MECHANISM 2 of 3</div>
+        <div class="centered" style="height: auto; flex: 1;">
+          <div class="box" style="max-width: 600px;">
+            <p style="font-size: 1.25rem; text-align: center;">
+              "LLMs <span class="underline-yellow">don't plan, don't remember</span>"
+            </p>
+          </div>
+          <div style="margin-top: 2rem; text-align: center;">
+            <p>The chat interface creates an <span class="text-yellow">ILLUSION</span> of memory.</p>
+            <p class="text-dim" style="margin-top: 1rem;">Here's what actually happens.</p>
+          </div>
+        </div>
+        <div class="attribution">Dr. Hari Krishna</div>
+      </div>
+
+      <!-- State 3B: Context Animation (sub-states handled via JS) -->
+      <div class="state" id="state-3b">
+        <div class="title-medium">WHAT THE MODEL ACTUALLY RECEIVES</div>
+        <div style="border-top: 1px solid var(--border); width: 300px; margin: 0.5rem 0 1rem 0;"></div>
+
+        <div class="scroll-container" id="context-container">
+          <!-- Turn 1 -->
+          <div class="turn" id="turn-1">
+            <div class="turn-label">TURN 1</div>
+            <div class="turn-content user">
+              <strong>YOU:</strong> "Create a lesson plan for quadratic equations. Keep it under 5 points."
+              <div class="token-count">(15 tokens)</div>
+            </div>
+            <div class="turn-content ai">
+              <strong>AI:</strong> "Here's a 5-point lesson plan: 1. Introduction to quadratics..."
+              <div class="token-count">(180 tokens)</div>
+            </div>
+          </div>
+
+          <!-- Turn 2 (hidden initially) -->
+          <div class="turn" id="turn-2" style="display: none;">
+            <div class="turn-label">TURN 2</div>
+            <div class="turn-content user">
+              <strong>YOU:</strong> "Add assessment ideas"
+              <div class="token-count">(5 tokens)</div>
+            </div>
+            <div id="sweep-2" style="display: none;">
+              <div style="background: var(--yellow); color: var(--bg); padding: 0.25rem 0.5rem; font-size: 0.75rem; text-align: center; margin: 0.5rem 0;">
+                ▲▲▲ MODEL RE-READS ALL 200 TOKENS ABOVE BEFORE RESPONDING ▲▲▲
+              </div>
+            </div>
+            <div class="turn-content ai" id="ai-2" style="display: none;">
+              <strong>AI:</strong> "Here are assessment ideas..."
+              <div class="token-count">(120 tokens)</div>
+            </div>
+          </div>
+
+          <!-- Turn 3 (hidden initially) -->
+          <div class="turn" id="turn-3" style="display: none;">
+            <div class="turn-label">TURN 3</div>
+            <div class="turn-content user">
+              <strong>YOU:</strong> "Make it more engaging"
+              <div class="token-count">(4 tokens)</div>
+            </div>
+            <div id="sweep-3" style="display: none;">
+              <div style="background: var(--yellow); color: var(--bg); padding: 0.25rem 0.5rem; font-size: 0.75rem; text-align: center; margin: 0.5rem 0;">
+                ▲▲▲ MODEL RE-READS ALL 320 TOKENS ABOVE ▲▲▲
+              </div>
+            </div>
+            <div class="turn-content ai" id="ai-3" style="display: none;">
+              <strong>AI:</strong> "Here's a more engaging version..."
+              <div class="token-count">(150 tokens)</div>
+            </div>
+          </div>
+
+          <!-- Turn 4 (hidden initially) -->
+          <div class="turn" id="turn-4" style="display: none;">
+            <div class="turn-label">TURN 4</div>
+            <div class="turn-content user">
+              <strong>YOU:</strong> "Add homework suggestions"
+              <div class="token-count">(4 tokens)</div>
+            </div>
+            <div id="sweep-4" style="display: none;">
+              <div style="background: var(--yellow); color: var(--bg); padding: 0.25rem 0.5rem; font-size: 0.75rem; text-align: center; margin: 0.5rem 0;">
+                ▲▲▲ MODEL RE-READS ALL 474 TOKENS ABOVE ▲▲▲
+              </div>
+            </div>
+            <div class="turn-content ai" id="ai-4" style="display: none;">
+              <strong>AI:</strong> "Here are homework suggestions:<br>
+              1. Practice problem set...<br>
+              2. Real-world applications...<br>
+              ...<br>
+              <span class="text-red bold">12. Extension challenges..." ← 12 POINTS!</span>
+              <div class="token-count">(175 tokens)</div>
+            </div>
+          </div>
+
+          <!-- Warning (hidden initially) -->
+          <div id="context-warning" style="display: none;">
+            <div class="warning-box">
+              <p class="text-yellow bold">⚠ YOUR ORIGINAL "UNDER 5 POINTS" CONSTRAINT?</p>
+              <p style="margin-top: 0.5rem;">Still there... buried 650 tokens ago.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="context-total" id="context-total">
+          Total Context: <span id="token-counter">195</span> tokens
+        </div>
+
+        <div style="text-align: center; margin-top: 0.5rem;">
+          <button class="anim-btn" onclick="advanceContext()" id="context-btn">▶ continue conversation</button>
+        </div>
+        <div class="attribution">Dr. Hari Krishna</div>
+      </div>
+
+      <!-- State 3C: Insight -->
+      <div class="state" id="state-3c">
+        <div class="title-medium">WHAT THIS MEANS FOR YOUR PROMPTS</div>
+        <div style="border-top: 1px solid var(--border); width: 300px; margin: 0.5rem 0 1.5rem 0;"></div>
+
+        <div class="box">
+          <p>The model isn't "forgetting" your instructions.</p>
+          <p style="margin-top: 1rem;">Your constraints are still there — just buried under hundreds of newer tokens.</p>
+
+          <div class="box" style="margin-top: 1.5rem; background: rgba(51, 65, 85, 0.2);">
+            <p><span class="text-red">Long conversation</span> ───────► <span class="text-red">Constraints diluted</span></p>
+            <p style="margin-top: 0.5rem;"><span class="text-green">Fresh chat + context</span> ───────► <span class="text-green">Constraints intact</span></p>
+          </div>
+        </div>
+
+        <div style="margin-top: 2rem;">
+          <span class="text-yellow bold">SOLUTION ───►</span>
+          <span class="text-green bold">Context Anchoring + Repeat Key Constraints</span>
+          <p class="text-dim" style="margin-top: 0.5rem;">(Put critical requirements at the START. Repeat them in long conversations.)</p>
+        </div>
+        <div class="attribution">Dr. Hari Krishna</div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: Agreement Bias -->
+    <div class="slide" id="slide-4">
+
+      <!-- State 4A: Mechanism Statement -->
+      <div class="state active" id="state-4a">
+        <div class="mechanism-label text-green">MECHANISM 3 of 3</div>
+        <div class="centered" style="height: auto; flex: 1;">
+          <div class="box" style="max-width: 600px;">
+            <p style="font-size: 1.25rem; text-align: center;">
+              "LLMs <span class="underline-green">default to agreeable patterns</span>"
+            </p>
+          </div>
+          <div style="margin-top: 2rem; text-align: center;">
+            <p>Models are trained on human feedback. Humans prefer agreement.</p>
+            <p style="margin-top: 1rem;">So the model learns to say "Yes, great idea!"</p>
+            <p class="text-red" style="margin-top: 1rem; font-size: 1.125rem;">Even when it's not.</p>
+          </div>
+        </div>
+        <div class="attribution">Dr. Hari Krishna</div>
+      </div>
+
+      <!-- State 4B: Comparison -->
+      <div class="state" id="state-4b">
+        <div class="title-medium">SAME PROJECT. DIFFERENT FRAMING.</div>
+        <div style="border-top: 1px solid var(--border); width: 280px; margin: 0.5rem 0 1rem 0;"></div>
+
+        <div class="comparison">
+          <div class="comparison-col bad">
+            <div class="comparison-header bad">✗ ASKING FOR VALIDATION</div>
+            <div class="text-dim text-small" style="margin-bottom: 0.75rem;">
+              "Is this a good project? Students measure plant growth over 2 weeks."
+            </div>
+            <div style="border-top: 1px solid var(--border); margin: 0.75rem 0;"></div>
+            <p><strong>AI:</strong> "This is an excellent hands-on project! It encourages curiosity and scientific thinking.</p>
+            <p style="margin-top: 0.5rem;">You could enhance it by adding graphing..."</p>
+            <div style="border-top: 1px solid var(--border); margin: 0.75rem 0;"></div>
+            <p class="text-dim text-small">Pure validation. No actual problems found.</p>
+          </div>
+
+          <div class="comparison-col good">
+            <div class="comparison-header good">✓ ASKING FOR CRITIQUE</div>
+            <div class="text-dim text-small" style="margin-bottom: 0.75rem;">
+              "Find 3 ways this project will FAIL with struggling students. [same project]"
+            </div>
+            <div style="border-top: 1px solid var(--border); margin: 0.75rem 0;"></div>
+            <p><strong>AI:</strong> "Three failure points:</p>
+            <p style="margin-top: 0.5rem;">1. Students without 'controlled variable' concept will compare plants incorrectly.</p>
+            <p style="margin-top: 0.5rem;">2. 2-week timeline means absent students lose data.</p>
+            <p style="margin-top: 0.5rem;">3. 'Present findings' is vague — students won't know what to include."</p>
+          </div>
+        </div>
+
+        <p style="text-align: center; margin-top: 1rem;">Same project. One gives validation. One gives insight.</p>
+        <div class="attribution">Dr. Hari Krishna</div>
+      </div>
+
+      <!-- State 4C: Insight -->
+      <div class="state" id="state-4c">
+        <div class="title-medium">WHAT THIS MEANS FOR YOUR PROMPTS</div>
+        <div style="border-top: 1px solid var(--border); width: 300px; margin: 0.5rem 0 1.5rem 0;"></div>
+
+        <div class="box">
+          <p><span class="text-red">"Is this good?"</span> ─────────────► triggers agreement patterns</p>
+          <p style="margin-top: 1rem;"><span class="text-green">"How will this fail?"</span> ───────► triggers analysis patterns</p>
+          <p style="margin-top: 1.5rem;">The model CAN critique — but you have to ask explicitly.</p>
+        </div>
+
+        <div style="margin-top: 2rem;">
+          <span class="text-green bold">SOLUTION ───►</span>
+          <span class="text-green bold">Adversarial Framing</span>
+          <p class="text-dim" style="margin-top: 0.5rem;">(Ask for failure modes. Request critique. Override the default agreeableness.)</p>
+        </div>
+        <div class="attribution">Dr. Hari Krishna</div>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: Task 1 - Lesson Planning -->
+    <div class="slide" id="slide-5">
+
+      <!-- State 5A: Task Introduction -->
+      <div class="state active" id="state-5a">
+        <div class="task-header">
+          <span class="text-green">TASK 1: LESSON PLANNING</span>
+        </div>
+
+        <div class="text-small" style="margin-bottom: 1rem;">
+          <span class="text-dim">Mechanism:</span> "Predict next token based on all previous tokens"<br>
+          <span class="text-dim">Solution:</span> <span class="text-green">Context Anchoring</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div style="text-align: center; margin: 1rem 0;">
+          <span class="title-medium">YOUR TURN</span>
+        </div>
+
+        <ol style="margin: 1rem 0; padding-left: 1.5rem;">
+          <li style="margin: 0.5rem 0;">Open ChatGPT, Claude, or Gemini</li>
+          <li style="margin: 0.5rem 0;">Think of a topic you're teaching this week</li>
+          <li style="margin: 0.5rem 0;">Try this prompt:
+            <div class="template-box" style="margin: 0.75rem 0;">
+"Create a lesson plan for [your topic]."</div>
+          </li>
+          <li style="margin: 0.5rem 0;">Look at the output. Is it specific to YOUR classroom?</li>
+        </ol>
+
+        <div class="timer">⏱ 2 MINUTES</div>
+
+        <div style="text-align: center; margin-top: 1rem;" class="text-dim">
+          [ click when ready to see structured version ]
+        </div>
+        <div class="attribution">Dr. Hari Krishna</div>
+      </div>
+
+      <!-- State 5B: Structured Prompt -->
+      <div class="state" id="state-5b">
+        <div class="title-medium">NOW TRY THE STRUCTURED VERSION</div>
+        <div style="border-top: 1px solid var(--border); width: 280px; margin: 0.5rem 0 1rem 0;"></div>
+
+        <div class="template-box" id="template-1">You are a curriculum designer for Class 10 CBSE Mathematics.
+
+<span class="tag">&lt;goal&gt;</span>
+Students will solve quadratic equations using the formula
+without a calculator.
+<span class="tag">&lt;/goal&gt;</span>
+
+<span class="tag">&lt;student_reality&gt;</span>
+- Class size: 45 students
+- Common struggle: Sign errors with negative values
+- Time: Two 35-minute periods
+<span class="tag">&lt;/student_reality&gt;</span>
+
+<span class="tag">&lt;constraints&gt;</span>
+- Use only money or cricket examples
+- Include one diagnostic check mid-lesson
+- Assume no prior mastery of factoring
+<span class="tag">&lt;/constraints&gt;</span>
+
+First: List 3 prerequisites students need.
+Then: Create the lesson sequence.</div>
+
+        <div style="text-align: center;">
+          <button class="copy-btn" onclick="copyTemplate('template-1', this)">📋 copy template</button>
+        </div>
+
+        <div class="timer">⏱ 2 MINUTES</div>
+
+        <div style="text-align: center; margin-top: 0.5rem;" class="text-dim">
+          [ click when ready to compare outputs ]
+        </div>
+        <div class="attribution">Dr. Hari Krishna</div>
+      </div>
+
+      <!-- State 5C: Comparison -->
+      <div class="state" id="state-5c">
+        <div class="title-medium">COMPARE YOUR OUTPUTS</div>
+        <div style="border-top: 1px solid var(--border); width: 200px; margin: 0.5rem 0 1rem 0;"></div>
+
+        <div class="comparison">
+          <div class="comparison-col bad">
+            <div class="comparison-header bad">✗ CASUAL PROMPT</div>
+            <div class="text-dim text-small">"Create a lesson plan for quadratic equations"</div>
+            <div style="border-top: 1px solid var(--border); margin: 0.75rem 0;"></div>
+            <p class="text-small bold">WHAT YOU PROBABLY GOT:</p>
+            <ul style="margin: 0.5rem 0; padding-left: 1rem;" class="text-small">
+              <li>Assumes 20-30 students (generic default)</li>
+              <li>Suggests "group work" (hard with 45 students)</li>
+              <li>Starts with definitions (no hook, boring)</li>
+              <li>No prerequisites mentioned</li>
+              <li>Abstract examples</li>
+            </ul>
+          </div>
+
+          <div class="comparison-col good">
+            <div class="comparison-header good">✓ STRUCTURED PROMPT</div>
+            <div class="text-dim text-small">[The template you just used]</div>
+            <div style="border-top: 1px solid var(--border); margin: 0.75rem 0;"></div>
+            <p class="text-small bold">WHAT YOU PROBABLY GOT:</p>
+            <ul style="margin: 0.5rem 0; padding-left: 1rem;" class="text-small">
+              <li>Addresses YOUR 45 students</li>
+              <li>Suggests Think-Pair-Share (works for large classes)</li>
+              <li>Lists prerequisites FIRST</li>
+              <li>Uses cricket/money examples (YOUR context)</li>
+              <li>Includes mid-lesson check</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="insight-box">
+          <strong>WHY IT WORKED:</strong> Your specific tokens (45 students, sign errors, cricket examples) became the context. Every token the model generated was conditioned on YOUR reality — not generic defaults.
+        </div>
+        <div class="attribution">Dr. Hari Krishna</div>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: Task 2 - Error Diagnosis -->
+    <div class="slide" id="slide-6">
+
+      <!-- State 6A: Task Introduction -->
+      <div class="state active" id="state-6a">
+        <div class="task-header yellow">
+          <span class="text-yellow">TASK 2: DIAGNOSING STUDENT ERRORS</span>
+        </div>
+
+        <div class="text-small" style="margin-bottom: 1rem;">
+          <span class="text-dim">Mechanism:</span> "Don't plan" (direct prediction skips reasoning)<br>
+          <span class="text-dim">Solution:</span> <span class="text-yellow">Chain-of-Thought</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div style="text-align: center; margin: 1rem 0;">
+          <span class="title-medium">YOUR TURN</span>
+        </div>
+
+        <p>Here's a real student error:</p>
+
+        <div class="box box-yellow" style="background: rgba(251, 191, 36, 0.1);">
+          <p class="text-dim text-small">Student (Class 8 Science):</p>
+          <p style="font-style: italic; margin-top: 0.5rem;">"Water evaporates faster on hot days because heat makes water lighter, so it floats up into the air."</p>
+        </div>
+
+        <p style="margin-top: 1rem;">Try this prompt:</p>
+
+        <div class="template-box">
+"What's wrong with this answer and how do I fix it?"</div>
+
+        <div class="timer">⏱ 2 MINUTES</div>
+
+        <div style="text-align: center; margin-top: 0.5rem;" class="text-dim">
+          [ click when ready to see structured version ]
+        </div>
+        <div class="attribution">Dr. Hari Krishna</div>
+      </div>
+
+      <!-- State 6B: Structured Prompt -->
+      <div class="state" id="state-6b">
+        <div class="title-medium">NOW TRY THE STRUCTURED VERSION</div>
+        <div style="border-top: 1px solid var(--border); width: 280px; margin: 0.5rem 0 1rem 0;"></div>
+
+        <div class="template-box" id="template-2">Student answer (Class 8 Science):
+"Water evaporates faster on hot days because heat makes water
+lighter, so it floats up into the air."
+
+<span class="tag" style="color: var(--blue);">&lt;correct_concept&gt;</span>
+Evaporation occurs when water molecules gain enough kinetic
+energy to escape the liquid surface. Higher temperature means
+more kinetic energy, so more molecules escape.
+<span class="tag" style="color: var(--blue);">&lt;/correct_concept&gt;</span>
+
+<span class="tag" style="color: var(--yellow);">&lt;thinking&gt;</span>
+1. What prerequisite concept is the student missing?
+2. Where exactly did their reasoning break?
+3. What is the smallest intervention to fix this gap?
+4. What question can I ask to verify they understood?
+<span class="tag" style="color: var(--yellow);">&lt;/thinking&gt;</span>
+
+Output ONLY:
+- Diagnosis (1 sentence)
+- Micro-task (under 2 minutes)
+- Verification question</div>
+
+        <div style="text-align: center;">
+          <button class="copy-btn" onclick="copyTemplate('template-2', this)">📋 copy template</button>
+        </div>
+
+        <div class="timer">⏱ 2 MINUTES</div>
+
+        <div style="text-align: center; margin-top: 0.5rem;" class="text-dim">
+          [ click when ready to compare outputs ]
+        </div>
+        <div class="attribution">Dr. Hari Krishna</div>
+      </div>
+
+      <!-- State 6C: Comparison -->
+      <div class="state" id="state-6c">
+        <div class="title-medium">COMPARE YOUR OUTPUTS</div>
+        <div style="border-top: 1px solid var(--border); width: 200px; margin: 0.5rem 0 1rem 0;"></div>
+
+        <div class="comparison">
+          <div class="comparison-col bad">
+            <div class="comparison-header bad">✗ CASUAL PROMPT</div>
+            <div class="text-dim text-small">"What's wrong and how do I fix it?"</div>
+            <div style="border-top: 1px solid var(--border); margin: 0.75rem 0;"></div>
+            <p class="text-small bold">WHAT YOU PROBABLY GOT:</p>
+            <p class="text-small" style="margin-top: 0.5rem;">"The student has a misconception about evaporation. You should explain that heat increases kinetic energy of water molecules, allowing them to escape. Try a demo with a hot plate..."</p>
+            <div style="border-top: 1px solid var(--border); margin: 0.75rem 0;"></div>
+            <ul style="padding-left: 1rem;" class="text-small text-dim">
+              <li>Generic theory dump</li>
+              <li>No pinpoint diagnosis</li>
+              <li>"Hot plate" = equipment you don't have</li>
+            </ul>
+          </div>
+
+          <div class="comparison-col good">
+            <div class="comparison-header good">✓ STRUCTURED PROMPT</div>
+            <div class="text-dim text-small">[Template with &lt;thinking&gt; tags]</div>
+            <div style="border-top: 1px solid var(--border); margin: 0.75rem 0;"></div>
+            <p class="text-small bold">WHAT YOU PROBABLY GOT:</p>
+            <p class="text-small" style="margin-top: 0.5rem;"><strong>Diagnosis:</strong> "Student conflates 'lighter' (mass) with 'more energetic' (kinetic energy)."</p>
+            <p class="text-small" style="margin-top: 0.5rem;"><strong>Micro-task (90 seconds):</strong> "Put a drop of water on your hand. Blow on it. Does it get lighter? No. But it evaporates. What made it evaporate?"</p>
+            <p class="text-small" style="margin-top: 0.5rem;"><strong>Verification:</strong> "Can cold water evaporate? Why?"</p>
+          </div>
+        </div>
+
+        <div class="insight-box">
+          <strong>WHY IT WORKED:</strong> The &lt;thinking&gt; tags forced the model to generate reasoning tokens BEFORE answer tokens. Each step changed what came next. It couldn't skip to generic theory.
+        </div>
+        <div class="attribution">Dr. Hari Krishna</div>
+      </div>
+    </div>
+
+    <!-- SLIDE 7: Task 3 - Stress Testing -->
+    <div class="slide" id="slide-7">
+
+      <!-- State 7A: Task Introduction -->
+      <div class="state active" id="state-7a">
+        <div class="task-header" style="border-color: var(--green);">
+          <span class="text-green">TASK 3: STRESS-TESTING BEFORE CLASS</span>
+        </div>
+
+        <div class="text-small" style="margin-bottom: 1rem;">
+          <span class="text-dim">Mechanism:</span> "Default to agreeable patterns"<br>
+          <span class="text-dim">Solution:</span> <span class="text-green">Adversarial Framing</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div style="text-align: center; margin: 1rem 0;">
+          <span class="title-medium">YOUR TURN</span>
+        </div>
+
+        <p>Think of a lesson, project, or assessment you've designed.</p>
+
+        <p style="margin-top: 1rem;">Try this prompt:</p>
+
+        <div class="template-box">
+"Is this a good [lesson/project/assessment]?
+Any suggestions?
+
+[paste your lesson/project/assessment]"</div>
+
+        <p style="margin-top: 1rem;">Notice: Does the AI genuinely critique it?<br>
+        Or does it validate and then add suggestions?</p>
+
+        <div class="timer">⏱ 2 MINUTES</div>
+
+        <div style="text-align: center; margin-top: 0.5rem;" class="text-dim">
+          [ click when ready to see structured version ]
+        </div>
+        <div class="attribution">Dr. Hari Krishna</div>
+      </div>
+
+      <!-- State 7B: Structured Prompt -->
+      <div class="state" id="state-7b">
+        <div class="title-medium">NOW TRY THE STRUCTURED VERSION</div>
+        <div style="border-top: 1px solid var(--border); width: 280px; margin: 0.5rem 0 1rem 0;"></div>
+
+        <div class="template-box" id="template-3" style="font-size: 0.8rem;">Project: [paste your lesson/project/assessment]
+
+<span class="tag" style="color: var(--green);">&lt;mission&gt;</span>
+<strong>Do NOT be supportive. Find how this will fail.</strong>
+
+Analyze from three perspectives:
+1. Resource-constrained teacher (time, materials, supervision)
+2. Skeptical examiner (is learning actually verified?)
+3. Struggling student (where will they get lost?)
+
+Then simulate with three students:
+- Student A: Missing prerequisite knowledge
+- Student B: High achiever, disengages when bored
+- Student C: Literal-minded, confused by ambiguity
+<span class="tag" style="color: var(--green);">&lt;/mission&gt;</span>
+
+Output ONLY a Failure Report:
+
+| Student | Where They Fail | Hidden Assumption | One Fix |</div>
+
+        <div style="text-align: center;">
+          <button class="copy-btn" onclick="copyTemplate('template-3', this)">📋 copy template</button>
+        </div>
+
+        <div class="timer">⏱ 2 MINUTES</div>
+
+        <div style="text-align: center; margin-top: 0.5rem;" class="text-dim">
+          [ click when ready to compare outputs ]
+        </div>
+        <div class="attribution">Dr. Hari Krishna</div>
+      </div>
+
+      <!-- State 7C: Comparison -->
+      <div class="state" id="state-7c">
+        <div class="title-medium">COMPARE YOUR OUTPUTS</div>
+        <div style="border-top: 1px solid var(--border); width: 200px; margin: 0.5rem 0 1rem 0;"></div>
+
+        <div class="comparison">
+          <div class="comparison-col bad">
+            <div class="comparison-header bad">✗ CASUAL PROMPT</div>
+            <div class="text-dim text-small">"Is this good? Any suggestions?"</div>
+            <div style="border-top: 1px solid var(--border); margin: 0.75rem 0;"></div>
+            <p class="text-small">"This is an excellent project! It encourages hands-on learning and scientific inquiry.</p>
+            <p class="text-small" style="margin-top: 0.5rem;">You could enhance it by:</p>
+            <ul style="padding-left: 1rem;" class="text-small">
+              <li>Adding graphing</li>
+              <li>Including reflection</li>
+              <li>Adding peer review</li>
+            </ul>
+            <p class="text-small" style="margin-top: 0.5rem;">These additions would make an already strong project even better!"</p>
+            <div style="border-top: 1px solid var(--border); margin: 0.75rem 0;"></div>
+            <ul style="padding-left: 1rem;" class="text-small text-dim">
+              <li>Pure validation</li>
+              <li>Zero problems found</li>
+              <li>"Enhancements" not fixes</li>
+            </ul>
+          </div>
+
+          <div class="comparison-col good">
+            <div class="comparison-header good">✓ STRUCTURED PROMPT</div>
+            <div class="text-dim text-small">[Adversarial template]</div>
+            <div style="border-top: 1px solid var(--border); margin: 0.75rem 0;"></div>
+            <table style="width: 100%; font-size: 0.75rem; border-collapse: collapse;">
+              <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding: 0.25rem;"><strong>Student A</strong></td>
+                <td style="padding: 0.25rem;">Fails at step 3 — doesn't know 'controlled variable' concept.<br>
+                <span class="text-dim">Assumption: Taught in Cls 6</span><br>
+                <span class="text-green">Fix: Add 5-min review</span></td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding: 0.25rem;"><strong>Student B</strong></td>
+                <td style="padding: 0.25rem;">Disengages after Day 3 — no challenge<br>
+                <span class="text-dim">Assumption: Observation alone is engaging</span><br>
+                <span class="text-green">Fix: Add hypothesis task</span></td>
+              </tr>
+              <tr>
+                <td style="padding: 0.25rem;"><strong>Student C</strong></td>
+                <td style="padding: 0.25rem;">Confused by 'present findings' — what goes in a presentation?<br>
+                <span class="text-dim">Assumption: They know</span><br>
+                <span class="text-green">Fix: Give template</span></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="insight-box">
+          <strong>WHY IT WORKED:</strong> "Do NOT be supportive" overrode the model's trained agreeableness. The student personas forced critique from multiple perspectives — not just the "helpful assistant."
+        </div>
+        <div class="attribution">Dr. Hari Krishna</div>
+      </div>
+    </div>
+
+    <!-- SLIDE 8: Conclusion -->
+    <div class="slide" id="slide-8">
+
+      <!-- State 8A: Core Insight Callback -->
+      <div class="state active" id="state-8a">
+        <div class="centered">
+          <div class="text-dim uppercase text-small" style="margin-bottom: 1.5rem;">The One Thing to Remember</div>
+          <div class="quote-box" style="max-width: 750px;">
+            <p>"LLMs <span class="text-blue">predict the next token based on all previous tokens</span>.</p>
+            <p style="margin-top: 1rem;">They <span class="text-yellow">don't plan, don't remember</span>, and <span class="text-green">default to agreeable patterns</span>."</p>
+          </div>
+          <div style="margin-top: 2rem; font-size: 1.25rem;">
+            You now know what this means.
+          </div>
+        </div>
+        <div class="attribution">Dr. Hari Krishna</div>
+      </div>
+
+      <!-- State 8B: Summary -->
+      <div class="state" id="state-8b">
+        <div class="title-medium">THREE MECHANISMS. THREE SOLUTIONS.</div>
+        <div style="border-top: 1px solid var(--border); width: 300px; margin: 0.5rem 0 1.5rem 0;"></div>
+
+        <div class="box">
+          <table class="summary-table">
+            <tr>
+              <th style="width: 50%;">MECHANISM</th>
+              <th>SOLUTION</th>
+            </tr>
+            <tr>
+              <td>"Predict next token based on all previous tokens"</td>
+              <td><span class="text-green bold">CONTEXT ANCHORING</span><br><span class="text-dim text-small">Front-load your specifics.</span></td>
+            </tr>
+            <tr>
+              <td>"Don't plan, don't remember"</td>
+              <td><span class="text-yellow bold">CHAIN-OF-THOUGHT</span><br><span class="text-dim text-small">Force intermediate steps.</span></td>
+            </tr>
+            <tr>
+              <td>"Default to agreeable patterns"</td>
+              <td><span class="text-green bold">ADVERSARIAL FRAMING</span><br><span class="text-dim text-small">Ask for critique explicitly.</span></td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="workflow" id="workflow-animation">
+          <div class="workflow-box red" id="wf-anchor" style="opacity: 0;">ANCHOR</div>
+          <span class="workflow-arrow" id="wf-arrow1" style="opacity: 0;">────►</span>
+          <div class="workflow-box yellow" id="wf-think" style="opacity: 0;">THINK</div>
+          <span class="workflow-arrow" id="wf-arrow2" style="opacity: 0;">────►</span>
+          <div class="workflow-box green" id="wf-test" style="opacity: 0;">TEST</div>
+        </div>
+        <div class="workflow-vertical">
+          <span class="workflow-arrow" id="wf-arrow3" style="opacity: 0;">▼</span>
+          <div class="workflow-box blue" id="wf-iterate" style="opacity: 0;">ITERATE</div>
+        </div>
+        <div class="attribution">Dr. Hari Krishna</div>
+      </div>
+
+      <!-- State 8C: Commitment -->
+      <div class="state" id="state-8c">
+        <div class="centered" style="justify-content: flex-start; padding-top: 2rem;">
+          <div class="title-medium" style="margin-bottom: 1rem;">YOUR COMMITMENT</div>
+          <div style="border-top: 1px solid var(--border); width: 150px; margin-bottom: 1.5rem;"></div>
+
+          <div class="box box-green" style="max-width: 600px;">
+            <p style="text-align: center;">Turn to the person next to you.</p>
+            <p style="text-align: center; margin-top: 1rem;">Say out loud:</p>
+            <p style="text-align: center; margin-top: 1.5rem; font-size: 1.125rem;">
+              "Tomorrow, I will use <span class="blank"></span>
+            </p>
+            <p style="text-align: center;" class="blank-label">(technique)</p>
+            <p style="text-align: center; margin-top: 1rem; font-size: 1.125rem;">
+              for <span class="blank" style="min-width: 300px;"></span>."
+            </p>
+            <p style="text-align: center;" class="blank-label">(specific task)</p>
+            <p style="text-align: center; margin-top: 1.5rem; font-weight: 600;">Write it down. Now.</p>
+          </div>
+
+          <div class="divider" style="width: 100%; max-width: 700px;"></div>
+
+          <div style="max-width: 700px; text-align: center;">
+            <p class="text-dim">The AI will update. GPT-5, Claude 4, whatever comes next.</p>
+            <p class="text-dim">The specific prompts might change.</p>
+            <p style="margin-top: 1rem;">But this principle won't:</p>
+            <p style="margin-top: 1rem;"><span class="text-green bold">STRUCTURE</span> shifts what tokens are probable.</p>
+            <p><span class="text-red bold">VAGUENESS</span> defaults to generic patterns.</p>
+            <p style="margin-top: 1.5rem;">You now know how to structure.</p>
+            <p style="margin-top: 1.5rem; font-size: 1.5rem;" class="text-green bold">Go use it.</p>
+          </div>
+        </div>
+        <div class="attribution">Dr. Hari Krishna</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Navigation hint -->
+  <div class="nav-hint">
+    ← → Space: Navigate | R: Reset animation
+  </div>
+
+  <script>
+    // Presentation state management
+    const presentation = {
+      currentSlide: 0,
+      slides: [
+        { id: 1, states: ['1a', '1b', '1c'], currentState: 0 },
+        { id: 2, states: ['2a', '2b', '2c'], currentState: 0 },
+        { id: 3, states: ['3a', '3b', '3c'], currentState: 0 },
+        { id: 4, states: ['4a', '4b', '4c'], currentState: 0 },
+        { id: 5, states: ['5a', '5b', '5c'], currentState: 0 },
+        { id: 6, states: ['6a', '6b', '6c'], currentState: 0 },
+        { id: 7, states: ['7a', '7b', '7c'], currentState: 0 },
+        { id: 8, states: ['8a', '8b', '8c'], currentState: 0 }
+      ],
+
+      next() {
+        const currentSlideData = this.slides[this.currentSlide];
+
+        // If we're on slide 3 state 3b, handle context animation separately
+        if (this.currentSlide === 2 && currentSlideData.currentState === 1) {
+          if (contextStep < 4) {
+            advanceContext();
+            return;
+          }
+        }
+
+        // If more states in current slide
+        if (currentSlideData.currentState < currentSlideData.states.length - 1) {
+          currentSlideData.currentState++;
+          this.render();
+
+          // Trigger animations for specific states
+          if (this.currentSlide === 7 && currentSlideData.currentState === 1) {
+            setTimeout(animateWorkflow, 500);
+          }
+        }
+        // Move to next slide
+        else if (this.currentSlide < this.slides.length - 1) {
+          this.currentSlide++;
+          this.slides[this.currentSlide].currentState = 0;
+          this.render();
+
+          // Reset context animation when entering slide 3
+          if (this.currentSlide === 2) {
+            resetContext();
+          }
+
+          // Start token animation when entering slide 2 state 2b
+          if (this.currentSlide === 1) {
+            // Animation will start when state 2b is shown
+          }
+        }
+      },
+
+      prev() {
+        const currentSlideData = this.slides[this.currentSlide];
+
+        // If more states to go back in current slide
+        if (currentSlideData.currentState > 0) {
+          currentSlideData.currentState--;
+          this.render();
+        }
+        // Move to previous slide
+        else if (this.currentSlide > 0) {
+          this.currentSlide--;
+          // Go to last state of previous slide
+          const prevSlide = this.slides[this.currentSlide];
+          prevSlide.currentState = prevSlide.states.length - 1;
+          this.render();
+        }
+      },
+
+      goTo(slideIndex) {
+        if (slideIndex >= 0 && slideIndex < this.slides.length) {
+          this.currentSlide = slideIndex;
+          this.slides[slideIndex].currentState = 0;
+          this.render();
+        }
+      },
+
+      render() {
+        // Hide all slides
+        document.querySelectorAll('.slide').forEach(slide => {
+          slide.classList.remove('active');
+        });
+
+        // Show current slide
+        const currentSlideData = this.slides[this.currentSlide];
+        const slideEl = document.getElementById(`slide-${currentSlideData.id}`);
+        slideEl.classList.add('active');
+
+        // Hide all states in current slide
+        slideEl.querySelectorAll('.state').forEach(state => {
+          state.classList.remove('active');
+        });
+
+        // Show current state
+        const stateId = `state-${currentSlideData.states[currentSlideData.currentState]}`;
+        const stateEl = document.getElementById(stateId);
+        if (stateEl) {
+          stateEl.classList.add('active');
+        }
+
+        // Handle specific slide behaviors
+        if (this.currentSlide === 1 && currentSlideData.currentState === 1) {
+          // Start token animation when on slide 2 state 2b
+          setTimeout(() => tokenAnim.play(), 500);
+        } else {
+          tokenAnim.pause();
+        }
+      }
+    };
+
+    // Token prediction animation
+    const tokenAnim = {
+      running: false,
+      frame: 0,
+      interval: null,
+
+      sequences: [
+        {
+          tokens: ['The', 'early', 'bird'],
+          predictions: [
+            { word: 'gets', prob: 45, selected: true },
+            { word: 'catches', prob: 35, selected: false },
+            { word: 'wakes', prob: 8, selected: false },
+            { word: 'arrives', prob: 5, selected: false },
+            { word: 'sings', prob: 4, selected: false },
+            { word: '[other]', prob: 3, selected: false }
+          ]
+        },
+        {
+          tokens: ['The', 'early', 'bird', 'gets'],
+          predictions: [
+            { word: 'the', prob: 82, selected: true },
+            { word: 'up', prob: 10, selected: false },
+            { word: 'worms', prob: 3, selected: false },
+            { word: '[other]', prob: 5, selected: false }
+          ]
+        },
+        {
+          tokens: ['The', 'early', 'bird', 'gets', 'the'],
+          predictions: [
+            { word: 'worm', prob: 71, selected: true },
+            { word: 'prize', prob: 12, selected: false },
+            { word: 'best', prob: 8, selected: false },
+            { word: '[other]', prob: 9, selected: false }
+          ]
+        }
+      ],
+
+      renderBar(prob, selected) {
+        const filled = Math.round(prob / 4);
+        const empty = 25 - filled;
+        return '█'.repeat(filled) + '░'.repeat(empty);
+      },
+
+      renderSequence(index) {
+        const seq = this.sequences[index];
+        const container = document.getElementById('token-sequence');
+        container.innerHTML = seq.tokens.map(t =>
+          `<div class="token-box">${t}</div>`
+        ).join('') + '<div class="token-box cursor">_</div>';
+      },
+
+      renderProbabilities(index, animate = false) {
+        const seq = this.sequences[index];
+        const container = document.getElementById('prob-container');
+
+        container.innerHTML = seq.predictions.map(p => `
+          <div class="prob-bar">
+            <span class="prob-label">${p.word}</span>
+            <div class="prob-visual">
+              <span class="prob-blocks ${p.selected ? 'selected' : 'unselected'}">${this.renderBar(p.prob, p.selected)}</span>
+              <span class="prob-percent">${p.prob}%</span>
+              ${p.selected ? '<span class="selected-indicator">← SELECTED</span>' : ''}
+            </div>
+          </div>
+        `).join('');
+      },
+
+      play() {
+        if (this.running) return;
+        this.running = true;
+
+        let step = 0;
+        const maxSteps = this.sequences.length;
+
+        const animate = () => {
+          if (!this.running) return;
+
+          this.renderSequence(step);
+          this.renderProbabilities(step);
+
+          step++;
+          if (step >= maxSteps) {
+            step = 0;
+            // Show final complete sequence briefly
+            setTimeout(() => {
+              if (this.running) {
+                const container = document.getElementById('token-sequence');
+                container.innerHTML = ['The', 'early', 'bird', 'gets', 'the', 'worm'].map(t =>
+                  `<div class="token-box active">${t}</div>`
+                ).join('');
+              }
+            }, 100);
+          }
+
+          this.interval = setTimeout(animate, 2500);
+        };
+
+        animate();
+      },
+
+      pause() {
+        this.running = false;
+        if (this.interval) {
+          clearTimeout(this.interval);
+          this.interval = null;
+        }
+      },
+
+      reset() {
+        this.pause();
+        this.frame = 0;
+        this.renderSequence(0);
+        this.renderProbabilities(0);
+        setTimeout(() => this.play(), 500);
+      }
+    };
+
+    // Context concatenation animation (Slide 3)
+    let contextStep = 0;
+
+    function advanceContext() {
+      contextStep++;
+
+      if (contextStep === 1) {
+        document.getElementById('turn-2').style.display = 'block';
+        document.getElementById('sweep-2').style.display = 'block';
+        setTimeout(() => {
+          document.getElementById('ai-2').style.display = 'block';
+          animateCounter(195, 320);
+        }, 1000);
+      } else if (contextStep === 2) {
+        document.getElementById('turn-3').style.display = 'block';
+        document.getElementById('sweep-3').style.display = 'block';
+        setTimeout(() => {
+          document.getElementById('ai-3').style.display = 'block';
+          animateCounter(320, 474);
+        }, 1000);
+      } else if (contextStep === 3) {
+        document.getElementById('turn-4').style.display = 'block';
+        document.getElementById('sweep-4').style.display = 'block';
+        setTimeout(() => {
+          document.getElementById('ai-4').style.display = 'block';
+          animateCounter(474, 653);
+        }, 1000);
+      } else if (contextStep === 4) {
+        document.getElementById('context-warning').style.display = 'block';
+        document.getElementById('context-btn').textContent = '▶ see the insight';
+        document.getElementById('token-counter').parentElement.style.color = 'var(--red)';
+      }
+    }
+
+    function animateCounter(from, to) {
+      const counter = document.getElementById('token-counter');
+      const duration = 500;
+      const steps = 20;
+      const increment = (to - from) / steps;
+      let current = from;
+      let step = 0;
+
+      const interval = setInterval(() => {
+        step++;
+        current = Math.round(from + (increment * step));
+        counter.textContent = current;
+
+        if (step >= steps) {
+          counter.textContent = to;
+          clearInterval(interval);
+        }
+      }, duration / steps);
+    }
+
+    function resetContext() {
+      contextStep = 0;
+      document.getElementById('turn-2').style.display = 'none';
+      document.getElementById('turn-3').style.display = 'none';
+      document.getElementById('turn-4').style.display = 'none';
+      document.getElementById('sweep-2').style.display = 'none';
+      document.getElementById('sweep-3').style.display = 'none';
+      document.getElementById('sweep-4').style.display = 'none';
+      document.getElementById('ai-2').style.display = 'none';
+      document.getElementById('ai-3').style.display = 'none';
+      document.getElementById('ai-4').style.display = 'none';
+      document.getElementById('context-warning').style.display = 'none';
+      document.getElementById('token-counter').textContent = '195';
+      document.getElementById('token-counter').parentElement.style.color = '';
+      document.getElementById('context-btn').textContent = '▶ continue conversation';
+    }
+
+    // Workflow animation (Slide 8)
+    function animateWorkflow() {
+      const elements = [
+        { id: 'wf-anchor', delay: 0 },
+        { id: 'wf-arrow1', delay: 300 },
+        { id: 'wf-think', delay: 600 },
+        { id: 'wf-arrow2', delay: 900 },
+        { id: 'wf-test', delay: 1200 },
+        { id: 'wf-arrow3', delay: 1500 },
+        { id: 'wf-iterate', delay: 1800 }
+      ];
+
+      elements.forEach(({ id, delay }) => {
+        setTimeout(() => {
+          const el = document.getElementById(id);
+          el.style.opacity = '1';
+          el.style.transition = 'opacity 0.3s ease';
+
+          if (id === 'wf-iterate') {
+            el.classList.add('pulse');
+          }
+        }, delay);
+      });
+    }
+
+    // Copy template function
+    function copyTemplate(templateId, btn) {
+      const el = document.getElementById(templateId);
+      // Get text content and clean up HTML tags for display
+      let text = el.innerText;
+
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = '✓ copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = '📋 copy template';
+          btn.classList.remove('copied');
+        }, 2000);
+      }).catch(err => {
+        console.error('Failed to copy:', err);
+      });
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        presentation.next();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        presentation.prev();
+      } else if (e.key === 'r' || e.key === 'R') {
+        e.preventDefault();
+        tokenAnim.reset();
+        resetContext();
+      }
+    });
+
+    // Touch navigation
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    document.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    });
+
+    document.addEventListener('touchend', (e) => {
+      const touchEndX = e.changedTouches[0].clientX;
+      const touchEndY = e.changedTouches[0].clientY;
+
+      const diffX = touchEndX - touchStartX;
+      const diffY = touchEndY - touchStartY;
+
+      // Only trigger if horizontal swipe is more significant than vertical
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+        if (diffX < 0) {
+          presentation.next();
+        } else {
+          presentation.prev();
+        }
+      }
+    });
+
+    // Click navigation (but not on buttons or interactive elements)
+    document.addEventListener('click', (e) => {
+      // Don't navigate if clicking on buttons or copy buttons
+      if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+        return;
+      }
+
+      // Don't navigate if clicking on template boxes (for selection)
+      if (e.target.closest('.template-box')) {
+        return;
+      }
+
+      presentation.next();
+    });
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      presentation.render();
+    });
+  </script>
+</body>
+</html>
