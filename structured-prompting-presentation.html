@@ -789,6 +789,33 @@
     .drawing-indicator.visible {
       display: block;
     }
+
+    /* Pause Indicator */
+    .pause-indicator {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 999;
+      background: rgba(0, 0, 0, 0.85);
+      border: 2px solid var(--yellow);
+      color: var(--yellow);
+      padding: 1rem 2rem;
+      font-size: 1.5rem;
+      font-family: var(--font);
+      border-radius: 4px;
+      display: none;
+      pointer-events: none;
+    }
+
+    .pause-indicator.visible {
+      display: block;
+    }
+
+    /* Paused state - freeze all CSS animations */
+    body.paused * {
+      animation-play-state: paused !important;
+    }
   </style>
 </head>
 <body>
@@ -1658,6 +1685,9 @@ Output ONLY a Failure Report:
   <!-- Drawing Mode Indicator -->
   <div class="drawing-indicator" id="drawing-indicator">✏️ DRAWING MODE (D to exit)</div>
 
+  <!-- Pause Indicator -->
+  <div class="pause-indicator" id="pause-indicator">⏸ PAUSED (P to resume)</div>
+
   <!-- Drawing Toolbar -->
   <div class="drawing-toolbar" id="drawing-toolbar">
     <div class="color-picker">
@@ -1681,7 +1711,7 @@ Output ONLY a Failure Report:
 
   <!-- Navigation hint -->
   <div class="nav-hint">
-    ← → Space: Navigate | R: Reset | D: Draw
+    ← → Space: Navigate | P: Pause | D: Draw | R: Reset
   </div>
 
   <script>
@@ -2297,8 +2327,47 @@ Output ONLY a Failure Report:
       }
     };
 
+    // ========================================
+    // Global Pause Functionality
+    // ========================================
+    const pauseIndicator = document.getElementById('pause-indicator');
+    let isPaused = false;
+
+    function togglePause() {
+      isPaused = !isPaused;
+
+      if (isPaused) {
+        // Pause all animations
+        document.body.classList.add('paused');
+        pauseIndicator.classList.add('visible');
+
+        // Pause token animation if running
+        if (tokenAnim.running) {
+          tokenAnim.pause();
+          tokenAnim.wasPausedByGlobal = true;
+        }
+      } else {
+        // Resume all animations
+        document.body.classList.remove('paused');
+        pauseIndicator.classList.remove('visible');
+
+        // Resume token animation if it was paused by global pause
+        if (tokenAnim.wasPausedByGlobal) {
+          tokenAnim.play();
+          tokenAnim.wasPausedByGlobal = false;
+        }
+      }
+    }
+
     // Keyboard navigation
     document.addEventListener('keydown', (e) => {
+      // Toggle pause with 'P' key (works in any mode)
+      if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePause();
+        return;
+      }
+
       // Toggle drawing mode with 'D' key
       if (e.key === 'd' || e.key === 'D') {
         e.preventDefault();
