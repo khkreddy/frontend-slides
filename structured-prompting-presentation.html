@@ -663,6 +663,132 @@
       text-align: center;
       margin-top: 0.25rem;
     }
+
+    /* Drawing Canvas Overlay */
+    #drawing-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1000;
+      pointer-events: none;
+      touch-action: none;
+    }
+
+    #drawing-canvas.active {
+      pointer-events: auto;
+      cursor: crosshair;
+    }
+
+    /* Drawing Toolbar */
+    .drawing-toolbar {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 1001;
+      display: none;
+      flex-direction: column;
+      gap: 0.5rem;
+      background: rgba(0, 0, 0, 0.9);
+      border: 1px solid var(--border);
+      padding: 0.75rem;
+      border-radius: 4px;
+    }
+
+    .drawing-toolbar.visible {
+      display: flex;
+    }
+
+    .drawing-toolbar button {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.5rem 0.75rem;
+      font-family: var(--font);
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .drawing-toolbar button:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    .drawing-toolbar button.active {
+      border-color: var(--green);
+      color: var(--green);
+      background: rgba(74, 222, 128, 0.1);
+    }
+
+    .color-picker {
+      display: flex;
+      gap: 0.25rem;
+      flex-wrap: wrap;
+      max-width: 120px;
+    }
+
+    .color-btn {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--border);
+      cursor: pointer;
+      padding: 0;
+      transition: transform 0.1s;
+    }
+
+    .color-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .color-btn.selected {
+      border-color: var(--text);
+      box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--text);
+    }
+
+    .stroke-sizes {
+      display: flex;
+      gap: 0.25rem;
+      align-items: center;
+    }
+
+    .stroke-btn {
+      background: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .stroke-btn:hover {
+      border-color: var(--blue);
+    }
+
+    .stroke-btn.selected {
+      border-color: var(--green);
+      box-shadow: 0 0 0 2px var(--green);
+    }
+
+    .drawing-indicator {
+      position: fixed;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1001;
+      background: var(--green);
+      color: var(--bg);
+      padding: 0.25rem 0.75rem;
+      font-size: 0.75rem;
+      font-family: var(--font);
+      border-radius: 2px;
+      display: none;
+    }
+
+    .drawing-indicator.visible {
+      display: block;
+    }
   </style>
 </head>
 <body>
@@ -1526,9 +1652,36 @@ Output ONLY a Failure Report:
 
   </div>
 
+  <!-- Drawing Canvas Overlay -->
+  <canvas id="drawing-canvas"></canvas>
+
+  <!-- Drawing Mode Indicator -->
+  <div class="drawing-indicator" id="drawing-indicator">✏️ DRAWING MODE (D to exit)</div>
+
+  <!-- Drawing Toolbar -->
+  <div class="drawing-toolbar" id="drawing-toolbar">
+    <div class="color-picker">
+      <button class="color-btn selected" style="background: #ffffff;" data-color="#ffffff" title="White"></button>
+      <button class="color-btn" style="background: #f87171;" data-color="#f87171" title="Red"></button>
+      <button class="color-btn" style="background: #4ade80;" data-color="#4ade80" title="Green"></button>
+      <button class="color-btn" style="background: #fbbf24;" data-color="#fbbf24" title="Yellow"></button>
+      <button class="color-btn" style="background: #60a5fa;" data-color="#60a5fa" title="Blue"></button>
+      <button class="color-btn" style="background: #a78bfa;" data-color="#a78bfa" title="Purple"></button>
+    </div>
+    <div class="stroke-sizes">
+      <button class="stroke-btn" style="width: 8px; height: 8px;" data-size="2" title="Thin"></button>
+      <button class="stroke-btn selected" style="width: 12px; height: 12px;" data-size="4" title="Medium"></button>
+      <button class="stroke-btn" style="width: 18px; height: 18px;" data-size="8" title="Thick"></button>
+      <button class="stroke-btn" style="width: 24px; height: 24px;" data-size="16" title="Extra Thick"></button>
+    </div>
+    <button onclick="clearCanvas()">🗑️ Clear Slide</button>
+    <button onclick="clearAllDrawings()">🗑️ Clear All</button>
+    <button onclick="undoDrawing()">↩️ Undo</button>
+  </div>
+
   <!-- Navigation hint -->
   <div class="nav-hint">
-    ← → Space: Navigate | R: Reset animation
+    ← → Space: Navigate | R: Reset | D: Draw
   </div>
 
   <script>
@@ -1876,8 +2029,292 @@ Output ONLY a Failure Report:
       });
     }
 
+    // ========================================
+    // Drawing Canvas Functionality
+    // ========================================
+    const drawingCanvas = document.getElementById('drawing-canvas');
+    const drawingCtx = drawingCanvas.getContext('2d');
+    const drawingToolbar = document.getElementById('drawing-toolbar');
+    const drawingIndicator = document.getElementById('drawing-indicator');
+
+    let isDrawingMode = false;
+    let isDrawing = false;
+    let currentColor = '#ffffff';
+    let currentStrokeSize = 4;
+    let lastX = 0;
+    let lastY = 0;
+
+    // Store drawings per slide (key = slideIndex-stateIndex)
+    const slideDrawings = {};
+    let currentDrawingKey = '0-0';
+    let undoStack = [];
+
+    // Initialize canvas size
+    function resizeCanvas() {
+      const tempCanvas = document.createElement('canvas');
+      const tempCtx = tempCanvas.getContext('2d');
+      tempCanvas.width = drawingCanvas.width;
+      tempCanvas.height = drawingCanvas.height;
+      tempCtx.drawImage(drawingCanvas, 0, 0);
+
+      drawingCanvas.width = window.innerWidth;
+      drawingCanvas.height = window.innerHeight;
+
+      // Restore content
+      drawingCtx.drawImage(tempCanvas, 0, 0);
+
+      // Restore drawing settings
+      drawingCtx.lineCap = 'round';
+      drawingCtx.lineJoin = 'round';
+      drawingCtx.strokeStyle = currentColor;
+      drawingCtx.lineWidth = currentStrokeSize;
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // Toggle drawing mode
+    function toggleDrawingMode() {
+      isDrawingMode = !isDrawingMode;
+
+      if (isDrawingMode) {
+        drawingCanvas.classList.add('active');
+        drawingToolbar.classList.add('visible');
+        drawingIndicator.classList.add('visible');
+        loadSlideDrawing();
+      } else {
+        drawingCanvas.classList.remove('active');
+        drawingToolbar.classList.remove('visible');
+        drawingIndicator.classList.remove('visible');
+        saveSlideDrawing();
+      }
+    }
+
+    // Save current slide's drawing
+    function saveSlideDrawing() {
+      slideDrawings[currentDrawingKey] = drawingCanvas.toDataURL();
+    }
+
+    // Load drawing for current slide
+    function loadSlideDrawing() {
+      const key = `${presentation.currentSlide}-${presentation.slides[presentation.currentSlide].currentState}`;
+      currentDrawingKey = key;
+
+      // Clear canvas first
+      drawingCtx.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+
+      // Load saved drawing if exists
+      if (slideDrawings[key]) {
+        const img = new Image();
+        img.onload = () => {
+          drawingCtx.drawImage(img, 0, 0);
+        };
+        img.src = slideDrawings[key];
+      }
+
+      // Reset undo stack for this slide
+      undoStack = [];
+    }
+
+    // Clear canvas for current slide
+    function clearCanvas() {
+      // Save state for undo
+      undoStack.push(drawingCanvas.toDataURL());
+
+      drawingCtx.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+      saveSlideDrawing();
+    }
+
+    // Clear all drawings
+    function clearAllDrawings() {
+      if (confirm('Clear drawings from all slides?')) {
+        Object.keys(slideDrawings).forEach(key => delete slideDrawings[key]);
+        drawingCtx.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+        undoStack = [];
+      }
+    }
+
+    // Undo last drawing action
+    function undoDrawing() {
+      if (undoStack.length > 0) {
+        const previousState = undoStack.pop();
+        const img = new Image();
+        img.onload = () => {
+          drawingCtx.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+          drawingCtx.drawImage(img, 0, 0);
+          saveSlideDrawing();
+        };
+        img.src = previousState;
+      }
+    }
+
+    // Get position from event (handles mouse, touch, and pen)
+    function getPosition(e) {
+      if (e.touches && e.touches.length > 0) {
+        return {
+          x: e.touches[0].clientX,
+          y: e.touches[0].clientY,
+          pressure: e.touches[0].force || 0.5
+        };
+      }
+      return {
+        x: e.clientX,
+        y: e.clientY,
+        pressure: e.pressure || 0.5
+      };
+    }
+
+    // Start drawing
+    function startDrawing(e) {
+      if (!isDrawingMode) return;
+
+      // Save state for undo before starting new stroke
+      undoStack.push(drawingCanvas.toDataURL());
+      if (undoStack.length > 50) undoStack.shift(); // Limit undo history
+
+      isDrawing = true;
+      const pos = getPosition(e);
+      lastX = pos.x;
+      lastY = pos.y;
+
+      // Draw a dot for single clicks
+      drawingCtx.beginPath();
+      drawingCtx.arc(lastX, lastY, currentStrokeSize / 2, 0, Math.PI * 2);
+      drawingCtx.fillStyle = currentColor;
+      drawingCtx.fill();
+    }
+
+    // Draw
+    function draw(e) {
+      if (!isDrawingMode || !isDrawing) return;
+
+      e.preventDefault();
+
+      const pos = getPosition(e);
+
+      // Adjust stroke width based on pressure for supported devices
+      const pressureWidth = currentStrokeSize * (0.5 + pos.pressure);
+
+      drawingCtx.beginPath();
+      drawingCtx.strokeStyle = currentColor;
+      drawingCtx.lineWidth = pressureWidth;
+      drawingCtx.lineCap = 'round';
+      drawingCtx.lineJoin = 'round';
+      drawingCtx.moveTo(lastX, lastY);
+      drawingCtx.lineTo(pos.x, pos.y);
+      drawingCtx.stroke();
+
+      lastX = pos.x;
+      lastY = pos.y;
+    }
+
+    // Stop drawing
+    function stopDrawing() {
+      if (isDrawing) {
+        isDrawing = false;
+        saveSlideDrawing();
+      }
+    }
+
+    // Mouse events
+    drawingCanvas.addEventListener('mousedown', startDrawing);
+    drawingCanvas.addEventListener('mousemove', draw);
+    drawingCanvas.addEventListener('mouseup', stopDrawing);
+    drawingCanvas.addEventListener('mouseout', stopDrawing);
+
+    // Touch events
+    drawingCanvas.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      startDrawing(e);
+    });
+    drawingCanvas.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+      draw(e);
+    });
+    drawingCanvas.addEventListener('touchend', stopDrawing);
+    drawingCanvas.addEventListener('touchcancel', stopDrawing);
+
+    // Pointer events (for digital pens with pressure support)
+    drawingCanvas.addEventListener('pointerdown', (e) => {
+      if (e.pointerType === 'pen' || e.pointerType === 'touch') {
+        e.preventDefault();
+        startDrawing(e);
+      }
+    });
+    drawingCanvas.addEventListener('pointermove', (e) => {
+      if (e.pointerType === 'pen' || e.pointerType === 'touch') {
+        e.preventDefault();
+        draw(e);
+      }
+    });
+    drawingCanvas.addEventListener('pointerup', (e) => {
+      if (e.pointerType === 'pen' || e.pointerType === 'touch') {
+        stopDrawing();
+      }
+    });
+
+    // Color picker
+    document.querySelectorAll('.color-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        currentColor = btn.dataset.color;
+        drawingCtx.strokeStyle = currentColor;
+      });
+    });
+
+    // Stroke size picker
+    document.querySelectorAll('.stroke-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        document.querySelectorAll('.stroke-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        currentStrokeSize = parseInt(btn.dataset.size);
+        drawingCtx.lineWidth = currentStrokeSize;
+      });
+    });
+
+    // Prevent toolbar clicks from propagating
+    drawingToolbar.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+
+    // Update drawing when slide changes
+    const originalRender = presentation.render;
+    presentation.render = function() {
+      // Save drawing before changing slides
+      if (isDrawingMode) {
+        saveSlideDrawing();
+      }
+
+      // Call original render
+      originalRender.call(this);
+
+      // Load drawing for new slide
+      if (isDrawingMode) {
+        loadSlideDrawing();
+      }
+    };
+
     // Keyboard navigation
     document.addEventListener('keydown', (e) => {
+      // Toggle drawing mode with 'D' key
+      if (e.key === 'd' || e.key === 'D') {
+        e.preventDefault();
+        toggleDrawingMode();
+        return;
+      }
+
+      // Don't handle navigation when in drawing mode
+      if (isDrawingMode) {
+        // Allow Escape to exit drawing mode
+        if (e.key === 'Escape') {
+          toggleDrawingMode();
+        }
+        return;
+      }
+
       if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
         e.preventDefault();
         presentation.next();
@@ -1896,11 +2333,17 @@ Output ONLY a Failure Report:
     let touchStartY = 0;
 
     document.addEventListener('touchstart', (e) => {
+      // Don't track touch for navigation if in drawing mode
+      if (isDrawingMode) return;
+
       touchStartX = e.touches[0].clientX;
       touchStartY = e.touches[0].clientY;
     });
 
     document.addEventListener('touchend', (e) => {
+      // Don't navigate if in drawing mode
+      if (isDrawingMode) return;
+
       const touchEndX = e.changedTouches[0].clientX;
       const touchEndY = e.changedTouches[0].clientY;
 
@@ -1919,6 +2362,9 @@ Output ONLY a Failure Report:
 
     // Click navigation (but not on buttons or interactive elements)
     document.addEventListener('click', (e) => {
+      // Don't navigate if in drawing mode
+      if (isDrawingMode) return;
+
       // Don't navigate if clicking on buttons or copy buttons
       if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
         return;
@@ -1926,6 +2372,11 @@ Output ONLY a Failure Report:
 
       // Don't navigate if clicking on template boxes (for selection)
       if (e.target.closest('.template-box')) {
+        return;
+      }
+
+      // Don't navigate if clicking on drawing toolbar
+      if (e.target.closest('.drawing-toolbar')) {
         return;
       }
 
