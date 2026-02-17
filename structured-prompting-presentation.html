@@ -816,6 +816,238 @@
     body.paused * {
       animation-play-state: paused !important;
     }
+
+    /* CoT Animation Styles */
+    .cot-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin: 1rem 0;
+      height: 100%;
+    }
+
+    .cot-side {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem;
+      border: 1px solid var(--border);
+      position: relative;
+    }
+
+    .cot-side.bad {
+      border-color: var(--red);
+    }
+
+    .cot-side.good {
+      border-color: var(--green);
+    }
+
+    .cot-label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      padding: 0.25rem 0.75rem;
+      border: 1px solid var(--border);
+    }
+
+    .cot-path {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      position: relative;
+      padding: 1rem 0;
+    }
+
+    .cot-node {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--border);
+      background: rgba(51, 65, 85, 0.3);
+      font-size: 0.875rem;
+      text-align: center;
+      z-index: 2;
+    }
+
+    .cot-node.prompt {
+      border-color: var(--blue);
+      background: rgba(96, 165, 250, 0.1);
+    }
+
+    .cot-node.answer-bad {
+      border-color: var(--red);
+      background: rgba(248, 113, 113, 0.1);
+    }
+
+    .cot-node.answer-good {
+      border-color: var(--green);
+      background: rgba(74, 222, 128, 0.1);
+    }
+
+    .cot-node.step {
+      border-color: var(--yellow);
+      background: rgba(251, 191, 36, 0.1);
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .cot-node.step.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .cot-spark {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      z-index: 3;
+    }
+
+    .cot-spark.bad {
+      background: var(--red);
+      box-shadow: 0 0 10px var(--red), 0 0 20px var(--red);
+      left: 50%;
+      transform: translateX(-50%);
+      top: 60px;
+      animation: sparkFallBad 3s ease-in-out infinite;
+    }
+
+    .cot-spark.good {
+      background: var(--green);
+      box-shadow: 0 0 10px var(--green), 0 0 20px var(--green);
+      left: 50%;
+      transform: translateX(-50%);
+      top: 60px;
+      animation: sparkFallGood 4s ease-in-out infinite;
+    }
+
+    @keyframes sparkFallBad {
+      0% { top: 60px; opacity: 1; }
+      40% { top: 45%; opacity: 1; }
+      50% { top: 50%; opacity: 0.5; transform: translateX(-50%) scale(1.5); }
+      55% { opacity: 0; }
+      100% { top: 60px; opacity: 0; }
+    }
+
+    @keyframes sparkFallGood {
+      0% { top: 60px; }
+      20% { top: 25%; }
+      25% { top: 25%; }
+      40% { top: 45%; }
+      45% { top: 45%; }
+      60% { top: 65%; }
+      65% { top: 65%; }
+      80% { top: calc(100% - 60px); }
+      100% { top: calc(100% - 60px); }
+    }
+
+    .cot-fail-marker {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2rem;
+      color: var(--red);
+      opacity: 0;
+      animation: failAppear 3s ease-in-out infinite;
+    }
+
+    @keyframes failAppear {
+      0%, 45% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+      55% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+      65%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
+    }
+
+    .cot-insight {
+      margin-top: 1rem;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--yellow);
+      background: rgba(251, 191, 36, 0.1);
+      font-size: 0.875rem;
+      text-align: center;
+    }
+
+    /* Workflow Example Styles */
+    .workflow-example {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      height: 100%;
+    }
+
+    .workflow-file {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .workflow-file-header {
+      padding: 0.5rem 1rem;
+      background: rgba(51, 65, 85, 0.5);
+      border-bottom: 1px solid var(--border);
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .workflow-file-header .icon {
+      opacity: 0.7;
+    }
+
+    .workflow-file-content {
+      flex: 1;
+      padding: 0.75rem;
+      font-size: 0.7rem;
+      overflow-y: auto;
+      background: rgba(0, 0, 0, 0.3);
+      white-space: pre-wrap;
+      line-height: 1.4;
+    }
+
+    .workflow-arrow-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .workflow-arrow-large {
+      font-size: 2rem;
+      color: var(--green);
+    }
+
+    .highlight-structure {
+      background: rgba(74, 222, 128, 0.2);
+      border-left: 2px solid var(--green);
+      padding-left: 0.25rem;
+      margin-left: -0.25rem;
+    }
+
+    .highlight-context {
+      background: rgba(96, 165, 250, 0.2);
+      border-left: 2px solid var(--blue);
+      padding-left: 0.25rem;
+      margin-left: -0.25rem;
+    }
+
+    .highlight-constraint {
+      background: rgba(251, 191, 36, 0.2);
+      border-left: 2px solid var(--yellow);
+      padding-left: 0.25rem;
+      margin-left: -0.25rem;
+    }
+
+    @media (max-width: 768px) {
+      .cot-container, .workflow-example {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1363,13 +1595,67 @@ Then: Create the lesson sequence.</div>
         <div class="timer">⏱ 2 MINUTES</div>
 
         <div style="text-align: center; margin-top: 0.5rem;" class="text-dim">
-          [ click when ready to see structured version ]
+          [ click to understand why this happens ]
         </div>
         <div class="attribution">Dr. Hari Krishna</div>
       </div>
 
-      <!-- State 6B: Structured Prompt -->
+      <!-- State 6B: CoT Animation Explanation -->
       <div class="state" id="state-6b">
+        <div class="title-medium">WHY "DIRECT" PROMPTS FAIL</div>
+        <div style="border-top: 1px solid var(--border); width: 250px; margin: 0.5rem 0 0.5rem 0;"></div>
+        <p class="text-dim text-small">The "Statistical Leap" vs "Stepping Stones"</p>
+
+        <div class="cot-container">
+          <!-- Left Side: Direct Prompt (Fails) -->
+          <div class="cot-side bad">
+            <div class="cot-label text-red">❌ DIRECT PROMPT</div>
+            <div class="cot-path">
+              <div class="cot-node prompt">"What's wrong and how to fix it?"</div>
+
+              <div style="flex: 1; display: flex; align-items: center; justify-content: center; position: relative; width: 100%;">
+                <div style="border-left: 2px dashed var(--red); height: 100%; position: absolute;"></div>
+                <div class="cot-spark bad"></div>
+                <div class="cot-fail-marker">❓</div>
+              </div>
+
+              <div class="cot-node answer-bad">Generic theory dump</div>
+            </div>
+            <p class="text-xs text-dim" style="margin-top: 0.5rem;">Long leap = High risk of hallucination</p>
+          </div>
+
+          <!-- Right Side: CoT Prompt (Succeeds) -->
+          <div class="cot-side good">
+            <div class="cot-label text-green">✓ CHAIN-OF-THOUGHT</div>
+            <div class="cot-path" id="cot-path-good">
+              <div class="cot-node prompt">"Let's think step-by-step..."</div>
+
+              <div class="cot-node step" id="cot-step-1">Step 1: What's missing?</div>
+              <div class="cot-node step" id="cot-step-2">Step 2: Where did it break?</div>
+              <div class="cot-node step" id="cot-step-3">Step 3: Smallest fix?</div>
+
+              <div class="cot-spark good"></div>
+
+              <div class="cot-node answer-good">Precise diagnosis</div>
+            </div>
+            <p class="text-xs text-dim" style="margin-top: 0.5rem;">Short steps = High accuracy</p>
+          </div>
+        </div>
+
+        <div class="cot-insight">
+          <strong class="text-yellow">KEY INSIGHT:</strong> LLMs don't have a "brain" to think privately.
+          They must <span class="text-green">"think out loud"</span> on screen to stay on track.
+          Each written step becomes context for the next.
+        </div>
+
+        <div style="text-align: center; margin-top: 0.5rem;" class="text-dim">
+          [ click to try the structured version ]
+        </div>
+        <div class="attribution">Dr. Hari Krishna</div>
+      </div>
+
+      <!-- State 6C: Structured Prompt -->
+      <div class="state" id="state-6c">
         <div class="title-medium">NOW TRY THE STRUCTURED VERSION</div>
         <div style="border-top: 1px solid var(--border); width: 280px; margin: 0.5rem 0 1rem 0;"></div>
 
@@ -1407,8 +1693,8 @@ Output ONLY:
         <div class="attribution">Dr. Hari Krishna</div>
       </div>
 
-      <!-- State 6C: Comparison -->
-      <div class="state" id="state-6c">
+      <!-- State 6D: Comparison -->
+      <div class="state" id="state-6d">
         <div class="title-medium">COMPARE YOUR OUTPUTS</div>
         <div style="border-top: 1px solid var(--border); width: 200px; margin: 0.5rem 0 1rem 0;"></div>
 
@@ -1641,37 +1927,93 @@ Output ONLY a Failure Report:
         <div class="attribution">Dr. Hari Krishna</div>
       </div>
 
-      <!-- State 8C: Commitment -->
+      <!-- State 8C: Real Workflow Example -->
       <div class="state" id="state-8c">
-        <div class="centered" style="justify-content: flex-start; padding-top: 2rem;">
-          <div class="title-medium" style="margin-bottom: 1rem;">YOUR COMMITMENT</div>
-          <div style="border-top: 1px solid var(--border); width: 150px; margin-bottom: 1.5rem;"></div>
+        <div class="title-medium">MY ACTUAL WORKFLOW</div>
+        <div style="border-top: 1px solid var(--border); width: 200px; margin: 0.5rem 0 0.5rem 0;"></div>
+        <p class="text-dim text-small">Creating homework for Periodic Table (Chemistry)</p>
 
-          <div class="box box-green" style="max-width: 600px;">
-            <p style="text-align: center;">Turn to the person next to you.</p>
-            <p style="text-align: center; margin-top: 1rem;">Say out loud:</p>
-            <p style="text-align: center; margin-top: 1.5rem; font-size: 1.125rem;">
-              "Tomorrow, I will use <span class="blank"></span>
-            </p>
-            <p style="text-align: center;" class="blank-label">(technique)</p>
-            <p style="text-align: center; margin-top: 1rem; font-size: 1.125rem;">
-              for <span class="blank" style="min-width: 300px;"></span>."
-            </p>
-            <p style="text-align: center;" class="blank-label">(specific task)</p>
-            <p style="text-align: center; margin-top: 1.5rem; font-weight: 600;">Write it down. Now.</p>
+        <div class="workflow-example" style="margin-top: 1rem;">
+          <!-- Left: Notes File -->
+          <div class="workflow-file">
+            <div class="workflow-file-header">
+              <span class="icon">📄</span>
+              <span>periodic_table_notes.txt</span>
+              <span class="text-blue" style="margin-left: auto;">CONTEXT</span>
+            </div>
+            <div class="workflow-file-content">
+<span class="highlight-context">&lt;syllabus objectives&gt;</span>
+8.1 Arrangement of elements
+1. Describe the Periodic Table as an
+   arrangement in periods and groups...
+4. Explain similarities in chemical
+   properties in terms of electronic
+   configuration...
+
+8.2 Group I properties
+1. Describe alkali metals with trends:
+   (a) decreasing melting point
+   (b) increasing density
+   (c) increasing reactivity
+<span class="highlight-context">&lt;/syllabus objectives&gt;</span>
+
+<span class="highlight-context">&lt;Teacher Notes&gt;</span>
+Students were taught that two factors
+determine electrostatic attraction:
+<span class="text-yellow">magnitude of charge</span> and <span class="text-yellow">distance</span>.
+
+This explains reactivity trends:
+- Group I: easier to lose electrons
+  as distance increases down group
+- Halogens: less attraction at valence
+  shell as atomic size increases
+<span class="highlight-context">&lt;/Teacher Notes&gt;</span></div>
           </div>
 
-          <div class="divider" style="width: 100%; max-width: 700px;"></div>
+          <!-- Right: Prompt File -->
+          <div class="workflow-file">
+            <div class="workflow-file-header">
+              <span class="icon">📝</span>
+              <span>homework_prompt.txt</span>
+              <span class="text-green" style="margin-left: auto;">STRUCTURE</span>
+            </div>
+            <div class="workflow-file-content">
+<span class="highlight-structure">Chapter/Topic:</span> [Periodic Table]
+<span class="highlight-structure">Class details:</span>
+- Number of students: [Fill in]
+- Time limit: [30 minutes]
+- Ability level: [mixed ability]
 
-          <div style="max-width: 700px; text-align: center;">
-            <p class="text-dim">The AI will update. GPT-5, Claude 4, whatever comes next.</p>
-            <p class="text-dim">The specific prompts might change.</p>
-            <p style="margin-top: 1rem;">But this principle won't:</p>
-            <p style="margin-top: 1rem;"><span class="text-green bold">STRUCTURE</span> shifts what tokens are probable.</p>
-            <p><span class="text-red bold">VAGUENESS</span> defaults to generic patterns.</p>
-            <p style="margin-top: 1.5rem;">You now know how to structure.</p>
-            <p style="margin-top: 1.5rem; font-size: 1.5rem;" class="text-green bold">Go use it.</p>
+<span class="highlight-constraint">Design homework using this structure:</span>
+
+<span class="text-green">SECTION A:</span> Description & Identification
+- Test basic concepts (one idea/question)
+
+<span class="text-yellow">SECTION B:</span> Explanation & Prediction
+- Can students explain WHY?
+- Can students PREDICT new situations?
+
+<span class="text-red">SECTION C:</span> Making Connections (extension)
+- Connect MULTIPLE ideas
+
+<span class="highlight-constraint">Format requirements:</span>
+1. Include mark scheme with <span class="text-yellow">common
+   wrong answers</span> identified
+2. Add "Teaching Notes" that tell me:
+   - Which questions test which ideas
+   - <span class="text-red">Where students will fail and why</span>
+   - What to do if most get it wrong
+
+<span class="highlight-structure">Make it DIAGNOSTIC, not just evaluative:</span>
+Wrong answers should reveal <span class="text-yellow">specific gaps</span>.</div>
           </div>
+        </div>
+
+        <div class="insight-box" style="margin-top: 0.75rem;">
+          <span class="text-blue">CONTEXT</span> (my notes) +
+          <span class="text-green">STRUCTURE</span> (sections, format) +
+          <span class="text-yellow">CONSTRAINTS</span> (diagnostic, teacher notes)
+          = Output I can actually use tomorrow
         </div>
         <div class="attribution">Dr. Hari Krishna</div>
       </div>
@@ -1724,7 +2066,7 @@ Output ONLY a Failure Report:
         { id: 3, states: ['3a', '3b', '3c'], currentState: 0 },
         { id: 4, states: ['4a', '4b', '4c'], currentState: 0 },
         { id: 5, states: ['5a', '5b', '5c'], currentState: 0 },
-        { id: 6, states: ['6a', '6b', '6c'], currentState: 0 },
+        { id: 6, states: ['6a', '6b', '6c', '6d'], currentState: 0 },
         { id: 7, states: ['7a', '7b', '7c'], currentState: 0 },
         { id: 8, states: ['8a', '8b', '8c'], currentState: 0 }
       ],
@@ -1824,8 +2166,58 @@ Output ONLY a Failure Report:
         } else {
           tokenAnim.pause();
         }
+
+        // Start CoT stepping stones animation when on slide 6 state 6b
+        if (this.currentSlide === 5 && currentSlideData.currentState === 1) {
+          setTimeout(() => startCotAnimation(), 500);
+        } else {
+          stopCotAnimation();
+        }
       }
     };
+
+    // CoT Stepping Stones Animation
+    let cotAnimInterval = null;
+
+    function startCotAnimation() {
+      // Reset all steps to hidden
+      document.querySelectorAll('.cot-node.step').forEach(el => {
+        el.classList.remove('visible');
+      });
+
+      // Animate steps appearing one by one
+      const steps = ['cot-step-1', 'cot-step-2', 'cot-step-3'];
+      let currentStep = 0;
+
+      function showNextStep() {
+        if (currentStep < steps.length) {
+          const stepEl = document.getElementById(steps[currentStep]);
+          if (stepEl) {
+            stepEl.classList.add('visible');
+          }
+          currentStep++;
+        } else {
+          // Reset and loop
+          currentStep = 0;
+          document.querySelectorAll('.cot-node.step').forEach(el => {
+            el.classList.remove('visible');
+          });
+        }
+      }
+
+      // Show first step immediately
+      showNextStep();
+
+      // Then show subsequent steps
+      cotAnimInterval = setInterval(showNextStep, 1200);
+    }
+
+    function stopCotAnimation() {
+      if (cotAnimInterval) {
+        clearInterval(cotAnimInterval);
+        cotAnimInterval = null;
+      }
+    }
 
     // Token prediction animation
     const tokenAnim = {
