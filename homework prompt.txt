@@ -1,0 +1,48 @@
+**Chapter/Topic:** [Periodic Table]
+
+**What students have learned:** [Fill in - e.g., "Group 1, halogens, reactivity trends, atomic radius, electron shell configuration"]
+
+**Class details:**
+- Number of students: [Fill in]
+- Time limit for homework: [Fill in - e.g., "30 minutes"]
+- Ability level: [Fill in - "mixed ability" / "high ability" / "struggling students"]
+- Resources students can use: [Fill in - e.g., "textbook and periodic table"]
+
+---
+
+**Design the homework using this structure:**
+
+**SECTION A: Description & Identification (easier questions)**
+- Can students identify substances/systems using properties, reactions, composition, or structure?
+- Test if students have learned the basic concepts (one idea per question)
+
+**SECTION B: Explanation & Prediction (medium questions)**  
+- Can students explain WHY properties/behaviors happen?
+- Can students predict what will happen in new situations?
+- Test if students can use ideas about particles, forces between particles, or energy
+
+**SECTION C: Making Connections (harder questions - optional extension)**
+- Can students connect MULTIPLE ideas to solve complex problems?
+- Can students evaluate explanations or compare different approaches?
+
+---
+
+**Format requirements:**
+1. Include a mark scheme with common wrong answers identified
+2. Add "Teaching Notes" that tell me:
+   - Which questions test which ideas
+   - Where students will probably fail and why
+   - What to do if most students get it wrong
+   - Which questions struggling students should skip
+3. Give realistic time estimates (don't assume students work fast)
+
+---
+
+**Make it diagnostic, not just evaluative:** 
+I want to see WHAT students don't understand yet, not just WHETHER they got it right.
+
+Design questions so that wrong answers reveal specific gaps in understanding.
+
+---
+
+END OF PROMPT - Delete everything above this line before pasting
