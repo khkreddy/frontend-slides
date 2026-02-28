@@ -13,6 +13,235 @@ Create zero-dependency, animation-rich HTML presentations that run entirely in t
 2. **Show, Don't Tell** — People don't know what they want until they see it. Generate visual previews, not abstract choices.
 3. **Distinctive Design** — Avoid generic "AI slop" aesthetics. Every presentation should feel custom-crafted.
 4. **Production Quality** — Code should be well-commented, accessible, and performant.
+5. **Viewport Fitting (CRITICAL)** — Every slide MUST fit exactly within the viewport. No scrolling within slides, ever. This is non-negotiable.
+
+---
+
+## CRITICAL: Viewport Fitting Requirements
+
+**This section is mandatory for ALL presentations. Every slide must be fully visible without scrolling on any screen size.**
+
+### The Golden Rule
+
+```
+Each slide = exactly one viewport height (100vh/100dvh)
+Content overflows? → Split into multiple slides or reduce content
+Never scroll within a slide.
+```
+
+### Content Density Limits
+
+To guarantee viewport fitting, enforce these limits per slide:
+
+| Slide Type | Maximum Content |
+|------------|-----------------|
+| Title slide | 1 heading + 1 subtitle + optional tagline |
+| Content slide | 1 heading + 4-6 bullet points OR 1 heading + 2 paragraphs |
+| Feature grid | 1 heading + 6 cards maximum (2x3 or 3x2 grid) |
+| Code slide | 1 heading + 8-10 lines of code maximum |
+| Quote slide | 1 quote (max 3 lines) + attribution |
+| Image slide | 1 heading + 1 image (max 60vh height) |
+
+**If content exceeds these limits → Split into multiple slides**
+
+### Required CSS Architecture
+
+Every presentation MUST include this base CSS for viewport fitting:
+
+```css
+/* ===========================================
+   VIEWPORT FITTING: MANDATORY BASE STYLES
+   These styles MUST be included in every presentation.
+   They ensure slides fit exactly in the viewport.
+   =========================================== */
+
+/* 1. Lock html/body to viewport */
+html, body {
+    height: 100%;
+    overflow-x: hidden;
+}
+
+html {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+}
+
+/* 2. Each slide = exact viewport height */
+.slide {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for mobile browsers */
+    overflow: hidden; /* CRITICAL: Prevent ANY overflow */
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* 3. Content container with flex for centering */
+.slide-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-height: 100%;
+    overflow: hidden; /* Double-protection against overflow */
+    padding: var(--slide-padding);
+}
+
+/* 4. ALL typography uses clamp() for responsive scaling */
+:root {
+    /* Titles scale from mobile to desktop */
+    --title-size: clamp(1.5rem, 5vw, 4rem);
+    --h2-size: clamp(1.25rem, 3.5vw, 2.5rem);
+    --h3-size: clamp(1rem, 2.5vw, 1.75rem);
+
+    /* Body text */
+    --body-size: clamp(0.75rem, 1.5vw, 1.125rem);
+    --small-size: clamp(0.65rem, 1vw, 0.875rem);
+
+    /* Spacing scales with viewport */
+    --slide-padding: clamp(1rem, 4vw, 4rem);
+    --content-gap: clamp(0.5rem, 2vw, 2rem);
+    --element-gap: clamp(0.25rem, 1vw, 1rem);
+}
+
+/* 5. Cards/containers use viewport-relative max sizes */
+.card, .container, .content-box {
+    max-width: min(90vw, 1000px);
+    max-height: min(80vh, 700px);
+}
+
+/* 6. Lists auto-scale with viewport */
+.feature-list, .bullet-list {
+    gap: clamp(0.4rem, 1vh, 1rem);
+}
+
+.feature-list li, .bullet-list li {
+    font-size: var(--body-size);
+    line-height: 1.4;
+}
+
+/* 7. Grids adapt to available space */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+    gap: clamp(0.5rem, 1.5vw, 1rem);
+}
+
+/* 8. Images constrained to viewport */
+img, .image-container {
+    max-width: 100%;
+    max-height: min(50vh, 400px);
+    object-fit: contain;
+}
+
+/* ===========================================
+   RESPONSIVE BREAKPOINTS
+   Aggressive scaling for smaller viewports
+   =========================================== */
+
+/* Short viewports (< 700px height) */
+@media (max-height: 700px) {
+    :root {
+        --slide-padding: clamp(0.75rem, 3vw, 2rem);
+        --content-gap: clamp(0.4rem, 1.5vw, 1rem);
+        --title-size: clamp(1.25rem, 4.5vw, 2.5rem);
+        --h2-size: clamp(1rem, 3vw, 1.75rem);
+    }
+}
+
+/* Very short viewports (< 600px height) */
+@media (max-height: 600px) {
+    :root {
+        --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem);
+        --content-gap: clamp(0.3rem, 1vw, 0.75rem);
+        --title-size: clamp(1.1rem, 4vw, 2rem);
+        --body-size: clamp(0.7rem, 1.2vw, 0.95rem);
+    }
+
+    /* Hide non-essential elements */
+    .nav-dots, .keyboard-hint, .decorative {
+        display: none;
+    }
+}
+
+/* Extremely short (landscape phones, < 500px height) */
+@media (max-height: 500px) {
+    :root {
+        --slide-padding: clamp(0.4rem, 2vw, 1rem);
+        --title-size: clamp(1rem, 3.5vw, 1.5rem);
+        --h2-size: clamp(0.9rem, 2.5vw, 1.25rem);
+        --body-size: clamp(0.65rem, 1vw, 0.85rem);
+    }
+}
+
+/* Narrow viewports (< 600px width) */
+@media (max-width: 600px) {
+    :root {
+        --title-size: clamp(1.25rem, 7vw, 2.5rem);
+    }
+
+    /* Stack grids vertically */
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===========================================
+   REDUCED MOTION
+   Respect user preferences
+   =========================================== */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+
+    html {
+        scroll-behavior: auto;
+    }
+}
+```
+
+### Overflow Prevention Checklist
+
+Before generating any presentation, mentally verify:
+
+1. ✅ Every `.slide` has `height: 100vh; height: 100dvh; overflow: hidden;`
+2. ✅ All font sizes use `clamp(min, preferred, max)`
+3. ✅ All spacing uses `clamp()` or viewport units
+4. ✅ Content containers have `max-height` constraints
+5. ✅ Images have `max-height: min(50vh, 400px)` or similar
+6. ✅ Grids use `auto-fit` with `minmax()` for responsive columns
+7. ✅ Breakpoints exist for heights: 700px, 600px, 500px
+8. ✅ No fixed pixel heights on content elements
+9. ✅ Content per slide respects density limits
+
+### When Content Doesn't Fit
+
+If you find yourself with too much content:
+
+**DO:**
+- Split into multiple slides
+- Reduce bullet points (max 5-6 per slide)
+- Shorten text (aim for 1-2 lines per bullet)
+- Use smaller code snippets
+- Create a "continued" slide
+
+**DON'T:**
+- Reduce font size below readable limits
+- Remove padding/spacing entirely
+- Allow any scrolling
+- Cram content to fit
+
+### Testing Viewport Fit
+
+After generating, recommend the user test at these sizes:
+- Desktop: 1920×1080, 1440×900, 1280×720
+- Tablet: 1024×768, 768×1024 (portrait)
+- Mobile: 375×667, 414×896
+- Landscape phone: 667×375, 896×414
 
 ---
 
@@ -38,7 +267,9 @@ First, determine what the user wants:
 
 Before designing, understand the content. Ask via AskUserQuestion:
 
-### Step 1.1: Presentation Context
+### Step 1.1: Presentation Context + Images (Single Form)
+
+**IMPORTANT:** Ask ALL 4 questions in a single AskUserQuestion call so the user can fill everything out at once before submitting.
 
 **Question 1: Purpose**
 - Header: "Purpose"
@@ -65,7 +296,58 @@ Before designing, understand the content. Ask via AskUserQuestion:
   - "I have rough notes" — Need help organizing into slides
   - "I have a topic only" — Need help creating the full outline
 
+**Question 4: Images**
+- Header: "Images"
+- Question: "Do you have images to include? Select 'No images' or select Other and type/paste your image folder path."
+- Options:
+  - "No images" — Text-only presentation (use CSS-generated visuals instead)
+  - "./assets" — Use the `assets/` folder in the current project
+
+The user can select **"Other"** to type or paste any custom folder path (e.g. `~/Desktop/screenshots`). This way the image folder path is collected in the same form — no extra round-trip.
+
 If user has content, ask them to share it (text, bullet points, images, etc.).
+
+### Step 1.2: Image Evaluation
+
+**User-provided assets are important visual anchors** — but not every asset is necessarily usable. The first step is always to evaluate. After evaluation, the curated assets become additional context that shapes how the presentation is built. This is a **co-design process**: text content + curated visuals together inform the slide structure from the start, not a post-hoc "fit images in after the fact."
+
+**If user selected "No images"** → Skip the entire image pipeline. Proceed directly to Phase 2 (Style Discovery) and Phase 3 (Generate Presentation) using text content only. The presentation will use CSS-generated visuals (gradients, shapes, patterns, typography) for visual interest — this is the original behavior and produces fully polished results without any images.
+
+**If user provides an image folder:**
+
+1. **Scan the folder** — Use `ls` to list all image files (`.png`, `.jpg`, `.jpeg`, `.gif`, `.svg`, `.webp`)
+2. **View each image** — Use the Read tool to see what each image contains (Claude is multimodal)
+3. **Evaluate each image** — For each image, assess:
+   - Filename and dimensions
+   - What it shows (screenshot, logo, chart, diagram, photo)
+   - **Usability:** Is the image clear, relevant to the presentation topic, and high enough quality? Mark as `USABLE` or `NOT USABLE` (with reason: blurry, irrelevant, broken, etc.)
+   - **Content signal:** What feature or concept does this image represent? (e.g., "chat_ui.png" → "conversational interface feature")
+   - Shape: square, landscape, portrait, circular
+   - Dominant colors (important for style compatibility later)
+4. **Present the evaluation and proposed slide outline to the user** — Show which images are usable and which are not, with reasons. Then show the proposed slide outline with image assignments.
+
+**Co-design: curated assets inform the outline**
+
+After evaluation, the **usable** images become context for planning the slide structure alongside text content. This is not "plan slides then add images" — it's designing the presentation around both text and visuals from the start:
+
+- 3 usable product screenshots → plan 3 feature slides, each anchored by one screenshot
+- 1 usable logo → title slide and/or closing slide
+- 1 usable architecture diagram → dedicated "How It Works" slide
+- 1 blurry/irrelevant image → excluded, with explanation to user
+
+This means curated images are factored in **before** style selection (Phase 2) and **before** HTML generation (Phase 3). They are co-equal context in the design process.
+
+5. **Confirm outline via AskUserQuestion** — Do NOT break the flow by asking the user to type free text. Use AskUserQuestion to confirm:
+
+**Question: Outline Confirmation**
+- Header: "Outline"
+- Question: "Does this slide outline and image selection look right?"
+- Options:
+  - "Looks good, proceed" — Move on to style selection
+  - "Adjust images" — I want to change which images go where
+  - "Adjust outline" — I want to change the slide structure
+
+This keeps the entire flow in the AskUserQuestion format without dropping to free-text chat.
 
 ---
 
@@ -75,7 +357,64 @@ If user has content, ask them to share it (text, bullet points, images, etc.).
 
 Most people can't articulate design preferences in words. Instead of asking "do you want minimalist or bold?", we generate mini-previews and let them react.
 
-### Step 2.1: Mood Selection
+### How Users Choose Presets
+
+Users can select a style in **two ways**:
+
+**Option A: Guided Discovery (Default)**
+- User answers mood questions
+- Skill generates 3 preview files based on their answers
+- User views previews in browser and picks their favorite
+- This is best for users who don't have a specific style in mind
+
+**Option B: Direct Selection**
+- If user already knows what they want, they can request a preset by name
+- Example: "Use the Bold Signal style" or "I want something like Dark Botanical"
+- Skip to Phase 3 immediately
+
+**Available Presets:**
+| Preset | Vibe | Best For |
+|--------|------|----------|
+| Bold Signal | Confident, high-impact | Pitch decks, keynotes |
+| Electric Studio | Clean, professional | Agency presentations |
+| Creative Voltage | Energetic, retro-modern | Creative pitches |
+| Dark Botanical | Elegant, sophisticated | Premium brands |
+| Notebook Tabs | Editorial, organized | Reports, reviews |
+| Pastel Geometry | Friendly, approachable | Product overviews |
+| Split Pastel | Playful, modern | Creative agencies |
+| Vintage Editorial | Witty, personality-driven | Personal brands |
+| Neon Cyber | Futuristic, techy | Tech startups |
+| Terminal Green | Developer-focused | Dev tools, APIs |
+| Swiss Modern | Minimal, precise | Corporate, data |
+| Paper & Ink | Literary, thoughtful | Storytelling |
+
+### Step 2.0: Style Path Selection
+
+First, ask how the user wants to choose their style:
+
+**Question: Style Selection Method**
+- Header: "Style"
+- Question: "How would you like to choose your presentation style?"
+- Options:
+  - "Show me options" — Generate 3 previews based on my needs (recommended for most users)
+  - "I know what I want" — Let me pick from the preset list directly
+
+**If "Show me options"** → Continue to Step 2.1 (Mood Selection)
+
+**If "I know what I want"** → Show preset picker:
+
+**Question: Pick a Preset**
+- Header: "Preset"
+- Question: "Which style would you like to use?"
+- Options:
+  - "Bold Signal" — Vibrant card on dark, confident and high-impact
+  - "Dark Botanical" — Elegant dark with soft abstract shapes
+  - "Notebook Tabs" — Editorial paper look with colorful section tabs
+  - "Pastel Geometry" — Friendly pastels with decorative pills
+
+(If user picks one, skip to Phase 3. If they want to see more options, show additional presets or proceed to guided discovery.)
+
+### Step 2.1: Mood Selection (Guided Discovery)
 
 **Question 1: Feeling**
 - Header: "Vibe"
@@ -100,10 +439,10 @@ Based on their mood selection, generate **3 distinct style previews** as mini HT
 
 | Mood | Style Options |
 |------|---------------|
-| Impressed/Confident | "Corporate Elegant", "Dark Executive", "Clean Minimal" |
-| Excited/Energized | "Neon Cyber", "Bold Gradients", "Kinetic Motion" |
-| Calm/Focused | "Paper & Ink", "Soft Muted", "Swiss Minimal" |
-| Inspired/Moved | "Cinematic Dark", "Warm Editorial", "Atmospheric" |
+| Impressed/Confident | "Bold Signal", "Electric Studio", "Dark Botanical" |
+| Excited/Energized | "Creative Voltage", "Neon Cyber", "Split Pastel" |
+| Calm/Focused | "Notebook Tabs", "Paper & Ink", "Swiss Modern" |
+| Inspired/Moved | "Dark Botanical", "Vintage Editorial", "Pastel Geometry" |
 
 **IMPORTANT: Never use these generic patterns:**
 - Purple gradients on white backgrounds
@@ -134,6 +473,8 @@ Each preview file should be:
 - A single "title slide" showing the aesthetic
 - Animated to demonstrate motion style
 - ~50-100 lines, not a full presentation
+
+**Logo in previews (if available):** If the user provided images in Step 1.2 and a logo was identified as `USABLE`, embed it (base64) into each of the 3 style previews. This creates a "wow moment" — the user sees their own brand identity styled three different ways, making the choice feel personal rather than abstract. Apply any necessary processing (e.g., circular crop) per-style so each preview shows the logo as it would actually appear in the final presentation. If no logo was provided, generate previews without one — this is fine.
 
 Present to user:
 ```
@@ -172,8 +513,131 @@ If "Mix elements", ask for specifics.
 ## Phase 3: Generate Presentation
 
 Now generate the full presentation based on:
-- Content from Phase 1
+- Content from Phase 1 (text only, or text + curated images)
 - Style from Phase 2
+
+If the user provided images, the slide outline already incorporates them as visual anchors from Step 1.2. If not, proceed with text-only content — CSS-generated visuals (gradients, shapes, patterns) provide visual interest.
+
+### Image Pipeline (skip if no images)
+
+If the user chose "No images" in Step 1.2, **skip this entire section** and go straight to generating HTML. The presentation will be text-only with CSS-generated visuals — this is a fully supported, first-class path.
+
+If the user provided images, execute these steps **before** generating HTML.
+
+**Key principle: Co-design, not post-hoc.** The curated images from Step 1.2 (those marked `USABLE`) are already part of the slide outline. The pipeline's job here is to process images for the chosen style and place them in the HTML.
+
+#### Step 3.1: Image Processing (Pillow)
+
+For each curated image, determine what processing it needs based on the chosen style (e.g., circular crop for logos, resize for large files) and what CSS framing will bridge any color gaps between the image and the style's palette. Then process accordingly.
+
+**Rules:**
+- **Never repeat** the same image on multiple slides (except logos which may bookend title + closing)
+- **Always add CSS framing** (border, glow, shadow) for images whose colors clash with the style's palette
+
+**Dependency:** Python `Pillow` library (the standard image processing library for Python).
+
+```bash
+# Install if not available (portable across macOS/Linux/Windows)
+pip install Pillow
+```
+
+This is analogous to how `python-pptx` is used in Phase 4 (PPT Conversion) — a standard, well-maintained Python package that any user can install.
+
+**Common processing operations:**
+
+```python
+from PIL import Image, ImageDraw
+
+# ─── Circular Crop (for logos on modern/clean styles) ───
+def crop_circle(input_path, output_path):
+    """Crop a square image to a circle with transparent background."""
+    img = Image.open(input_path).convert('RGBA')
+    w, h = img.size
+    # Make square if not already
+    size = min(w, h)
+    left = (w - size) // 2
+    top = (h - size) // 2
+    img = img.crop((left, top, left + size, top + size))
+    # Create circular mask
+    mask = Image.new('L', (size, size), 0)
+    draw = ImageDraw.Draw(mask)
+    draw.ellipse([0, 0, size, size], fill=255)
+    img.putalpha(mask)
+    img.save(output_path, 'PNG')
+
+# ─── Resize (for oversized images that inflate the HTML) ───
+def resize_max(input_path, output_path, max_dim=1200):
+    """Resize image so largest dimension <= max_dim. Preserves aspect ratio."""
+    img = Image.open(input_path)
+    img.thumbnail((max_dim, max_dim), Image.LANCZOS)
+    img.save(output_path, quality=85)
+
+# ─── Add Padding / Background (for images that need breathing room) ───
+def add_padding(input_path, output_path, padding=40, bg_color=(0, 0, 0, 0)):
+    """Add transparent padding around an image."""
+    img = Image.open(input_path).convert('RGBA')
+    w, h = img.size
+    new = Image.new('RGBA', (w + 2*padding, h + 2*padding), bg_color)
+    new.paste(img, (padding, padding), img)
+    new.save(output_path, 'PNG')
+```
+
+**When to apply each operation:**
+
+| Situation | Operation |
+|-----------|-----------|
+| Square logo on a style with rounded aesthetics | `crop_circle()` |
+| Image > 1MB (slow to load) | `resize_max(max_dim=1200)` |
+| Screenshot needs breathing room in layout | `add_padding()` |
+| Image has wrong aspect ratio for its slide slot | Manual crop with `img.crop((left, top, right, bottom))` |
+
+**Save processed images** alongside originals with a `_processed` suffix (e.g., `logo_round.png`). Never overwrite the user's original files.
+
+#### Step 3.2: Place Images
+
+**Use direct file paths** — do NOT convert images to base64 data URIs. Since presentations are viewed locally, reference images with relative paths from the HTML file:
+
+```html
+<img src="assets/logo_round.png" alt="Logo" class="slide-image logo">
+<img src="assets/screenshot.png" alt="Screenshot" class="slide-image screenshot">
+```
+
+This keeps the HTML file small and images easy to swap. Only use base64 encoding if the user explicitly requests a fully self-contained single-file presentation.
+
+**Image CSS classes (adapt border/glow colors to match the chosen style):**
+```css
+/* Base image constraint — CRITICAL for viewport fitting */
+.slide-image {
+    max-width: 100%;
+    max-height: min(50vh, 400px);
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+/* Screenshots: add framing to bridge color gaps with the style */
+.slide-image.screenshot {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Logos: smaller, no frame */
+.slide-image.logo {
+    max-height: min(30vh, 200px);
+}
+```
+
+**IMPORTANT:** Adapt the `.screenshot` border and shadow colors to match the chosen style's accent color. For example:
+- Dark Botanical (gold accent): `border: 1px solid rgba(197, 160, 89, 0.2); box-shadow: 0 0 20px rgba(197, 160, 89, 0.08);`
+- Creative Voltage (neon yellow): `border: 2px solid rgba(212, 255, 0, 0.25); box-shadow: 0 0 20px rgba(212, 255, 0, 0.08);`
+
+**Placement patterns:**
+- **Title slide:** Logo centered above or beside the title
+- **Feature slides:** Screenshot on one side, text on the other (two-column layout)
+- **Full-bleed:** Image as slide background with text overlay (use with caution)
+- **Inline:** Image within content flow, centered, with caption below
+
+**Note:** Processed images (e.g. `logo_round.png`) are saved alongside originals in the assets folder. Reference them with relative paths in the HTML.
 
 ### File Structure
 
@@ -218,12 +682,16 @@ Follow this structure for all presentations:
             --accent: #00ffcc;
             --accent-glow: rgba(0, 255, 204, 0.3);
 
-            /* Typography */
+            /* Typography - MUST use clamp() for responsive scaling */
             --font-display: 'Clash Display', sans-serif;
             --font-body: 'Satoshi', sans-serif;
+            --title-size: clamp(2rem, 6vw, 5rem);
+            --subtitle-size: clamp(0.875rem, 2vw, 1.25rem);
+            --body-size: clamp(0.75rem, 1.2vw, 1rem);
 
-            /* Spacing */
-            --slide-padding: clamp(2rem, 5vw, 4rem);
+            /* Spacing - MUST use clamp() for responsive scaling */
+            --slide-padding: clamp(1.5rem, 4vw, 4rem);
+            --content-gap: clamp(1rem, 2vw, 2rem);
 
             /* Animation */
             --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -242,6 +710,7 @@ Follow this structure for all presentations:
         html {
             scroll-behavior: smooth;
             scroll-snap-type: y mandatory;
+            height: 100%;
         }
 
         body {
@@ -249,21 +718,62 @@ Follow this structure for all presentations:
             background: var(--bg-primary);
             color: var(--text-primary);
             overflow-x: hidden;
+            height: 100%;
         }
 
         /* ===========================================
            SLIDE CONTAINER
-           Each section is one slide
+           CRITICAL: Each slide MUST fit exactly in viewport
+           - Use height: 100vh (NOT min-height)
+           - Use overflow: hidden to prevent scroll
+           - Content must scale with clamp() values
            =========================================== */
         .slide {
-            min-height: 100vh;
+            width: 100vw;
+            height: 100vh; /* EXACT viewport height - no scrolling */
+            height: 100dvh; /* Dynamic viewport height for mobile */
             padding: var(--slide-padding);
             scroll-snap-align: start;
             display: flex;
             flex-direction: column;
             justify-content: center;
             position: relative;
+            overflow: hidden; /* Prevent any content overflow */
+        }
+
+        /* Content wrapper that prevents overflow */
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-height: 100%;
             overflow: hidden;
+        }
+
+        /* ===========================================
+           RESPONSIVE BREAKPOINTS
+           Adjust content for different screen sizes
+           =========================================== */
+        @media (max-height: 600px) {
+            :root {
+                --slide-padding: clamp(1rem, 3vw, 2rem);
+                --content-gap: clamp(0.5rem, 1.5vw, 1rem);
+            }
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --title-size: clamp(1.5rem, 8vw, 3rem);
+            }
+        }
+
+        @media (max-height: 500px) and (orientation: landscape) {
+            /* Extra compact for landscape phones */
+            :root {
+                --title-size: clamp(1.25rem, 5vw, 2rem);
+                --slide-padding: clamp(0.75rem, 2vw, 1.5rem);
+            }
         }
 
         /* ===========================================
@@ -394,19 +904,20 @@ class CustomCursor {
 }
 ```
 
-**Responsive:**
-- Mobile-friendly (single column, adjusted spacing)
-- Disable heavy effects on mobile
-- Touch-friendly interactions
+**CSS Function Negation:**
+- Never negate CSS functions directly — `-clamp()`, `-min()`, `-max()` are silently ignored by browsers with no console error
+- Always use `calc(-1 * clamp(...))` instead. See STYLE_PRESETS.md → "CSS Gotchas" for details.
 
-```css
-@media (max-width: 768px) {
-    .nav-dots,
-    .keyboard-hint {
-        display: none;
-    }
-}
-```
+**Responsive & Viewport Fitting (CRITICAL):**
+
+**See the "CRITICAL: Viewport Fitting Requirements" section above for complete CSS and guidelines.**
+
+Quick reference:
+- Every `.slide` must have `height: 100vh; height: 100dvh; overflow: hidden;`
+- All typography and spacing must use `clamp()`
+- Respect content density limits (max 4-6 bullets, max 6 cards, etc.)
+- Include breakpoints for heights: 700px, 600px, 500px
+- When content doesn't fit → split into multiple slides, never scroll
 
 ---
 
@@ -744,15 +1255,22 @@ class TiltEffect {
 ## Example Session Flow
 
 1. User: "I want to create a pitch deck for my AI startup"
-2. Skill asks about purpose, length, content
-3. User shares their bullet points and key messages
-4. Skill asks about desired feeling (Impressed + Excited)
-5. Skill generates 3 style previews
-6. User picks Style B (Neon Cyber), asks for darker background
-7. Skill generates full presentation with all slides
-8. Skill opens the presentation in browser
-9. User requests tweaks to specific slides
-10. Final presentation delivered
+2. Skill asks about purpose, length, content, and images (single form)
+3. User shares bullet points, selects `./assets` folder
+4. **Evaluate:** Skill views each image (multimodal), builds slide outline with image assignments:
+   - `logo.png` → USABLE → title/closing slide
+   - `chat_ui.png` → USABLE → feature slide
+   - `dashboard.png` → USABLE → feature slide
+   - `launch_card.png` → USABLE → feature slide
+   - `blurry_team.jpg` → NOT USABLE (too low resolution)
+5. User confirms outline via AskUserQuestion
+6. Skill asks about desired feeling (Impressed + Excited)
+7. Skill generates 3 style previews
+8. User picks Style B (Neon Cyber)
+9. **Process + Generate:** Skill runs Pillow operations (circular crop, resize), generates full presentation with direct image paths
+10. Skill opens the presentation in browser
+11. User requests tweaks to specific slides
+12. Final presentation delivered
 
 ---
 
