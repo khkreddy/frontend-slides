@@ -1,0 +1,1881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Fundamental Unit of Life — Grade 9 CBSE Biology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#060c18;--card:#0d1527;--card2:#111e35;
+  --green:#10b981;--blue:#60a5fa;--purple:#a78bfa;
+  --amber:#fbbf24;--red:#f87171;--teal:#2dd4bf;
+  --text:#f1f5f9;--sub:#94a3b8;--dim:#64748b;
+  --border:rgba(16,185,129,0.18);
+  --ff:'Fira Code','Courier New',monospace;
+}
+body{font-family:var(--ff);background:var(--bg);color:var(--text);height:100vh;width:100vw;overflow:hidden}
+#pbar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#10b981,#60a5fa);transition:width 0.4s;z-index:1000;width:3.2%}
+.presentation{width:100%;height:100vh;position:relative}
+.slide{display:none;width:100%;height:100vh;padding:38px 62px 80px;position:absolute;top:0;left:0;flex-direction:column;overflow:hidden}
+.slide.active{display:flex;animation:si 0.35s ease}
+@keyframes si{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:translateX(0)}}
+.stag{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:3px;color:var(--green);margin-bottom:7px;opacity:.8}
+h1.st{font-size:44px;font-weight:700;color:var(--text);line-height:1.1;margin-bottom:6px}
+h2.st{font-size:35px;font-weight:600;color:var(--text);line-height:1.15;margin-bottom:6px}
+.ssub{font-size:22px;color:var(--blue);margin-top:6px;margin-bottom:2px}
+.shead{margin-bottom:18px}
+.sbody{flex:1;display:flex;overflow:hidden;gap:38px;min-height:0}
+.sbody.col{flex-direction:column}
+.sbody.row{flex-direction:row;align-items:stretch}
+.half{flex:1;display:flex;flex-direction:column;justify-content:center;min-width:0}
+.c60{flex:0 0 57%;display:flex;flex-direction:column;justify-content:center;min-width:0}
+.c40{flex:0 0 40%;display:flex;flex-direction:column;justify-content:center;align-items:center;min-width:0}
+.c55{flex:0 0 54%;display:flex;flex-direction:column;justify-content:center;min-width:0}
+.c45{flex:0 0 43%;display:flex;flex-direction:column;justify-content:center;align-items:center;min-width:0}
+ul.bl{list-style:none;display:flex;flex-direction:column;gap:10px}
+ul.bl li{font-size:20px;color:var(--text);line-height:1.5;padding-left:22px;position:relative}
+ul.bl li::before{content:'▸';position:absolute;left:0;color:var(--green)}
+ul.bl li.sub{font-size:17px;color:var(--sub);padding-left:40px}
+ul.bl li.sub::before{content:'◦';left:22px;color:var(--blue)}
+.dbox{background:var(--card);border:1px solid var(--border);border-left:4px solid var(--green);border-radius:8px;padding:16px 20px;margin:10px 0;font-size:19px;line-height:1.55}
+.dbox .dlbl{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--green);margin-bottom:6px}
+.gq{background:rgba(96,165,250,.07);border:1px solid rgba(96,165,250,.25);border-radius:10px;padding:16px 24px;margin-top:18px;font-size:20px;color:var(--blue);font-style:italic;line-height:1.5}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:13px}
+.crd{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:15px;transition:border-color .2s}
+.crd:hover{border-color:var(--green)}
+.crd .ctit{font-size:15px;font-weight:600;color:var(--blue);margin-bottom:5px}
+.crd .ctxt{font-size:14px;color:var(--sub);line-height:1.45}
+table.dt{width:100%;border-collapse:collapse;font-size:19px}
+table.dt th{background:rgba(16,185,129,.12);color:var(--green);padding:11px 17px;text-align:left;border-bottom:2px solid var(--green)}
+table.dt td{padding:11px 17px;border-bottom:1px solid rgba(255,255,255,.06);color:var(--text)}
+table.dt tr:hover td{background:rgba(255,255,255,.025)}
+.cpbdg{background:var(--amber);color:#000;font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:1px;text-transform:uppercase;display:inline-block;margin-bottom:16px}
+.ql{display:flex;flex-direction:column;gap:14px}
+.qi{background:var(--card);border:1px solid rgba(251,191,36,.2);border-radius:10px;padding:15px 20px}
+.qi .qlvl{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--amber);margin-bottom:4px}
+.qi .qtxt{font-size:19px;margin-bottom:9px;color:var(--text)}
+.rbtn{background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.32);color:var(--amber);padding:6px 15px;border-radius:6px;cursor:pointer;font-family:var(--ff);font-size:12px;transition:all .2s}
+.rbtn:hover{background:rgba(251,191,36,.22)}
+.ans{display:none;margin-top:9px;font-size:17px;color:var(--green);border-top:1px solid rgba(255,255,255,.07);padding-top:9px}
+.ans.show{display:block}
+#nav{position:fixed;bottom:20px;left:0;right:0;display:flex;justify-content:center;align-items:center;gap:13px;z-index:100}
+.nbtn{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.28);color:var(--green);padding:8px 24px;border-radius:50px;cursor:pointer;font-family:var(--ff);font-size:13px;letter-spacing:.5px;transition:all .2s}
+.nbtn:hover{background:rgba(16,185,129,.2);border-color:var(--green)}
+.nbtn:disabled{opacity:.3;cursor:not-allowed}
+#sc{font-size:12px;color:var(--dim);min-width:55px;text-align:center}
+.ocrd{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin-bottom:9px}
+.ocrd .onm{font-size:17px;font-weight:600;color:var(--green);margin-bottom:4px}
+.ocrd .ofn{font-size:16px;color:var(--sub);line-height:1.45}
+.nick{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.28);border-radius:6px;padding:3px 10px;font-size:12px;color:var(--red);display:inline-block;margin-top:4px}
+.take{display:flex;align-items:flex-start;gap:13px;padding:12px 16px;background:var(--card);border-left:3px solid var(--green);border-radius:0 8px 8px 0;margin-bottom:9px}
+.tnum{color:var(--green);font-size:19px;font-weight:700;min-width:26px}
+.ttxt{font-size:18px;color:var(--text);line-height:1.5}
+.scroll{overflow-y:auto;padding-right:5px}
+.scroll::-webkit-scrollbar{width:3px}
+.scroll::-webkit-scrollbar-thumb{background:var(--green);border-radius:2px}
+/* Title slide */
+.title-slide{background:radial-gradient(ellipse at 22% 55%,rgba(16,185,129,.07) 0%,transparent 52%),radial-gradient(ellipse at 78% 28%,rgba(96,165,250,.05) 0%,transparent 48%),var(--bg);justify-content:center}
+.tmain{font-size:50px;font-weight:700;background:linear-gradient(135deg,#10b981,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;margin-bottom:11px}
+.tgrade{font-size:18px;color:var(--sub);margin-bottom:7px}
+.tchap{font-size:22px;color:var(--blue);margin-bottom:34px}
+/* Microscope immersive */
+.micro-slide{background:#010407;padding:26px 34px 80px}
+/* SVG label style */
+.svgl{font-family:var(--ff);font-size:13px;fill:#e2e8f0}
+.svgls{font-family:var(--ff);font-size:12px;fill:#94a3b8}
+.svglg{font-family:var(--ff);font-size:13px;fill:#10b981}
+.ldr{stroke:rgba(255,255,255,0.25);stroke-width:1;stroke-dasharray:4,3;fill:none}
+/* Micro views */
+.mviews{display:flex;flex-direction:column;gap:12px;justify-content:center;align-items:center}
+.mview-wrap{display:flex;flex-direction:column;align-items:center;gap:4px}
+.mview-lbl{font-size:11px;color:var(--dim);text-align:center}
+/* Scale visualization */
+.scale-item{display:flex;flex-direction:column;align-items:center}
+.scale-bar{display:flex;align-items:flex-end;gap:0;justify-content:space-around;width:100%;height:120px}
+/* Highlight box */
+.hbox{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:8px;padding:14px 20px;margin-top:14px}
+.hbox p{font-size:18px;color:var(--sub);line-height:1.5}
+/* Three-part cards for basic cell parts */
+.tricard{display:flex;gap:16px;margin-top:8px}
+.tcard{flex:1;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;text-align:center}
+.tcard .tci{font-size:32px;margin-bottom:8px}
+.tcard .tcn{font-size:16px;font-weight:600;color:var(--green);margin-bottom:6px}
+.tcard .tcd{font-size:14px;color:var(--sub);line-height:1.4}
+/* Plastid rows */
+.prow{display:flex;align-items:center;gap:14px;padding:10px 14px;background:var(--card);border-radius:8px;border:1px solid var(--border);margin-bottom:8px}
+.pswatch{width:36px;height:36px;border-radius:6px;flex-shrink:0}
+.pname{font-size:17px;font-weight:600;margin-bottom:3px}
+.pdesc{font-size:15px;color:var(--sub)}
+/* Division diagram containers */
+.div-row{display:flex;align-items:center;justify-content:center;gap:20px;margin-top:10px}
+.div-lbl{font-size:14px;color:var(--sub);text-align:center;margin-top:6px}
+/* Unicellular grid */
+.ucgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.uc-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.uc-lbl{font-size:14px;color:var(--sub);text-align:center}
+/* Cell type row */
+.ct-row{display:flex;gap:16px;align-items:flex-end;justify-content:space-around}
+.ct-item{display:flex;flex-direction:column;align-items:center;gap:6px}
+.ct-lbl{font-size:12px;color:var(--sub);text-align:center}
+</style>
+</head>
+<body>
+<div id="pbar"></div>
+<div class="presentation">
+
+<!-- ==================== SLIDE 1: TITLE ==================== -->
+<section class="slide title-slide active" id="s1">
+  <div class="shead">
+    <div class="tgrade">Grade 9 Science — CBSE</div>
+    <div class="tmain">The Fundamental<br>Unit of Life</div>
+    <div class="tchap">Chapter 5 · Biology</div>
+  </div>
+  <div style="max-width:620px">
+    <div class="gq">"What is the smallest unit<br>that can still be alive?"</div>
+    <div style="margin-top:22px;display:flex;gap:24px">
+      <div class="dbox" style="flex:1;margin:0">
+        <div class="dlbl">You will learn</div>
+        Cell structure · Organelle functions · Cell discovery · Cell division
+      </div>
+    </div>
+  </div>
+  <!-- Decorative cell SVG top-right -->
+  <svg style="position:absolute;right:60px;top:40px;opacity:0.12" width="260" height="260" viewBox="0 0 260 260">
+    <ellipse cx="130" cy="130" rx="120" ry="100" fill="none" stroke="#10b981" stroke-width="2"/>
+    <ellipse cx="120" cy="122" rx="40" ry="34" fill="none" stroke="#60a5fa" stroke-width="1.5"/>
+    <circle cx="112" cy="116" r="10" fill="rgba(96,165,250,0.3)"/>
+    <path d="M160,100 Q180,90 195,105 Q205,115 200,128" fill="none" stroke="#a78bfa" stroke-width="1.5"/>
+    <ellipse cx="185" cy="155" rx="22" ry="11" fill="none" stroke="#f87171" stroke-width="1.5"/>
+    <line x1="168" y1="150" x2="176" y2="150" stroke="#fca5a5" stroke-width="1"/>
+    <line x1="168" y1="155" x2="176" y2="155" stroke="#fca5a5" stroke-width="1"/>
+    <circle cx="80" cy="165" r="10" fill="none" stroke="#a78bfa" stroke-width="1.5"/>
+  </svg>
+</section>
+
+<!-- ==================== SLIDE 2: SIZE SCALES ==================== -->
+<section class="slide" id="s2">
+  <div class="shead">
+    <div class="stag">Section A — Hook &amp; Context</div>
+    <h2 class="st">Size Scales of Life</h2>
+    <div class="ssub">From organism to organelle — how small is small?</div>
+  </div>
+  <div class="sbody col">
+    <svg viewBox="0 0 900 200" style="width:100%;max-height:180px">
+      <defs>
+        <linearGradient id="scaleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#10b981"/>
+          <stop offset="100%" stop-color="#60a5fa"/>
+        </linearGradient>
+      </defs>
+      <!-- Timeline baseline -->
+      <line x1="40" y1="120" x2="860" y2="120" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+      <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L6,3 L0,6 Z" fill="rgba(255,255,255,0.3)"/>
+      </marker></defs>
+      <line x1="40" y1="120" x2="855" y2="120" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" marker-end="url(#arr)"/>
+      <!-- Human -->
+      <rect x="50" y="30" width="100" height="90" rx="8" fill="rgba(16,185,129,0.12)" stroke="#10b981" stroke-width="1.5"/>
+      <text x="100" y="80" text-anchor="middle" font-family="'Fira Code',monospace" font-size="28" fill="#10b981">🧍</text>
+      <text x="100" y="140" text-anchor="middle" font-family="'Fira Code',monospace" font-size="13" fill="#10b981">Human Body</text>
+      <text x="100" y="155" text-anchor="middle" font-family="'Fira Code',monospace" font-size="11" fill="#64748b">~1.7 m</text>
+      <!-- Organ -->
+      <rect x="210" y="44" width="90" height="76" rx="8" fill="rgba(16,185,129,0.1)" stroke="#10b981" stroke-width="1.5"/>
+      <text x="255" y="90" text-anchor="middle" font-family="'Fira Code',monospace" font-size="22" fill="#10b981">🫀</text>
+      <text x="255" y="140" text-anchor="middle" font-family="'Fira Code',monospace" font-size="13" fill="#94a3b8">Organ</text>
+      <text x="255" y="155" text-anchor="middle" font-family="'Fira Code',monospace" font-size="11" fill="#64748b">~12 cm</text>
+      <!-- Tissue -->
+      <rect x="360" y="56" width="76" height="64" rx="8" fill="rgba(96,165,250,0.1)" stroke="#60a5fa" stroke-width="1.5"/>
+      <text x="398" y="97" text-anchor="middle" font-family="'Fira Code',monospace" font-size="18" fill="#60a5fa">🔬</text>
+      <text x="398" y="140" text-anchor="middle" font-family="'Fira Code',monospace" font-size="13" fill="#94a3b8">Tissue</text>
+      <text x="398" y="155" text-anchor="middle" font-family="'Fira Code',monospace" font-size="11" fill="#64748b">visible</text>
+      <!-- Cell -->
+      <rect x="495" y="68" width="62" height="52" rx="8" fill="rgba(167,139,250,0.12)" stroke="#a78bfa" stroke-width="1.5"/>
+      <text x="526" y="102" text-anchor="middle" font-family="'Fira Code',monospace" font-size="14" fill="#a78bfa">●</text>
+      <text x="526" y="140" text-anchor="middle" font-family="'Fira Code',monospace" font-size="13" fill="#a78bfa">Cell</text>
+      <text x="526" y="155" text-anchor="middle" font-family="'Fira Code',monospace" font-size="11" fill="#64748b">10–100 μm</text>
+      <!-- Organelle -->
+      <rect x="616" y="78" width="50" height="42" rx="8" fill="rgba(248,113,113,0.1)" stroke="#f87171" stroke-width="1.5"/>
+      <text x="641" y="106" text-anchor="middle" font-family="'Fira Code',monospace" font-size="11" fill="#f87171">●</text>
+      <text x="641" y="140" text-anchor="middle" font-family="'Fira Code',monospace" font-size="13" fill="#f87171">Organelle</text>
+      <text x="641" y="155" text-anchor="middle" font-family="'Fira Code',monospace" font-size="11" fill="#64748b">1–10 μm</text>
+      <!-- Molecule -->
+      <rect x="724" y="88" width="40" height="32" rx="8" fill="rgba(45,212,191,0.1)" stroke="#2dd4bf" stroke-width="1.5"/>
+      <text x="744" y="108" text-anchor="middle" font-family="'Fira Code',monospace" font-size="8" fill="#2dd4bf">●</text>
+      <text x="744" y="140" text-anchor="middle" font-family="'Fira Code',monospace" font-size="11" fill="#2dd4bf">Molecule</text>
+      <text x="744" y="155" text-anchor="middle" font-family="'Fira Code',monospace" font-size="11" fill="#64748b">nm range</text>
+      <text x="450" y="188" text-anchor="middle" font-family="'Fira Code',monospace" font-size="12" fill="#64748b">← LARGER &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SMALLER →</text>
+    </svg>
+    <div class="gq" style="margin-top:10px">If cells are so small, how did scientists discover them?</div>
+    <div class="hbox" style="margin-top:12px">
+      <p>Most cells are <strong style="color:var(--blue)">invisible to the naked eye</strong>. We need magnifying instruments — <strong style="color:var(--green)">microscopes</strong> — to see and study them.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 3: CHECKPOINT 1 ==================== -->
+<section class="slide" id="s3">
+  <div class="shead">
+    <div class="stag">Section A — Checkpoint</div>
+    <h2 class="st">Test Yourself</h2>
+  </div>
+  <div class="sbody col">
+    <div class="cpbdg">✦ Checkpoint 1</div>
+    <div class="ql">
+      <div class="qi">
+        <div class="qlvl">Recall</div>
+        <div class="qtxt">1. Which level of organisation is the smallest — organ, tissue, or cell?</div>
+        <button class="rbtn" onclick="ra('a1')">Reveal Answer</button>
+        <div class="ans" id="a1">Cell is the smallest level of organisation listed. Even smaller are organelles, then molecules.</div>
+      </div>
+      <div class="qi">
+        <div class="qlvl">Understanding</div>
+        <div class="qtxt">2. Are cells visible to the naked eye? Give an example to support your answer.</div>
+        <button class="rbtn" onclick="ra('a2')">Reveal Answer</button>
+        <div class="ans" id="a2">Most cells are NOT visible to the naked eye (e.g. a human cheek cell is ~20 μm). Exception: hen's egg is a single cell visible without a microscope.</div>
+      </div>
+      <div class="qi">
+        <div class="qlvl">Application</div>
+        <div class="qtxt">3. Why might magnification be needed to study cells?</div>
+        <button class="rbtn" onclick="ra('a3')">Reveal Answer</button>
+        <div class="ans" id="a3">Cells and their internal structures (organelles) are too small to see with the naked eye. Magnification allows scientists to observe cell shape, parts, and behaviour.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 4: DISCOVERY TIMELINE ==================== -->
+<section class="slide" id="s4">
+  <div class="shead">
+    <div class="stag">Section B — History of Cell Discovery</div>
+    <h2 class="st">Discovery of the Cell</h2>
+    <div class="ssub">A 200-year scientific journey</div>
+  </div>
+  <div class="sbody col">
+    <svg viewBox="0 0 900 280" style="width:100%;flex:1;max-height:260px">
+      <!-- Timeline line -->
+      <line x1="60" y1="140" x2="860" y2="140" stroke="rgba(16,185,129,0.35)" stroke-width="2"/>
+      <!-- 1665 -->
+      <circle cx="100" cy="140" r="14" fill="#10b981" stroke="#0d9488" stroke-width="2"/>
+      <text x="100" y="120" text-anchor="middle" font-family="'Fira Code',monospace" font-size="13" font-weight="600" fill="#10b981">1665</text>
+      <rect x="40" y="152" width="120" height="72" rx="7" fill="#0d1527" stroke="rgba(16,185,129,0.25)" stroke-width="1"/>
+      <text x="100" y="170" text-anchor="middle" font-family="'Fira Code',monospace" font-size="11" font-weight="600" fill="#f1f5f9">Robert Hooke</text>
+      <text x="100" y="184" text-anchor="middle" font-family="'Fira Code',monospace" font-size="10" fill="#94a3b8">Observed cork</text>
+      <text x="100" y="196" text-anchor="middle" font-family="'Fira Code',monospace" font-size="10" fill="#94a3b8">cells under</text>
+      <text x="100" y="208" text-anchor="middle" font-family="'Fira Code',monospace" font-size="10" fill="#94a3b8">microscope</text>
+      <!-- 1674 -->
+      <circle cx="250" cy="140" r="14" fill="#10b981" stroke="#0d9488" stroke-width="2"/>
+      <text x="250" y="52" text-anchor="middle" font-family="'Fira Code',monospace" font-size="13" font-weight="600" fill="#60a5fa">1674</text>
+      <rect x="188" y="60" width="124" height="72" rx="7" fill="#0d1527" stroke="rgba(96,165,250,0.25)" stroke-width="1"/>
+      <text x="250" y="78" text-anchor="middle" font-family="'Fira Code',monospace" font-size="11" font-weight="600" fill="#f1f5f9">Leeuwenhoek</text>
+      <text x="250" y="92" text-anchor="middle" font-family="'Fira Code',monospace" font-size="10" fill="#94a3b8">First to observe</text>
+      <text x="250" y="104" text-anchor="middle" font-family="'Fira Code',monospace" font-size="10" fill="#94a3b8">living cells</text>
+      <text x="250" y="116" text-anchor="middle" font-family="'Fira Code',monospace" font-size="10" fill="#94a3b8">(protozoa, bacteria)</text>
+      <line x1="250" y1="132" x2="250" y2="140" stroke="rgba(96,165,250,0.5)" stroke-width="1" stroke-dasharray="3,2"/>
+      <!-- 1831 -->
+      <circle cx="420" cy="140" r="14" fill="#a78bfa" stroke="#7c3aed" stroke-width="2"/>
+      <text x="420" y="120" text-anchor="middle" font-family="'Fira Code',monospace" font-size="13" font-weight="600" fill="#a78bfa">1831</text>
+      <rect x="358" y="152" width="124" height="72" rx="7" fill="#0d1527" stroke="rgba(167,139,250,0.25)" stroke-width="1"/>
+      <text x="420" y="170" text-anchor="middle" font-family="'Fira Code',monospace" font-size="11" font-weight="600" fill="#f1f5f9">Robert Brown</text>
+      <text x="420" y="184" text-anchor="middle" font-family="'Fira Code',monospace" font-size="10" fill="#94a3b8">Discovered the</text>
+      <text x="420" y="196" text-anchor="middle" font-family="'Fira Code',monospace" font-size="10" fill="#94a3b8">nucleus inside</text>
+      <text x="420" y="208" text-anchor="middle" font-family="'Fira Code',monospace" font-size="10" fill="#94a3b8">plant cells</text>
+      <!-- 1838-39 -->
+      <circle cx="610" cy="140" r="14" fill="#fbbf24" stroke="#d97706" stroke-width="2"/>
+      <text x="610" y="52" text-anchor="middle" font-family="'Fira Code',monospace" font-size="12" font-weight="600" fill="#fbbf24">1838–39</text>
+      <rect x="546" y="58" width="128" height="75" rx="7" fill="#0d1527" stroke="rgba(251,191,36,0.25)" stroke-width="1"/>
+      <text x="610" y="76" text-anchor="middle" font-family="'Fira Code',monospace" font-size="10" font-weight="600" fill="#f1f5f9">Schleiden &amp;</text>
+      <text x="610" y="89" text-anchor="middle" font-family="'Fira Code',monospace" font-size="10" font-weight="600" fill="#f1f5f9">Schwann</text>
+      <text x="610" y="103" text-anchor="middle" font-family="'Fira Code',monospace" font-size="10" fill="#94a3b8">Cell Theory:</text>
+      <text x="610" y="115" text-anchor="middle" font-family="'Fira Code',monospace" font-size="10" fill="#94a3b8">all living things</text>
+      <text x="610" y="127" text-anchor="middle" font-family="'Fira Code',monospace" font-size="10" fill="#94a3b8">made of cells</text>
+      <line x1="610" y1="133" x2="610" y2="140" stroke="rgba(251,191,36,0.5)" stroke-width="1" stroke-dasharray="3,2"/>
+      <!-- 1855 -->
+      <circle cx="810" cy="140" r="14" fill="#f87171" stroke="#dc2626" stroke-width="2"/>
+      <text x="810" y="120" text-anchor="middle" font-family="'Fira Code',monospace" font-size="13" font-weight="600" fill="#f87171">1855</text>
+      <rect x="748" y="152" width="122" height="72" rx="7" fill="#0d1527" stroke="rgba(248,113,113,0.25)" stroke-width="1"/>
+      <text x="810" y="170" text-anchor="middle" font-family="'Fira Code',monospace" font-size="11" font-weight="600" fill="#f1f5f9">Virchow</text>
+      <text x="810" y="184" text-anchor="middle" font-family="'Fira Code',monospace" font-size="10" fill="#94a3b8">Cells arise only</text>
+      <text x="810" y="196" text-anchor="middle" font-family="'Fira Code',monospace" font-size="10" fill="#94a3b8">from pre-existing</text>
+      <text x="810" y="208" text-anchor="middle" font-family="'Fira Code',monospace" font-size="10" fill="#94a3b8">cells</text>
+    </svg>
+    <div class="dbox" style="margin-top:8px">
+      <div class="dlbl">Cell Theory (Schleiden &amp; Schwann)</div>
+      All living organisms are composed of cells, and the cell is the basic unit of life.
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== SLIDE 5: COMPOUND MICROSCOPE (IMMERSIVE) ==================== -->
+<section class="slide micro-slide" id="s5">
+  <div class="shead" style="margin-bottom:10px">
+    <div class="stag" style="color:#2dd4bf;opacity:.7">Section B — Scientific Instrument</div>
+    <h2 class="st" style="font-size:30px">The Compound Microscope</h2>
+  </div>
+  <div class="sbody row" style="gap:24px">
+    <!-- Microscope SVG left -->
+    <div style="flex:0 0 46%;display:flex;align-items:center;justify-content:center">
+      <svg viewBox="0 0 440 620" style="max-height:500px;width:100%;filter:drop-shadow(0 0 18px rgba(16,185,129,0.45))">
+        <!-- BASE -->
+        <path d="M70,572 L370,572 Q390,572 390,552 L390,538 L316,538 L316,528 L124,528 L124,538 L50,538 L50,552 Q50,572 70,572 Z" fill="#0a1e36" stroke="#10b981" stroke-width="2"/>
+        <!-- PILLAR vertical support -->
+        <rect x="188" y="148" width="64" height="382" rx="5" fill="#081728" stroke="#10b981" stroke-width="1.5"/>
+        <!-- ARM left curve -->
+        <path d="M188,525 C188,460 158,420 148,370 C138,310 145,250 165,218 C176,200 188,190 188,180" stroke="#0d2040" stroke-width="36" stroke-linecap="round" fill="none"/>
+        <!-- ARM right curve -->
+        <path d="M252,525 C252,460 282,420 292,370 C302,310 295,250 275,218 C264,200 252,190 252,180" stroke="#0d2040" stroke-width="36" stroke-linecap="round" fill="none"/>
+        <!-- ARM outlines -->
+        <path d="M188,525 C188,460 158,420 148,370 C138,310 145,250 165,218 C176,200 188,190 188,180" stroke="#10b981" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        <path d="M252,525 C252,460 282,420 292,370 C302,310 295,250 275,218 C264,200 252,190 252,180" stroke="#10b981" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        <!-- STAGE -->
+        <rect x="98" y="358" width="244" height="15" rx="4" fill="#0f2540" stroke="#10b981" stroke-width="2"/>
+        <!-- Stage aperture -->
+        <circle cx="220" cy="366" r="22" fill="#010407" stroke="#10b981" stroke-width="1.5"/>
+        <!-- Stage clips -->
+        <rect x="114" y="350" width="32" height="9" rx="3" fill="#10b981" opacity="0.8"/>
+        <rect x="294" y="350" width="32" height="9" rx="3" fill="#10b981" opacity="0.8"/>
+        <!-- Slide on stage -->
+        <rect x="168" y="354" width="104" height="22" rx="2" fill="rgba(96,165,250,0.12)" stroke="rgba(96,165,250,0.3)" stroke-width="1"/>
+        <!-- SUBSTAGE CONDENSER -->
+        <rect x="204" y="373" width="32" height="22" rx="4" fill="#0a1e36" stroke="#2dd4bf" stroke-width="1.5"/>
+        <!-- MIRROR -->
+        <ellipse cx="220" cy="420" rx="38" ry="15" fill="rgba(96,165,250,0.08)" stroke="#60a5fa" stroke-width="2.5"/>
+        <line x1="220" y1="416" x2="220" y2="432" stroke="#60a5fa" stroke-width="2"/>
+        <path d="M194,422 Q196,434 200,438 L240,438 Q244,434 246,422" fill="none" stroke="#60a5fa" stroke-width="1.5"/>
+        <!-- BODY TUBE -->
+        <rect x="196" y="140" width="48" height="194" rx="4" fill="#081728" stroke="#10b981" stroke-width="2"/>
+        <!-- Tube inner detail -->
+        <rect x="202" y="146" width="36" height="182" rx="2" fill="rgba(0,0,0,0.4)"/>
+        <!-- ROTATING NOSEPIECE -->
+        <ellipse cx="220" cy="338" rx="46" ry="17" fill="#0f2540" stroke="#10b981" stroke-width="2"/>
+        <ellipse cx="220" cy="336" rx="42" ry="14" fill="none" stroke="rgba(16,185,129,0.3)" stroke-width="1"/>
+        <!-- OBJECTIVE LENSES (3) -->
+        <!-- Low power (short, ~30mm equiv) -->
+        <rect x="195" y="348" width="13" height="36" rx="4" fill="#0f2845" stroke="#93c5fd" stroke-width="1.5"/>
+        <ellipse cx="201" cy="384" rx="6" ry="4" fill="#bfdbfe" opacity="0.6"/>
+        <!-- Medium power (medium length) -->
+        <rect x="213" y="350" width="13" height="50" rx="4" fill="#0d2260" stroke="#93c5fd" stroke-width="1.5"/>
+        <ellipse cx="219" cy="400" rx="6" ry="4" fill="#bfdbfe" opacity="0.6"/>
+        <!-- High power (longest, pointing down) -->
+        <rect x="232" y="348" width="13" height="66" rx="4" fill="#0b1e80" stroke="#93c5fd" stroke-width="1.5"/>
+        <ellipse cx="238" cy="414" rx="6" ry="4" fill="#93c5fd" opacity="0.8"/>
+        <!-- EYEPIECE -->
+        <rect x="199" y="106" width="42" height="40" rx="6" fill="#0f2540" stroke="#10b981" stroke-width="2.5"/>
+        <ellipse cx="220" cy="108" rx="21" ry="8" fill="#081728" stroke="#10b981" stroke-width="1.5"/>
+        <!-- Rubber eyecup -->
+        <ellipse cx="220" cy="106" rx="26" ry="10" fill="none" stroke="rgba(16,185,129,0.5)" stroke-width="2.5" stroke-dasharray="3,2"/>
+        <!-- COARSE ADJUSTMENT (large knobs both sides) -->
+        <ellipse cx="170" cy="265" rx="22" ry="34" fill="#0a2040" stroke="#10b981" stroke-width="2.5"/>
+        <ellipse cx="270" cy="265" rx="22" ry="34" fill="#0a2040" stroke="#10b981" stroke-width="2.5"/>
+        <!-- Coarse knob ridges -->
+        <line x1="148" y1="248" x2="192" y2="248" stroke="rgba(16,185,129,0.25)" stroke-width="1.5"/>
+        <line x1="148" y1="262" x2="192" y2="262" stroke="rgba(16,185,129,0.25)" stroke-width="1.5"/>
+        <line x1="148" y1="276" x2="192" y2="276" stroke="rgba(16,185,129,0.25)" stroke-width="1.5"/>
+        <line x1="248" y1="248" x2="292" y2="248" stroke="rgba(16,185,129,0.25)" stroke-width="1.5"/>
+        <line x1="248" y1="262" x2="292" y2="262" stroke="rgba(16,185,129,0.25)" stroke-width="1.5"/>
+        <line x1="248" y1="276" x2="292" y2="276" stroke="rgba(16,185,129,0.25)" stroke-width="1.5"/>
+        <!-- FINE ADJUSTMENT (smaller knobs above) -->
+        <ellipse cx="170" cy="215" rx="14" ry="22" fill="#081430" stroke="#2dd4bf" stroke-width="1.5"/>
+        <ellipse cx="270" cy="215" rx="14" ry="22" fill="#081430" stroke="#2dd4bf" stroke-width="1.5"/>
+        <!-- Glow effect on eyepiece -->
+        <ellipse cx="220" cy="107" rx="18" ry="7" fill="rgba(16,185,129,0.15)"/>
+        <!-- Labels on left side -->
+        <line x1="199" y1="126" x2="100" y2="90" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="96" y="86" text-anchor="end" font-family="'Fira Code',monospace" font-size="12" fill="#10b981">Eyepiece</text>
+        <line x1="196" y1="210" x2="100" y2="200" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="96" y="196" text-anchor="end" font-family="'Fira Code',monospace" font-size="12" fill="#e2e8f0">Body Tube</text>
+        <line x1="148" y1="215" x2="86" y2="215" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="82" y="219" text-anchor="end" font-family="'Fira Code',monospace" font-size="12" fill="#2dd4bf">Fine Adj.</text>
+        <line x1="148" y1="265" x2="86" y2="280" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="82" y="284" text-anchor="end" font-family="'Fira Code',monospace" font-size="12" fill="#10b981">Coarse Adj.</text>
+        <line x1="188" y1="475" x2="100" y2="490" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="96" y="494" text-anchor="end" font-family="'Fira Code',monospace" font-size="12" fill="#e2e8f0">Arm</text>
+        <line x1="70" y1="555" x2="86" y2="555" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="82" y="559" text-anchor="end" font-family="'Fira Code',monospace" font-size="12" fill="#e2e8f0">Base</text>
+        <!-- Labels on right side -->
+        <line x1="242" y1="330" x2="340" y2="310" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="344" y="314" font-family="'Fira Code',monospace" font-size="12" fill="#93c5fd">Objective Lens</text>
+        <line x1="342" y1="366" x2="340" y2="366" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="344" y="370" font-family="'Fira Code',monospace" font-size="12" fill="#10b981">Stage</text>
+        <line x1="342" y1="420" x2="340" y2="420" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="344" y="424" font-family="'Fira Code',monospace" font-size="12" fill="#60a5fa">Mirror</text>
+      </svg>
+    </div>
+    <!-- Right: 3 microscope views -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:16px">
+      <div style="font-size:14px;color:#2dd4bf;text-transform:uppercase;letter-spacing:2px;margin-bottom:4px">Cells as seen through microscope</div>
+      <!-- Onion peel view -->
+      <div style="display:flex;align-items:center;gap:14px">
+        <svg width="110" height="110" viewBox="0 0 110 110" style="flex-shrink:0">
+          <defs><clipPath id="c1"><circle cx="55" cy="55" r="50"/></clipPath>
+          <radialGradient id="vg1" cx="50%" cy="50%"><stop offset="0%" stop-color="#1a3020"/><stop offset="100%" stop-color="#0a1a10"/></radialGradient></defs>
+          <circle cx="55" cy="55" r="50" fill="url(#vg1)" stroke="rgba(16,185,129,0.5)" stroke-width="3"/>
+          <g clip-path="url(#c1)">
+            <!-- Onion cells: rectangular grid -->
+            <rect x="8" y="12" width="28" height="22" fill="none" stroke="#4ade80" stroke-width="1.5" rx="1"/>
+            <circle cx="22" cy="23" r="4" fill="rgba(100,180,100,0.6)"/>
+            <rect x="38" y="12" width="28" height="22" fill="none" stroke="#4ade80" stroke-width="1.5" rx="1"/>
+            <circle cx="52" cy="23" r="4" fill="rgba(100,180,100,0.6)"/>
+            <rect x="68" y="12" width="30" height="22" fill="none" stroke="#4ade80" stroke-width="1.5" rx="1"/>
+            <circle cx="83" cy="23" r="4" fill="rgba(100,180,100,0.6)"/>
+            <rect x="8" y="36" width="28" height="22" fill="none" stroke="#4ade80" stroke-width="1.5" rx="1"/>
+            <circle cx="22" cy="47" r="4" fill="rgba(100,180,100,0.6)"/>
+            <rect x="38" y="36" width="28" height="22" fill="none" stroke="#4ade80" stroke-width="1.5" rx="1"/>
+            <circle cx="52" cy="47" r="4" fill="rgba(100,180,100,0.6)"/>
+            <rect x="68" y="36" width="30" height="22" fill="none" stroke="#4ade80" stroke-width="1.5" rx="1"/>
+            <circle cx="83" cy="47" r="4" fill="rgba(100,180,100,0.6)"/>
+            <rect x="8" y="60" width="28" height="22" fill="none" stroke="#4ade80" stroke-width="1.5" rx="1"/>
+            <circle cx="22" cy="71" r="4" fill="rgba(100,180,100,0.6)"/>
+            <rect x="38" y="60" width="28" height="22" fill="none" stroke="#4ade80" stroke-width="1.5" rx="1"/>
+            <circle cx="52" cy="71" r="4" fill="rgba(100,180,100,0.6)"/>
+            <rect x="68" y="60" width="30" height="22" fill="none" stroke="#4ade80" stroke-width="1.5" rx="1"/>
+            <circle cx="83" cy="71" r="4" fill="rgba(100,180,100,0.6)"/>
+            <rect x="8" y="84" width="28" height="22" fill="none" stroke="#4ade80" stroke-width="1.5" rx="1"/>
+            <rect x="38" y="84" width="28" height="22" fill="none" stroke="#4ade80" stroke-width="1.5" rx="1"/>
+            <rect x="68" y="84" width="30" height="22" fill="none" stroke="#4ade80" stroke-width="1.5" rx="1"/>
+          </g>
+          <circle cx="55" cy="55" r="50" fill="none" stroke="rgba(16,185,129,0.4)" stroke-width="3"/>
+        </svg>
+        <div>
+          <div style="font-size:14px;font-weight:600;color:#4ade80;margin-bottom:4px">Onion Peel Cells</div>
+          <div style="font-size:12px;color:#64748b;line-height:1.5">Rectangular cells with visible<br>cell walls and nuclei (stained)</div>
+        </div>
+      </div>
+      <!-- Cheek cell view -->
+      <div style="display:flex;align-items:center;gap:14px">
+        <svg width="110" height="110" viewBox="0 0 110 110" style="flex-shrink:0">
+          <defs><clipPath id="c2"><circle cx="55" cy="55" r="50"/></clipPath>
+          <radialGradient id="vg2" cx="50%" cy="50%"><stop offset="0%" stop-color="#1a1030"/><stop offset="100%" stop-color="#0a0818"/></radialGradient></defs>
+          <circle cx="55" cy="55" r="50" fill="url(#vg2)" stroke="rgba(96,165,250,0.5)" stroke-width="3"/>
+          <g clip-path="url(#c2)">
+            <!-- Irregular cheek cells -->
+            <path d="M20,30 C14,24 12,36 18,44 C24,50 34,52 42,46 C50,40 50,28 42,24 C36,20 26,24 20,30 Z" fill="rgba(160,130,180,0.3)" stroke="#c084fc" stroke-width="1.2"/>
+            <circle cx="30" cy="38" r="6" fill="rgba(147,51,234,0.6)"/>
+            <path d="M55,18 C48,14 44,22 46,32 C48,40 58,46 66,42 C74,38 76,26 70,20 C66,14 60,16 55,18 Z" fill="rgba(160,130,180,0.3)" stroke="#c084fc" stroke-width="1.2"/>
+            <circle cx="60" cy="32" r="5" fill="rgba(147,51,234,0.6)"/>
+            <path d="M20,60 C12,56 10,68 16,76 C22,84 36,86 44,80 C52,74 52,62 44,58 C38,54 26,56 20,60 Z" fill="rgba(160,130,180,0.3)" stroke="#c084fc" stroke-width="1.2"/>
+            <circle cx="32" cy="70" r="6" fill="rgba(147,51,234,0.6)"/>
+            <path d="M60,60 C54,54 48,62 50,72 C52,80 64,86 72,82 C82,76 84,64 78,58 C72,52 64,56 60,60 Z" fill="rgba(160,130,180,0.3)" stroke="#c084fc" stroke-width="1.2"/>
+            <circle cx="68" cy="72" r="5" fill="rgba(147,51,234,0.6)"/>
+          </g>
+          <circle cx="55" cy="55" r="50" fill="none" stroke="rgba(96,165,250,0.4)" stroke-width="3"/>
+        </svg>
+        <div>
+          <div style="font-size:14px;font-weight:600;color:#c084fc;margin-bottom:4px">Human Cheek Cells</div>
+          <div style="font-size:12px;color:#64748b;line-height:1.5">Irregular, flat cells with<br>central nucleus (methylene blue)</div>
+        </div>
+      </div>
+      <!-- Bacteria view -->
+      <div style="display:flex;align-items:center;gap:14px">
+        <svg width="110" height="110" viewBox="0 0 110 110" style="flex-shrink:0">
+          <defs><clipPath id="c3"><circle cx="55" cy="55" r="50"/></clipPath>
+          <radialGradient id="vg3" cx="50%" cy="50%"><stop offset="0%" stop-color="#101828"/><stop offset="100%" stop-color="#060c18"/></radialGradient></defs>
+          <circle cx="55" cy="55" r="50" fill="url(#vg3)" stroke="rgba(251,191,36,0.5)" stroke-width="3"/>
+          <g clip-path="url(#c3)">
+            <!-- Rod bacteria (bacilli) -->
+            <rect x="18" y="24" width="20" height="9" rx="4" fill="#fbbf24" opacity="0.8"/>
+            <rect x="46" y="18" width="20" height="9" rx="4" fill="#fbbf24" opacity="0.8" transform="rotate(25,56,22)"/>
+            <rect x="72" y="30" width="20" height="9" rx="4" fill="#fbbf24" opacity="0.8" transform="rotate(-15,82,34)"/>
+            <rect x="14" y="52" width="20" height="9" rx="4" fill="#fbbf24" opacity="0.7"/>
+            <rect x="44" y="56" width="20" height="9" rx="4" fill="#fbbf24" opacity="0.8" transform="rotate(40,54,60)"/>
+            <rect x="70" y="48" width="20" height="9" rx="4" fill="#fbbf24" opacity="0.7" transform="rotate(-30,80,52)"/>
+            <rect x="22" y="76" width="20" height="9" rx="4" fill="#fbbf24" opacity="0.8" transform="rotate(15,32,80)"/>
+            <rect x="62" y="74" width="20" height="9" rx="4" fill="#fbbf24" opacity="0.8" transform="rotate(-20,72,78)"/>
+            <!-- Cocci (spherical) -->
+            <circle cx="36" cy="40" r="5" fill="#fde68a" opacity="0.7"/>
+            <circle cx="58" cy="44" r="4" fill="#fde68a" opacity="0.7"/>
+            <circle cx="84" cy="62" r="5" fill="#fde68a" opacity="0.7"/>
+            <circle cx="30" cy="66" r="4" fill="#fde68a" opacity="0.7"/>
+          </g>
+          <circle cx="55" cy="55" r="50" fill="none" stroke="rgba(251,191,36,0.4)" stroke-width="3"/>
+        </svg>
+        <div>
+          <div style="font-size:14px;font-weight:600;color:#fbbf24;margin-bottom:4px">Bacteria</div>
+          <div style="font-size:12px;color:#64748b;line-height:1.5">Prokaryotic cells — rods (bacilli)<br>and spheres (cocci), no nucleus</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 6: ONION PEEL OBSERVATION ==================== -->
+<section class="slide" id="s6" style="background:#060c18">
+  <div class="shead">
+    <div class="stag">Section B — Practical Activity</div>
+    <h2 class="st">Onion Peel Observation</h2>
+    <div class="ssub">What do we see under the microscope?</div>
+  </div>
+  <div class="sbody row" style="gap:32px">
+    <div class="c45" style="justify-content:center">
+      <svg viewBox="0 0 320 320" style="width:100%;max-width:300px">
+        <defs>
+          <clipPath id="mview"><circle cx="160" cy="160" r="148"/></clipPath>
+          <radialGradient id="mbg" cx="50%" cy="50%"><stop offset="0%" stop-color="#182810"/><stop offset="100%" stop-color="#0a1508"/></radialGradient>
+        </defs>
+        <!-- Microscope view circle -->
+        <circle cx="160" cy="160" r="148" fill="url(#mbg)"/>
+        <g clip-path="url(#mview)">
+          <!-- Onion cells in grid pattern - elongated rectangles -->
+          <!-- Row 1 -->
+          <rect x="14" y="14" width="56" height="38" fill="rgba(20,60,20,0.6)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <circle cx="42" cy="33" r="7" fill="rgba(74,222,128,0.7)"/>
+          <rect x="72" y="14" width="56" height="38" fill="rgba(20,60,20,0.6)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <circle cx="100" cy="33" r="7" fill="rgba(74,222,128,0.7)"/>
+          <rect x="130" y="14" width="56" height="38" fill="rgba(20,60,20,0.6)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <circle cx="158" cy="33" r="7" fill="rgba(74,222,128,0.7)"/>
+          <rect x="188" y="14" width="56" height="38" fill="rgba(20,60,20,0.6)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <circle cx="216" cy="33" r="7" fill="rgba(74,222,128,0.7)"/>
+          <rect x="246" y="14" width="60" height="38" fill="rgba(20,60,20,0.6)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <!-- Row 2 -->
+          <rect x="14" y="54" width="56" height="38" fill="rgba(20,60,20,0.5)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <circle cx="42" cy="73" r="7" fill="rgba(74,222,128,0.7)"/>
+          <rect x="72" y="54" width="56" height="38" fill="rgba(20,60,20,0.5)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <circle cx="100" cy="73" r="7" fill="rgba(74,222,128,0.7)"/>
+          <rect x="130" y="54" width="56" height="38" fill="rgba(20,60,20,0.5)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <circle cx="158" cy="73" r="7" fill="rgba(74,222,128,0.7)"/>
+          <rect x="188" y="54" width="56" height="38" fill="rgba(20,60,20,0.5)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <circle cx="216" cy="73" r="7" fill="rgba(74,222,128,0.7)"/>
+          <rect x="246" y="54" width="60" height="38" fill="rgba(20,60,20,0.5)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <!-- Rows 3-6 similar -->
+          <rect x="14" y="94" width="56" height="38" fill="rgba(20,60,20,0.55)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <circle cx="42" cy="113" r="7" fill="rgba(74,222,128,0.65)"/>
+          <rect x="72" y="94" width="56" height="38" fill="rgba(20,60,20,0.55)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <circle cx="100" cy="113" r="7" fill="rgba(74,222,128,0.65)"/>
+          <rect x="130" y="94" width="56" height="38" fill="rgba(20,60,20,0.55)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <circle cx="158" cy="113" r="7" fill="rgba(74,222,128,0.65)"/>
+          <rect x="188" y="94" width="56" height="38" fill="rgba(20,60,20,0.55)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <circle cx="216" cy="113" r="7" fill="rgba(74,222,128,0.65)"/>
+          <rect x="246" y="94" width="60" height="38" fill="rgba(20,60,20,0.55)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <rect x="14" y="134" width="56" height="38" fill="rgba(20,60,20,0.5)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <circle cx="42" cy="153" r="7" fill="rgba(74,222,128,0.7)"/>
+          <rect x="72" y="134" width="56" height="38" fill="rgba(20,60,20,0.5)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <circle cx="100" cy="153" r="7" fill="rgba(74,222,128,0.7)"/>
+          <rect x="130" y="134" width="56" height="38" fill="rgba(20,60,20,0.5)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <circle cx="158" cy="153" r="7" fill="rgba(74,222,128,0.7)"/>
+          <rect x="188" y="134" width="56" height="38" fill="rgba(20,60,20,0.5)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <circle cx="216" cy="153" r="7" fill="rgba(74,222,128,0.7)"/>
+          <rect x="246" y="134" width="60" height="38" fill="rgba(20,60,20,0.5)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <rect x="14" y="174" width="56" height="38" fill="rgba(20,60,20,0.55)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <circle cx="42" cy="193" r="7" fill="rgba(74,222,128,0.6)"/>
+          <rect x="72" y="174" width="56" height="38" fill="rgba(20,60,20,0.55)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <circle cx="100" cy="193" r="7" fill="rgba(74,222,128,0.6)"/>
+          <rect x="130" y="174" width="56" height="38" fill="rgba(20,60,20,0.55)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <circle cx="158" cy="193" r="7" fill="rgba(74,222,128,0.6)"/>
+          <rect x="188" y="174" width="56" height="38" fill="rgba(20,60,20,0.55)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <circle cx="216" cy="193" r="7" fill="rgba(74,222,128,0.6)"/>
+          <rect x="246" y="174" width="60" height="38" fill="rgba(20,60,20,0.55)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <rect x="14" y="214" width="56" height="38" fill="rgba(20,60,20,0.5)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <rect x="72" y="214" width="56" height="38" fill="rgba(20,60,20,0.5)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <rect x="130" y="214" width="56" height="38" fill="rgba(20,60,20,0.5)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <rect x="188" y="214" width="56" height="38" fill="rgba(20,60,20,0.5)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <rect x="246" y="214" width="60" height="38" fill="rgba(20,60,20,0.5)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <rect x="14" y="254" width="56" height="50" fill="rgba(20,60,20,0.45)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <rect x="72" y="254" width="56" height="50" fill="rgba(20,60,20,0.45)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <rect x="130" y="254" width="56" height="50" fill="rgba(20,60,20,0.45)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <rect x="188" y="254" width="56" height="50" fill="rgba(20,60,20,0.45)" stroke="#22c55e" stroke-width="2" rx="2"/>
+          <rect x="246" y="254" width="60" height="50" fill="rgba(20,60,20,0.45)" stroke="#22c55e" stroke-width="2" rx="2"/>
+        </g>
+        <!-- Microscope view ring border -->
+        <circle cx="160" cy="160" r="148" fill="none" stroke="#10b981" stroke-width="4"/>
+        <circle cx="160" cy="160" r="148" fill="none" stroke="rgba(16,185,129,0.2)" stroke-width="12"/>
+        <!-- Leader lines for labels -->
+        <line x1="100" y1="73" x2="50" y2="320" stroke="rgba(255,255,255,0.25)" stroke-width="1" stroke-dasharray="3,2"/>
+        <line x1="158" y1="26" x2="280" y2="320" stroke="rgba(255,255,255,0.25)" stroke-width="1" stroke-dasharray="3,2"/>
+        <line x1="100" y1="33" x2="30" y2="310" stroke="rgba(255,255,255,0.25)" stroke-width="1" stroke-dasharray="3,2"/>
+      </svg>
+      <div style="display:flex;gap:18px;margin-top:10px;font-size:12px">
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:14px;height:14px;border:2px solid #22c55e;background:rgba(20,60,20,0.6)"></div><span style="color:#94a3b8">Cell Wall</span></div>
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:10px;height:10px;border-radius:50%;background:rgba(74,222,128,0.7)"></div><span style="color:#94a3b8">Nucleus</span></div>
+      </div>
+    </div>
+    <div class="c55">
+      <div class="dbox">
+        <div class="dlbl">Observation — Onion Peel (Allium cepa)</div>
+        The epidermal cells of an onion peel are arranged in a single layer. When stained with safranin or iodine, the cell walls and nuclei become visible under a compound microscope.
+      </div>
+      <ul class="bl" style="margin-top:18px">
+        <li>Cells are <strong>rectangular in shape</strong></li>
+        <li>Each cell has a distinct <strong>cell boundary</strong> (cell wall)</li>
+        <li>A dark-staining <strong>nucleus</strong> is visible in each cell</li>
+        <li>Cells are arranged in a <strong>single layer</strong> (monolayer)</li>
+        <li>Large <strong>central vacuole</strong> may be visible in mature cells</li>
+        <li>No chloroplasts — onion is a non-photosynthetic tissue</li>
+      </ul>
+      <div class="hbox" style="margin-top:14px">
+        <p><strong style="color:var(--green)">Why stain?</strong> Most cell contents are colourless. Dyes like safranin or methylene blue bind selectively to nuclei and cell walls, making them visible.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== SLIDE 7: CHECKPOINT 2 ==================== -->
+<section class="slide" id="s7">
+  <div class="shead">
+    <div class="stag">Section B — Checkpoint</div>
+    <h2 class="st">Test Yourself</h2>
+  </div>
+  <div class="sbody col">
+    <div class="cpbdg">✦ Checkpoint 2</div>
+    <div class="ql">
+      <div class="qi">
+        <div class="qlvl">Recall</div>
+        <div class="qtxt">1. Who first observed and named cells? What did they look at?</div>
+        <button class="rbtn" onclick="ra('b1')">Reveal Answer</button>
+        <div class="ans" id="b1">Robert Hooke (1665) first observed cells in a thin slice of cork using a primitive microscope. He named them "cells" because they resembled small rooms (cellulae).</div>
+      </div>
+      <div class="qi">
+        <div class="qlvl">Understanding</div>
+        <div class="qtxt">2. Why was the invention of the microscope important for biology?</div>
+        <button class="rbtn" onclick="ra('b2')">Reveal Answer</button>
+        <div class="ans" id="b2">The microscope allowed scientists to magnify objects too small to see with the naked eye, making it possible to observe cells, microorganisms, and subcellular structures for the first time.</div>
+      </div>
+      <div class="qi">
+        <div class="qlvl">Analysis</div>
+        <div class="qtxt">3. What did Hooke actually observe — living cells or dead cell walls? How do you know?</div>
+        <button class="rbtn" onclick="ra('b3')">Reveal Answer</button>
+        <div class="ans" id="b3">Hooke observed dead cell walls of cork cells. Cork is bark tissue made of dead cells whose walls remain after the living contents have dried out. He saw the box-like structure but not living content.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 8: UNICELLULAR vs MULTICELLULAR ==================== -->
+<section class="slide" id="s8">
+  <div class="shead">
+    <div class="stag">Section C — Variety of Cells</div>
+    <h2 class="st">Unicellular vs Multicellular</h2>
+    <div class="ssub">Cells are the building units of all life</div>
+  </div>
+  <div class="sbody row" style="gap:28px">
+    <div class="c55 scroll">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <!-- Amoeba -->
+        <div class="crd" style="border-color:rgba(251,191,36,0.3)">
+          <svg width="80" height="60" viewBox="0 0 80 60" style="margin-bottom:6px">
+            <path d="M40,10 C52,8 64,14 68,26 C72,34 70,44 62,50 C54,56 44,58 34,54 C24,50 14,42 12,30 C10,18 20,10 30,8 C34,7 38,8 40,10 Z" fill="rgba(251,191,36,0.15)" stroke="#fbbf24" stroke-width="1.5"/>
+            <circle cx="36" cy="30" r="8" fill="rgba(251,191,36,0.4)" stroke="#fbbf24" stroke-width="1"/>
+            <circle cx="34" cy="28" r="3" fill="#fbbf24"/>
+            <!-- pseudopods -->
+            <path d="M64,26 Q74,22 76,28" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
+            <path d="M40,10 Q44,2 48,6" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12,30 Q4,28 6,22" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <div class="ctit" style="color:#fbbf24">Amoeba</div>
+          <div class="ctxt"><strong style="color:#f1f5f9">Unicellular</strong> — single cell performs all life functions. Changes shape to move and engulf food.</div>
+        </div>
+        <!-- Bacteria -->
+        <div class="crd" style="border-color:rgba(248,113,113,0.3)">
+          <svg width="80" height="60" viewBox="0 0 80 60" style="margin-bottom:6px">
+            <rect x="14" y="22" width="52" height="18" rx="9" fill="rgba(248,113,113,0.2)" stroke="#f87171" stroke-width="1.5"/>
+            <circle cx="25" cy="31" r="3" fill="rgba(248,113,113,0.4)"/>
+            <circle cx="40" cy="31" r="3" fill="rgba(248,113,113,0.4)"/>
+            <circle cx="55" cy="31" r="3" fill="rgba(248,113,113,0.4)"/>
+            <!-- flagella -->
+            <path d="M66,31 Q74,25 76,18 Q78,12 72,10" fill="none" stroke="#f87171" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M66,31 Q72,38 70,46" fill="none" stroke="#f87171" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <div class="ctit" style="color:#f87171">Bacteria</div>
+          <div class="ctxt"><strong style="color:#f1f5f9">Unicellular</strong> prokaryote — no nuclear membrane, simplest living cells. Some have flagella.</div>
+        </div>
+        <!-- Human -->
+        <div class="crd" style="border-color:rgba(96,165,250,0.3)">
+          <svg width="80" height="60" viewBox="0 0 80 60" style="margin-bottom:6px">
+            <!-- many small cells -->
+            <rect x="4" y="4" width="16" height="12" rx="3" fill="rgba(96,165,250,0.2)" stroke="#60a5fa" stroke-width="1"/>
+            <rect x="22" y="4" width="16" height="12" rx="3" fill="rgba(96,165,250,0.2)" stroke="#60a5fa" stroke-width="1"/>
+            <rect x="40" y="4" width="16" height="12" rx="3" fill="rgba(96,165,250,0.2)" stroke="#60a5fa" stroke-width="1"/>
+            <rect x="58" y="4" width="16" height="12" rx="3" fill="rgba(96,165,250,0.2)" stroke="#60a5fa" stroke-width="1"/>
+            <rect x="4" y="18" width="16" height="12" rx="3" fill="rgba(96,165,250,0.2)" stroke="#60a5fa" stroke-width="1"/>
+            <rect x="22" y="18" width="16" height="12" rx="3" fill="rgba(96,165,250,0.2)" stroke="#60a5fa" stroke-width="1"/>
+            <rect x="40" y="18" width="16" height="12" rx="3" fill="rgba(96,165,250,0.2)" stroke="#60a5fa" stroke-width="1"/>
+            <rect x="58" y="18" width="16" height="12" rx="3" fill="rgba(96,165,250,0.2)" stroke="#60a5fa" stroke-width="1"/>
+            <rect x="4" y="32" width="16" height="12" rx="3" fill="rgba(96,165,250,0.2)" stroke="#60a5fa" stroke-width="1"/>
+            <rect x="22" y="32" width="16" height="12" rx="3" fill="rgba(96,165,250,0.2)" stroke="#60a5fa" stroke-width="1"/>
+            <rect x="40" y="32" width="16" height="12" rx="3" fill="rgba(96,165,250,0.2)" stroke="#60a5fa" stroke-width="1"/>
+            <rect x="58" y="32" width="16" height="12" rx="3" fill="rgba(96,165,250,0.2)" stroke="#60a5fa" stroke-width="1"/>
+            <text x="40" y="56" text-anchor="middle" font-family="'Fira Code',monospace" font-size="9" fill="#64748b">37 trillion cells!</text>
+          </svg>
+          <div class="ctit" style="color:#60a5fa">Humans</div>
+          <div class="ctxt"><strong style="color:#f1f5f9">Multicellular</strong> — ~37 trillion cells, each specialised for a function. Work together as tissues and organs.</div>
+        </div>
+        <!-- Plant -->
+        <div class="crd" style="border-color:rgba(16,185,129,0.3)">
+          <svg width="80" height="60" viewBox="0 0 80 60" style="margin-bottom:6px">
+            <!-- plant cells with cell walls -->
+            <rect x="4" y="4" width="22" height="16" rx="1" fill="rgba(16,185,129,0.15)" stroke="#10b981" stroke-width="1.5"/>
+            <circle cx="15" cy="12" r="3" fill="rgba(16,185,129,0.4)"/>
+            <rect x="28" y="4" width="22" height="16" rx="1" fill="rgba(16,185,129,0.15)" stroke="#10b981" stroke-width="1.5"/>
+            <circle cx="39" cy="12" r="3" fill="rgba(16,185,129,0.4)"/>
+            <rect x="52" y="4" width="22" height="16" rx="1" fill="rgba(16,185,129,0.15)" stroke="#10b981" stroke-width="1.5"/>
+            <circle cx="63" cy="12" r="3" fill="rgba(16,185,129,0.4)"/>
+            <rect x="4" y="22" width="22" height="16" rx="1" fill="rgba(16,185,129,0.15)" stroke="#10b981" stroke-width="1.5"/>
+            <circle cx="15" cy="30" r="3" fill="rgba(16,185,129,0.4)"/>
+            <rect x="28" y="22" width="22" height="16" rx="1" fill="rgba(16,185,129,0.15)" stroke="#10b981" stroke-width="1.5"/>
+            <circle cx="39" cy="30" r="3" fill="rgba(16,185,129,0.4)"/>
+            <rect x="52" y="22" width="22" height="16" rx="1" fill="rgba(16,185,129,0.15)" stroke="#10b981" stroke-width="1.5"/>
+            <circle cx="63" cy="30" r="3" fill="rgba(16,185,129,0.4)"/>
+            <rect x="4" y="40" width="22" height="16" rx="1" fill="rgba(16,185,129,0.15)" stroke="#10b981" stroke-width="1.5"/>
+            <rect x="28" y="40" width="22" height="16" rx="1" fill="rgba(16,185,129,0.15)" stroke="#10b981" stroke-width="1.5"/>
+            <rect x="52" y="40" width="22" height="16" rx="1" fill="rgba(16,185,129,0.15)" stroke="#10b981" stroke-width="1.5"/>
+          </svg>
+          <div class="ctit" style="color:#10b981">Plants</div>
+          <div class="ctxt"><strong style="color:#f1f5f9">Multicellular</strong> — rectangular cells with rigid cell walls. Specialised cells: leaf cells, root cells, stem cells.</div>
+        </div>
+      </div>
+    </div>
+    <div class="c45">
+      <div class="dbox">
+        <div class="dlbl">Key concept</div>
+        Whether an organism has one cell or trillions, the <strong style="color:var(--green)">cell is the basic unit of structure and function</strong>.
+      </div>
+      <ul class="bl" style="margin-top:16px">
+        <li><strong style="color:var(--amber)">Unicellular:</strong> One cell does everything — Amoeba, Paramecium, Bacteria, Yeast</li>
+        <li><strong style="color:var(--blue)">Multicellular:</strong> Cells divide labour — Animals, Plants, Fungi</li>
+        <li>More complex organisms have greater <strong>specialisation</strong> of cells</li>
+        <li>All cells, regardless of type, share basic features</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 9: HUMAN CELL TYPES ==================== -->
+<section class="slide" id="s9">
+  <div class="shead">
+    <div class="stag">Section C — Variety of Cells</div>
+    <h2 class="st">Different Human Cell Types</h2>
+    <div class="ssub">Shape is adapted to function</div>
+  </div>
+  <div class="sbody col">
+    <div style="display:flex;gap:20px;justify-content:space-around;align-items:flex-end;flex:1;padding-bottom:10px">
+      <!-- Nerve cell -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;flex:1">
+        <svg viewBox="0 0 100 160" style="max-height:140px;width:auto">
+          <defs><marker id="a2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#60a5fa"/></marker></defs>
+          <!-- Cell body -->
+          <ellipse cx="50" cy="55" rx="28" ry="24" fill="rgba(96,165,250,0.2)" stroke="#60a5fa" stroke-width="1.5"/>
+          <circle cx="50" cy="55" r="8" fill="rgba(96,165,250,0.5)"/>
+          <!-- Dendrites -->
+          <path d="M50,32 Q44,20 36,14" fill="none" stroke="#60a5fa" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M50,32 Q56,20 64,12" fill="none" stroke="#60a5fa" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M25,48 Q14,42 8,34" fill="none" stroke="#60a5fa" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M75,48 Q86,42 92,36" fill="none" stroke="#60a5fa" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- Axon -->
+          <path d="M50,78 L50,158" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round"/>
+          <path d="M44,140 L50,158 L56,140" fill="none" stroke="#60a5fa" stroke-width="1.5"/>
+          <!-- Myelin sheaths -->
+          <rect x="44" y="88" width="12" height="10" rx="5" fill="rgba(96,165,250,0.3)" stroke="#93c5fd" stroke-width="1"/>
+          <rect x="44" y="106" width="12" height="10" rx="5" fill="rgba(96,165,250,0.3)" stroke="#93c5fd" stroke-width="1"/>
+          <rect x="44" y="124" width="12" height="10" rx="5" fill="rgba(96,165,250,0.3)" stroke="#93c5fd" stroke-width="1"/>
+        </svg>
+        <div style="font-size:13px;font-weight:600;color:#60a5fa">Nerve Cell</div>
+        <div style="font-size:11px;color:#64748b;text-align:center">Long axon for<br>signal transmission</div>
+      </div>
+      <!-- Red Blood Cell -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;flex:1">
+        <svg viewBox="0 0 100 100" style="max-height:100px;width:auto">
+          <!-- RBC biconcave disc - top view -->
+          <ellipse cx="50" cy="50" rx="40" ry="40" fill="rgba(248,113,113,0.25)" stroke="#f87171" stroke-width="2"/>
+          <ellipse cx="50" cy="50" rx="22" ry="22" fill="rgba(248,113,113,0.15)" stroke="rgba(248,113,113,0.5)" stroke-width="1"/>
+          <!-- No nucleus label -->
+          <text x="50" y="54" text-anchor="middle" font-family="'Fira Code',monospace" font-size="9" fill="rgba(248,113,113,0.7)">No nucleus</text>
+        </svg>
+        <div style="font-size:13px;font-weight:600;color:#f87171">Red Blood Cell</div>
+        <div style="font-size:11px;color:#64748b;text-align:center">Biconcave disc<br>no nucleus (max O₂)</div>
+      </div>
+      <!-- Muscle cell -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;flex:1">
+        <svg viewBox="0 0 100 100" style="max-height:100px;width:auto">
+          <rect x="8" y="30" width="84" height="26" rx="4" fill="rgba(167,139,250,0.2)" stroke="#a78bfa" stroke-width="2"/>
+          <!-- Striations -->
+          <line x1="22" y1="30" x2="22" y2="56" stroke="rgba(167,139,250,0.4)" stroke-width="1.5"/>
+          <line x1="36" y1="30" x2="36" y2="56" stroke="rgba(167,139,250,0.4)" stroke-width="1.5"/>
+          <line x1="50" y1="30" x2="50" y2="56" stroke="rgba(167,139,250,0.4)" stroke-width="1.5"/>
+          <line x1="64" y1="30" x2="64" y2="56" stroke="rgba(167,139,250,0.4)" stroke-width="1.5"/>
+          <line x1="78" y1="30" x2="78" y2="56" stroke="rgba(167,139,250,0.4)" stroke-width="1.5"/>
+          <!-- Nuclei -->
+          <ellipse cx="24" cy="43" rx="5" ry="3" fill="rgba(167,139,250,0.7)"/>
+          <ellipse cx="52" cy="43" rx="5" ry="3" fill="rgba(167,139,250,0.7)"/>
+          <ellipse cx="78" cy="43" rx="5" ry="3" fill="rgba(167,139,250,0.7)"/>
+          <!-- Tapered ends -->
+          <path d="M8,43 Q2,43 2,48 Q2,52 8,52" fill="none" stroke="#a78bfa" stroke-width="1.5"/>
+          <path d="M92,43 Q98,43 98,48 Q98,52 92,52" fill="none" stroke="#a78bfa" stroke-width="1.5"/>
+        </svg>
+        <div style="font-size:13px;font-weight:600;color:#a78bfa">Muscle Cell</div>
+        <div style="font-size:11px;color:#64748b;text-align:center">Long, striated,<br>for contraction</div>
+      </div>
+      <!-- Sperm -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;flex:1">
+        <svg viewBox="0 0 60 130" style="max-height:130px;width:auto">
+          <!-- Head -->
+          <ellipse cx="30" cy="24" rx="18" ry="22" fill="rgba(45,212,191,0.2)" stroke="#2dd4bf" stroke-width="1.5"/>
+          <ellipse cx="30" cy="18" rx="14" ry="16" fill="rgba(45,212,191,0.35)" stroke="#2dd4bf" stroke-width="1"/>
+          <!-- Midpiece -->
+          <rect x="26" y="44" width="8" height="20" rx="3" fill="rgba(45,212,191,0.3)" stroke="#2dd4bf" stroke-width="1.5"/>
+          <!-- Tail -->
+          <path d="M30,64 Q34,80 28,96 Q24,112 30,128" fill="none" stroke="#2dd4bf" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <div style="font-size:13px;font-weight:600;color:#2dd4bf">Sperm Cell</div>
+        <div style="font-size:11px;color:#64748b;text-align:center">Tail for motility<br>compact DNA</div>
+      </div>
+      <!-- Ovum -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;flex:1">
+        <svg viewBox="0 0 120 120" style="max-height:110px;width:auto">
+          <!-- Zona pellucida -->
+          <circle cx="60" cy="60" r="55" fill="rgba(251,191,36,0.06)" stroke="rgba(251,191,36,0.3)" stroke-width="2" stroke-dasharray="4,3"/>
+          <!-- Cell membrane -->
+          <circle cx="60" cy="60" r="44" fill="rgba(251,191,36,0.15)" stroke="#fbbf24" stroke-width="2"/>
+          <!-- Cytoplasm detail -->
+          <circle cx="60" cy="60" r="40" fill="rgba(251,191,36,0.1)"/>
+          <!-- Nucleus -->
+          <circle cx="60" cy="60" r="14" fill="rgba(251,191,36,0.45)" stroke="#fbbf24" stroke-width="1.5"/>
+          <circle cx="56" cy="57" r="5" fill="rgba(251,191,36,0.8)"/>
+          <text x="60" y="106" text-anchor="middle" font-family="'Fira Code',monospace" font-size="8" fill="#64748b">zona pellucida</text>
+        </svg>
+        <div style="font-size:13px;font-weight:600;color:#fbbf24">Ovum (Egg Cell)</div>
+        <div style="font-size:11px;color:#64748b;text-align:center">Largest human cell<br>stores nutrients</div>
+      </div>
+    </div>
+    <div class="dbox" style="margin-top:4px">
+      <div class="dlbl">Principle</div>
+      Cell shape is adapted to its specific function — this is a fundamental principle of biology.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 10: WHAT IS A CELL MADE OF ==================== -->
+<section class="slide" id="s10">
+  <div class="shead">
+    <div class="stag">Section D — Basic Cell Structure</div>
+    <h2 class="st">What is a Cell Made Of?</h2>
+    <div class="ssub">Three universal components of all cells</div>
+  </div>
+  <div class="sbody col">
+    <div class="tricard" style="margin-top:10px">
+      <div class="tcard">
+        <svg width="60" height="60" viewBox="0 0 60 60" style="margin:0 auto 8px">
+          <circle cx="30" cy="30" r="26" fill="none" stroke="#10b981" stroke-width="3"/>
+          <circle cx="30" cy="30" r="20" fill="rgba(16,185,129,0.1)"/>
+          <text x="30" y="34" text-anchor="middle" font-family="'Fira Code',monospace" font-size="9" fill="#10b981">Plasma</text>
+          <text x="30" y="44" text-anchor="middle" font-family="'Fira Code',monospace" font-size="9" fill="#10b981">Membrane</text>
+        </svg>
+        <div class="tcn">Plasma Membrane</div>
+        <div class="tcd">Thin, flexible outer boundary. Selectively controls what enters and leaves the cell. Made of lipids and proteins.</div>
+      </div>
+      <div class="tcard">
+        <svg width="60" height="60" viewBox="0 0 60 60" style="margin:0 auto 8px">
+          <circle cx="30" cy="30" r="26" fill="rgba(96,165,250,0.12)" stroke="rgba(16,185,129,0.3)" stroke-width="1"/>
+          <ellipse cx="28" cy="28" rx="12" ry="10" fill="rgba(96,165,250,0.3)" stroke="#60a5fa" stroke-width="2"/>
+          <text x="30" y="50" text-anchor="middle" font-family="'Fira Code',monospace" font-size="9" fill="#60a5fa">Cytoplasm</text>
+        </svg>
+        <div class="tcn" style="color:var(--blue)">Cytoplasm</div>
+        <div class="tcd">Jelly-like fluid filling the cell. Contains water, salts, proteins, and all organelles. Site of many chemical reactions.</div>
+      </div>
+      <div class="tcard">
+        <svg width="60" height="60" viewBox="0 0 60 60" style="margin:0 auto 8px">
+          <circle cx="30" cy="30" r="26" fill="rgba(16,185,129,0.08)" stroke="rgba(16,185,129,0.2)" stroke-width="1"/>
+          <ellipse cx="30" cy="30" rx="15" ry="12" fill="rgba(30,58,138,0.6)" stroke="#93c5fd" stroke-width="2"/>
+          <circle cx="28" cy="28" r="5" fill="rgba(59,130,246,0.8)"/>
+          <text x="30" y="50" text-anchor="middle" font-family="'Fira Code',monospace" font-size="9" fill="#93c5fd">Nucleus</text>
+        </svg>
+        <div class="tcn" style="color:var(--purple)">Nucleus</div>
+        <div class="tcd">The control centre of the cell. Directs all cellular activities. Contains chromosomes (DNA) that carry genetic information.</div>
+      </div>
+    </div>
+    <div class="dbox" style="margin-top:20px">
+      <div class="dlbl">Universal</div>
+      These three components are found in <strong style="color:var(--green)">all living cells</strong> — from bacteria to plants to human nerve cells.
+    </div>
+    <div style="display:flex;gap:14px;margin-top:14px">
+      <div style="flex:1;background:var(--card2);border:1px solid rgba(16,185,129,0.12);border-radius:8px;padding:13px 16px">
+        <div style="font-size:13px;color:var(--green);margin-bottom:5px">PLANT CELLS ALSO HAVE</div>
+        <div style="font-size:16px;color:var(--sub)">Cell wall · Plastids · Large vacuole</div>
+      </div>
+      <div style="flex:1;background:var(--card2);border:1px solid rgba(16,185,129,0.12);border-radius:8px;padding:13px 16px">
+        <div style="font-size:13px;color:var(--blue);margin-bottom:5px">ANIMAL CELLS ALSO HAVE</div>
+        <div style="font-size:16px;color:var(--sub)">Centrioles · Lysosomes · Small vacuoles</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== SLIDE 11: PROKARYOTIC vs EUKARYOTIC ==================== -->
+<section class="slide" id="s11">
+  <div class="shead">
+    <div class="stag">Section D — Cell Types</div>
+    <h2 class="st">Prokaryotic vs Eukaryotic Cells</h2>
+    <div class="ssub">The nucleus defines the divide</div>
+  </div>
+  <div class="sbody col">
+    <table class="dt" style="margin-bottom:16px">
+      <tr><th>Feature</th><th style="color:#fbbf24">Prokaryotic</th><th style="color:#60a5fa">Eukaryotic</th></tr>
+      <tr><td>Nucleus</td><td style="color:#fbbf24">No membrane-bound nucleus; DNA free in cytoplasm (nucleoid region)</td><td style="color:#60a5fa">True nucleus with double nuclear membrane</td></tr>
+      <tr><td>Size</td><td style="color:#fbbf24">1–10 µm (smaller)</td><td style="color:#60a5fa">10–100 µm (larger)</td></tr>
+      <tr><td>Organelles</td><td style="color:#fbbf24">No membrane-bound organelles</td><td style="color:#60a5fa">Mitochondria, ER, Golgi, etc.</td></tr>
+      <tr><td>Cell Wall</td><td style="color:#fbbf24">Present (peptidoglycan in bacteria)</td><td style="color:#60a5fa">Present in plants (cellulose); absent in animals</td></tr>
+      <tr><td>Ribosomes</td><td style="color:#fbbf24">70S (smaller)</td><td style="color:#60a5fa">80S (larger); 70S in organelles</td></tr>
+      <tr><td>Examples</td><td style="color:#fbbf24">Bacteria, Blue-green algae (Cyanobacteria)</td><td style="color:#60a5fa">Plant, Animal, Fungal, Protist cells</td></tr>
+    </table>
+    <div class="dbox">
+      <div class="dlbl">Key Insight</div>
+      The presence of a <strong style="color:var(--green)">membrane-bound nucleus</strong> is the defining feature of eukaryotic cells. "Prokaryote" means <em>before nucleus</em>; "eukaryote" means <em>true nucleus</em>.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 12: CHECKPOINT 3 ==================== -->
+<section class="slide" id="s12">
+  <div class="shead">
+    <div class="stag">Section D — Checkpoint</div>
+    <h2 class="st">Test Yourself</h2>
+  </div>
+  <div class="sbody col">
+    <div class="cpbdg">✦ Checkpoint 3</div>
+    <div class="ql">
+      <div class="qi">
+        <div class="qlvl">Recall</div>
+        <div class="qtxt">1. What is the key difference between prokaryotic and eukaryotic cells?</div>
+        <button class="rbtn" onclick="ra('c1')">Reveal Answer</button>
+        <div class="ans" id="c1">Prokaryotic cells lack a membrane-bound nucleus — their genetic material lies free in the cytoplasm (nucleoid). Eukaryotic cells have a true nucleus enclosed by a double nuclear membrane.</div>
+      </div>
+      <div class="qi">
+        <div class="qlvl">Understanding</div>
+        <div class="qtxt">2. Why are bacteria classified as prokaryotes?</div>
+        <button class="rbtn" onclick="ra('c2')">Reveal Answer</button>
+        <div class="ans" id="c2">Bacteria lack a membrane-bound nucleus and membrane-bound organelles. Their DNA is a single circular chromosome lying free in the cytoplasm. They also have 70S ribosomes (smaller) and a cell wall made of peptidoglycan.</div>
+      </div>
+      <div class="qi">
+        <div class="qlvl">Application</div>
+        <div class="qtxt">3. A cell is found to have a nucleus surrounded by a double membrane. Is it prokaryotic or eukaryotic?</div>
+        <button class="rbtn" onclick="ra('c3')">Reveal Answer</button>
+        <div class="ans" id="c3">Eukaryotic. The double-membrane nuclear envelope is the defining feature of eukaryotic cells. Prokaryotic cells have no nuclear membrane at all.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 13: PLASMA MEMBRANE ==================== -->
+<section class="slide" id="s13">
+  <div class="shead">
+    <div class="stag">Section E — Cell Components</div>
+    <h2 class="st">The Plasma Membrane</h2>
+    <div class="ssub">Selectively permeable boundary of the cell</div>
+  </div>
+  <div class="sbody row" style="gap:32px">
+    <div class="c45" style="justify-content:center;align-items:center">
+      <svg viewBox="0 0 280 260" style="width:100%;max-width:280px">
+        <defs>
+          <linearGradient id="bilayer" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="rgba(16,185,129,0.15)"/>
+            <stop offset="100%" stop-color="rgba(96,165,250,0.1)"/>
+          </linearGradient>
+        </defs>
+        <text x="140" y="18" text-anchor="middle" font-family="'Fira Code',monospace" font-size="11" fill="#64748b">OUTSIDE (extracellular)</text>
+        <!-- Outer phospholipid heads -->
+        <circle cx="30" cy="50" r="9" fill="#10b981" opacity="0.8"/>
+        <circle cx="60" cy="50" r="9" fill="#10b981" opacity="0.8"/>
+        <circle cx="90" cy="50" r="9" fill="#10b981" opacity="0.8"/>
+        <circle cx="120" cy="50" r="9" fill="#10b981" opacity="0.8"/>
+        <circle cx="150" cy="50" r="9" fill="#10b981" opacity="0.8"/>
+        <circle cx="180" cy="50" r="9" fill="#10b981" opacity="0.8"/>
+        <circle cx="210" cy="50" r="9" fill="#10b981" opacity="0.8"/>
+        <circle cx="240" cy="50" r="9" fill="#10b981" opacity="0.8"/>
+        <!-- Outer tails -->
+        <line x1="30" y1="59" x2="30" y2="95" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="60" y1="59" x2="60" y2="95" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="90" y1="59" x2="90" y2="95" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="120" y1="59" x2="120" y2="95" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="150" y1="59" x2="150" y2="95" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="180" y1="59" x2="180" y2="95" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="210" y1="59" x2="210" y2="95" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="240" y1="59" x2="240" y2="95" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- Inner tails -->
+        <line x1="30" y1="165" x2="30" y2="130" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="60" y1="165" x2="60" y2="130" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="90" y1="165" x2="90" y2="130" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="120" y1="165" x2="120" y2="130" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="150" y1="165" x2="150" y2="130" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="180" y1="165" x2="180" y2="130" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="210" y1="165" x2="210" y2="130" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="240" y1="165" x2="240" y2="130" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- Inner phospholipid heads -->
+        <circle cx="30" cy="174" r="9" fill="#60a5fa" opacity="0.8"/>
+        <circle cx="60" cy="174" r="9" fill="#60a5fa" opacity="0.8"/>
+        <circle cx="90" cy="174" r="9" fill="#60a5fa" opacity="0.8"/>
+        <circle cx="120" cy="174" r="9" fill="#60a5fa" opacity="0.8"/>
+        <circle cx="150" cy="174" r="9" fill="#60a5fa" opacity="0.8"/>
+        <circle cx="180" cy="174" r="9" fill="#60a5fa" opacity="0.8"/>
+        <circle cx="210" cy="174" r="9" fill="#60a5fa" opacity="0.8"/>
+        <circle cx="240" cy="174" r="9" fill="#60a5fa" opacity="0.8"/>
+        <!-- Protein channel -->
+        <rect x="100" y="55" width="22" height="110" rx="8" fill="rgba(167,139,250,0.35)" stroke="#a78bfa" stroke-width="2"/>
+        <text x="111" y="115" text-anchor="middle" font-family="'Fira Code',monospace" font-size="9" fill="#a78bfa">Protein</text>
+        <!-- Hydrophobic zone label -->
+        <rect x="0" y="95" width="270" height="36" fill="rgba(251,191,36,0.05)"/>
+        <text x="268" y="117" text-anchor="end" font-family="'Fira Code',monospace" font-size="9" fill="#64748b">hydrophobic</text>
+        <text x="140" y="200" text-anchor="middle" font-family="'Fira Code',monospace" font-size="11" fill="#64748b">INSIDE (cytoplasm)</text>
+        <!-- Legend -->
+        <circle cx="20" cy="230" r="7" fill="#10b981" opacity="0.8"/>
+        <text x="32" y="234" font-family="'Fira Code',monospace" font-size="10" fill="#94a3b8">Phospholipid head (hydrophilic)</text>
+        <circle cx="20" cy="250" r="5" fill="#fbbf24"/>
+        <text x="32" y="254" font-family="'Fira Code',monospace" font-size="10" fill="#94a3b8">Fatty acid tails (hydrophobic)</text>
+      </svg>
+    </div>
+    <div class="c55">
+      <ul class="bl">
+        <li><strong>Selectively permeable</strong> — controls what enters and exits the cell</li>
+        <li>Made of a <strong>phospholipid bilayer</strong> with embedded proteins</li>
+        <li>Hydrophilic heads face outward; hydrophobic tails face inward</li>
+        <li>Proteins act as <strong>channels, receptors, and carriers</strong></li>
+        <li>Described by the <strong>Fluid Mosaic Model</strong> (Singer & Nicolson, 1972)</li>
+        <li class="sub">Fluid: phospholipids can move laterally</li>
+        <li class="sub">Mosaic: proteins embedded like tiles</li>
+      </ul>
+      <div class="dbox" style="margin-top:14px">
+        <div class="dlbl">Important</div>
+        The plasma membrane is present in <strong style="color:var(--green)">all cells</strong> — prokaryotic and eukaryotic. In plant cells, it lies <em>inside</em> the cell wall. In animal cells, it is the outermost boundary.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 14: CELL WALL ==================== -->
+<section class="slide" id="s14">
+  <div class="shead">
+    <div class="stag">Section E — Cell Components</div>
+    <h2 class="st">The Cell Wall</h2>
+    <div class="ssub">Rigid outer layer — plants, fungi, bacteria only</div>
+  </div>
+  <div class="sbody row" style="gap:32px">
+    <div class="c45" style="justify-content:center;align-items:center">
+      <svg viewBox="0 0 260 280" style="width:100%;max-width:240px">
+        <!-- Plant cell outline -->
+        <rect x="20" y="20" width="220" height="240" rx="12" fill="rgba(16,185,129,0.06)" stroke="#10b981" stroke-width="6"/>
+        <!-- Cell wall label indicator -->
+        <text x="130" y="14" text-anchor="middle" font-family="'Fira Code',monospace" font-size="10" fill="#10b981">← Cell Wall (cellulose) →</text>
+        <!-- Plasma membrane just inside -->
+        <rect x="26" y="26" width="208" height="228" rx="9" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="5,3"/>
+        <!-- Cytoplasm fill -->
+        <rect x="28" y="28" width="204" height="224" rx="8" fill="rgba(16,185,129,0.04)"/>
+        <!-- Nucleus -->
+        <ellipse cx="130" cy="140" rx="45" ry="38" fill="rgba(30,58,138,0.5)" stroke="#93c5fd" stroke-width="2"/>
+        <ellipse cx="118" cy="130" rx="14" ry="11" fill="rgba(59,130,246,0.7)"/>
+        <!-- Vacuole -->
+        <ellipse cx="130" cy="80" rx="50" ry="30" fill="rgba(96,165,250,0.1)" stroke="rgba(96,165,250,0.4)" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <text x="130" y="84" text-anchor="middle" font-family="'Fira Code',monospace" font-size="9" fill="#60a5fa">Vacuole</text>
+        <!-- Chloroplasts -->
+        <ellipse cx="55" cy="165" rx="18" ry="10" fill="rgba(16,185,129,0.5)" stroke="#22c55e" stroke-width="1.5"/>
+        <ellipse cx="55" cy="195" rx="18" ry="10" fill="rgba(16,185,129,0.5)" stroke="#22c55e" stroke-width="1.5"/>
+        <ellipse cx="205" cy="165" rx="18" ry="10" fill="rgba(16,185,129,0.5)" stroke="#22c55e" stroke-width="1.5"/>
+        <!-- Labels -->
+        <line x1="28" y1="140" x2="5" y2="155" stroke="rgba(96,165,250,0.4)" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="2" y="162" text-anchor="end" font-family="'Fira Code',monospace" font-size="9" fill="#60a5fa" transform="rotate(-8 2 162)">Plasma</text>
+        <text x="2" y="173" text-anchor="end" font-family="'Fira Code',monospace" font-size="9" fill="#60a5fa" transform="rotate(-8 2 173)">Membrane</text>
+      </svg>
+    </div>
+    <div class="c55">
+      <div class="dbox">
+        <div class="dlbl">Composition by organism</div>
+        <ul class="bl" style="margin-top:6px">
+          <li><strong style="color:var(--green)">Plant cells</strong> — cellulose (rigid, strong)</li>
+          <li><strong style="color:var(--amber)">Fungi</strong> — chitin</li>
+          <li><strong style="color:var(--red)">Bacteria</strong> — peptidoglycan (murein)</li>
+          <li><strong style="color:var(--blue)">Animal cells</strong> — <em>no cell wall</em></li>
+        </ul>
+      </div>
+      <ul class="bl" style="margin-top:16px">
+        <li><strong>Fully permeable</strong> — does NOT control passage of substances</li>
+        <li>Provides <strong>mechanical support, rigidity, and shape</strong></li>
+        <li>Prevents cell from <strong>bursting in hypotonic solution</strong> (turgor)</li>
+        <li>Allows plant cells to maintain <strong>turgor pressure</strong></li>
+        <li>Plasmodesmata — tiny channels through cell wall for cell-to-cell communication</li>
+      </ul>
+      <div class="gq" style="margin-top:14px">Why do plant cells not burst when placed in pure water, but animal cells do?</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 15: THE NUCLEUS ==================== -->
+<section class="slide" id="s15">
+  <div class="shead">
+    <div class="stag">Section E — Cell Components</div>
+    <h2 class="st">The Nucleus</h2>
+    <div class="ssub">Control centre of the cell</div>
+  </div>
+  <div class="sbody row" style="gap:28px">
+    <div class="c45" style="justify-content:center;align-items:center">
+      <svg viewBox="0 0 260 260" style="width:100%;max-width:250px">
+        <!-- Nuclear envelope outer -->
+        <ellipse cx="130" cy="130" rx="115" ry="105" fill="rgba(30,58,138,0.2)" stroke="#93c5fd" stroke-width="3"/>
+        <!-- Nuclear envelope inner -->
+        <ellipse cx="130" cy="130" rx="107" ry="97" fill="rgba(30,58,138,0.15)" stroke="#60a5fa" stroke-width="1.5" stroke-dasharray="6,3"/>
+        <!-- Nuclear pores -->
+        <circle cx="130" cy="25" r="7" fill="rgba(167,139,250,0.8)" stroke="#a78bfa" stroke-width="1.5"/>
+        <circle cx="38" cy="80" r="7" fill="rgba(167,139,250,0.8)" stroke="#a78bfa" stroke-width="1.5"/>
+        <circle cx="38" cy="180" r="7" fill="rgba(167,139,250,0.8)" stroke="#a78bfa" stroke-width="1.5"/>
+        <circle cx="130" cy="235" r="7" fill="rgba(167,139,250,0.8)" stroke="#a78bfa" stroke-width="1.5"/>
+        <circle cx="222" cy="80" r="7" fill="rgba(167,139,250,0.8)" stroke="#a78bfa" stroke-width="1.5"/>
+        <circle cx="222" cy="180" r="7" fill="rgba(167,139,250,0.8)" stroke="#a78bfa" stroke-width="1.5"/>
+        <!-- Nucleoplasm -->
+        <ellipse cx="130" cy="130" rx="100" ry="90" fill="rgba(30,58,138,0.3)"/>
+        <!-- Chromatin threads -->
+        <path d="M80,100 C95,90 110,115 95,125 C80,135 100,145 115,140" fill="none" stroke="#f87171" stroke-width="2" stroke-linecap="round"/>
+        <path d="M130,95 C145,85 160,110 148,125 C135,140 155,148 165,142" fill="none" stroke="#f87171" stroke-width="2" stroke-linecap="round"/>
+        <path d="M75,145 C90,135 105,155 95,165" fill="none" stroke="#fca5a5" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- Nucleolus -->
+        <circle cx="130" cy="135" r="24" fill="rgba(96,165,250,0.5)" stroke="#60a5fa" stroke-width="2"/>
+        <text x="130" y="139" text-anchor="middle" font-family="'Fira Code',monospace" font-size="10" font-weight="600" fill="#bfdbfe">Nucleolus</text>
+        <!-- Labels -->
+        <line x1="130" y1="25" x2="155" y2="10" stroke="rgba(167,139,250,0.5)" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="158" y="10" font-family="'Fira Code',monospace" font-size="10" fill="#a78bfa">Nuclear pore</text>
+        <line x1="242" y1="130" x2="260" y2="115" stroke="rgba(147,197,253,0.5)" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="140" y="255" text-anchor="middle" font-family="'Fira Code',monospace" font-size="10" fill="#64748b">Nuclear envelope (double membrane)</text>
+        <text x="10" y="160" font-family="'Fira Code',monospace" font-size="9" fill="#f87171">Chromatin</text>
+      </svg>
+    </div>
+    <div class="c55">
+      <ul class="bl">
+        <li><strong>Nuclear envelope</strong>: double membrane with nuclear pores</li>
+        <li><strong>Nuclear pores</strong>: allow exchange of materials (RNA, proteins) with cytoplasm</li>
+        <li><strong>Nucleoplasm</strong>: fluid inside the nucleus</li>
+        <li><strong>Nucleolus</strong>: site of ribosome RNA (rRNA) synthesis; disappears during cell division</li>
+        <li><strong>Chromatin</strong>: DNA + histone proteins; condenses into chromosomes during cell division</li>
+        <li class="sub">Human cells: 46 chromosomes (23 pairs)</li>
+        <li class="sub">Discovered by <strong>Robert Brown</strong> (1831) in plant cells</li>
+      </ul>
+      <div class="dbox" style="margin-top:14px">
+        <div class="dlbl">Functions</div>
+        Controls all metabolic activities · Carries hereditary information (DNA) · Site of DNA replication · Directs protein synthesis via RNA
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 16: ENDOPLASMIC RETICULUM ==================== -->
+<section class="slide" id="s16">
+  <div class="shead">
+    <div class="stag">Section E — Organelles</div>
+    <h2 class="st">Endoplasmic Reticulum (ER)</h2>
+    <div class="ssub">The cell's internal transport highway</div>
+  </div>
+  <div class="sbody row" style="gap:28px">
+    <div class="half">
+      <div style="background:var(--card);border:1px solid rgba(248,113,113,0.3);border-radius:10px;padding:16px;margin-bottom:14px">
+        <div style="font-size:13px;color:#f87171;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px">Rough ER (RER)</div>
+        <svg viewBox="0 0 240 100" style="width:100%;max-height:90px">
+          <!-- Membrane folds -->
+          <path d="M10,30 Q40,15 70,30 Q100,45 130,30 Q160,15 190,30 Q220,45 240,30" fill="none" stroke="#f87171" stroke-width="2"/>
+          <path d="M10,55 Q40,40 70,55 Q100,70 130,55 Q160,40 190,55 Q220,70 240,55" fill="none" stroke="#f87171" stroke-width="2"/>
+          <!-- Ribosomes (dots on surface) -->
+          <circle cx="20" cy="28" r="4" fill="#fbbf24"/>
+          <circle cx="50" cy="22" r="4" fill="#fbbf24"/>
+          <circle cx="80" cy="28" r="4" fill="#fbbf24"/>
+          <circle cx="110" cy="34" r="4" fill="#fbbf24"/>
+          <circle cx="140" cy="28" r="4" fill="#fbbf24"/>
+          <circle cx="170" cy="22" r="4" fill="#fbbf24"/>
+          <circle cx="200" cy="28" r="4" fill="#fbbf24"/>
+          <circle cx="230" cy="32" r="4" fill="#fbbf24"/>
+          <text x="120" y="85" text-anchor="middle" font-family="'Fira Code',monospace" font-size="10" fill="#fbbf24">● = Ribosomes</text>
+        </svg>
+        <ul class="bl" style="margin-top:8px">
+          <li style="font-size:17px">Has <strong>ribosomes</strong> studded on surface</li>
+          <li style="font-size:17px">Site of <strong>protein synthesis</strong></li>
+          <li style="font-size:17px">Transports proteins to Golgi apparatus</li>
+        </ul>
+      </div>
+      <div style="background:var(--card);border:1px solid rgba(96,165,250,0.3);border-radius:10px;padding:16px">
+        <div style="font-size:13px;color:#60a5fa;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px">Smooth ER (SER)</div>
+        <ul class="bl">
+          <li style="font-size:17px"><strong>No ribosomes</strong> on surface</li>
+          <li style="font-size:17px">Synthesises <strong>lipids and steroids</strong></li>
+          <li style="font-size:17px">Detoxification of drugs and poisons (liver cells)</li>
+          <li style="font-size:17px">Stores calcium ions (muscle cells)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="half" style="justify-content:center">
+      <div class="dbox">
+        <div class="dlbl">Common Functions — Both ER types</div>
+        <ul class="bl" style="margin-top:6px">
+          <li style="font-size:17px">Provide large <strong>surface area</strong> for chemical reactions</li>
+          <li style="font-size:17px">Form a <strong>transport network</strong> within the cell</li>
+          <li style="font-size:17px">Connected to the <strong>nuclear envelope</strong></li>
+          <li style="font-size:17px">Help in <strong>cell membrane formation</strong></li>
+        </ul>
+      </div>
+      <div class="gq" style="margin-top:16px">ER is like the cell's highway system — it connects the nucleus to the cell membrane and transports materials throughout.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 17: MITOCHONDRIA ==================== -->
+<section class="slide" id="s17">
+  <div class="shead">
+    <div class="stag">Section E — Organelles</div>
+    <h2 class="st">Mitochondria</h2>
+    <div class="ssub">Powerhouse of the cell — ATP factory</div>
+  </div>
+  <div class="sbody row" style="gap:32px">
+    <div class="c45" style="justify-content:center;align-items:center">
+      <svg viewBox="0 0 260 220" style="width:100%;max-width:260px">
+        <!-- Outer membrane -->
+        <ellipse cx="130" cy="110" rx="118" ry="90" fill="rgba(251,191,36,0.08)" stroke="#fbbf24" stroke-width="2.5"/>
+        <!-- Inner membrane with cristae -->
+        <ellipse cx="130" cy="110" rx="106" ry="78" fill="rgba(251,191,36,0.04)" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="6,3"/>
+        <!-- Matrix -->
+        <ellipse cx="130" cy="110" rx="98" ry="70" fill="rgba(251,191,36,0.06)"/>
+        <!-- Cristae folds -->
+        <path d="M40,100 Q60,75 80,100 Q100,125 120,100" fill="none" stroke="#f59e0b" stroke-width="2"/>
+        <path d="M100,130 Q120,105 140,130 Q160,155 180,130" fill="none" stroke="#f59e0b" stroke-width="2"/>
+        <path d="M150,90 Q170,65 190,90 Q210,115 220,95" fill="none" stroke="#f59e0b" stroke-width="2"/>
+        <!-- DNA circle in matrix -->
+        <circle cx="80" cy="130" r="14" fill="none" stroke="#f87171" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <text x="80" y="134" text-anchor="middle" font-family="'Fira Code',monospace" font-size="8" fill="#f87171">DNA</text>
+        <!-- Ribosome dots -->
+        <circle cx="170" cy="115" r="4" fill="#a78bfa"/>
+        <circle cx="180" cy="130" r="4" fill="#a78bfa"/>
+        <circle cx="165" cy="140" r="4" fill="#a78bfa"/>
+        <!-- Labels -->
+        <text x="130" y="18" text-anchor="middle" font-family="'Fira Code',monospace" font-size="10" fill="#fbbf24">Outer membrane</text>
+        <text x="245" y="70" font-family="'Fira Code',monospace" font-size="9" fill="#94a3b8">Cristae</text>
+        <text x="245" y="130" font-family="'Fira Code',monospace" font-size="9" fill="#a78bfa">Ribosomes</text>
+        <text x="130" y="205" text-anchor="middle" font-family="'Fira Code',monospace" font-size="10" fill="#f59e0b">Matrix (site of Krebs cycle)</text>
+      </svg>
+    </div>
+    <div class="c55">
+      <ul class="bl">
+        <li><strong>Double membrane</strong>: outer (smooth) + inner (folded into <em>cristae</em>)</li>
+        <li>Cristae increase <strong>surface area</strong> for ATP production</li>
+        <li>Matrix: fluid-filled space containing <strong>enzymes, DNA, ribosomes</strong></li>
+        <li>Has its own <strong>circular DNA and ribosomes</strong> (70S — like prokaryotes)</li>
+        <li class="sub">Supports the <strong>endosymbiotic theory</strong> — mitochondria were once free-living bacteria</li>
+        <li>Found in <strong>all eukaryotic cells</strong>; more in high-energy cells (muscle, liver)</li>
+      </ul>
+      <div class="dbox" style="margin-top:14px">
+        <div class="dlbl">Cellular Respiration (in matrix + cristae)</div>
+        <div style="font-size:20px;color:var(--green);margin-top:4px">C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + <strong>ATP</strong></div>
+        <div style="font-size:15px;color:var(--sub);margin-top:6px">ATP = Adenosine Triphosphate — the universal energy currency</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 18: PLASTIDS ==================== -->
+<section class="slide" id="s18">
+  <div class="shead">
+    <div class="stag">Section E — Organelles</div>
+    <h2 class="st">Plastids</h2>
+    <div class="ssub">Plant-cell only organelles — pigment and storage</div>
+  </div>
+  <div class="sbody col">
+    <div class="prow">
+      <div class="pswatch" style="background:linear-gradient(135deg,#15803d,#4ade80)"></div>
+      <div>
+        <div class="pname" style="color:#4ade80">Chloroplasts</div>
+        <div class="pdesc">Contain <strong>chlorophyll</strong> (green pigment). Site of <strong>photosynthesis</strong>. Have thylakoid membranes (stacked into grana) and stroma. Own DNA and ribosomes. Most important plastid.</div>
+      </div>
+    </div>
+    <div class="prow">
+      <div class="pswatch" style="background:linear-gradient(135deg,#b45309,#f97316)"></div>
+      <div>
+        <div class="pname" style="color:#fb923c">Chromoplasts</div>
+        <div class="pdesc">Contain <strong>coloured pigments</strong> (carotenoids — red, orange, yellow). Give colour to <strong>flowers, fruits, and roots</strong> (carrot, tomato, petals). Attract pollinators and seed dispersers. Cannot do photosynthesis.</div>
+      </div>
+    </div>
+    <div class="prow">
+      <div class="pswatch" style="background:linear-gradient(135deg,#475569,#94a3b8)"></div>
+      <div>
+        <div class="pname" style="color:#94a3b8">Leucoplasts</div>
+        <div class="pdesc"><strong>Colourless</strong> plastids for <strong>storage</strong>. Amyloplasts store starch (potato, rice), elaioplasts store oils, proteinoplasts store proteins. Found in non-green parts (roots, seeds).</div>
+      </div>
+    </div>
+    <div class="dbox" style="margin-top:14px">
+      <div class="dlbl">Important</div>
+      Plastids are found <strong style="color:var(--green)">ONLY in plant cells</strong>. Like mitochondria, they have their own DNA and ribosomes — supporting the endosymbiotic theory. Chloroplasts can inter-convert with chromoplasts (e.g. tomato ripening: green → red).
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 19: VACUOLES, LYSOSOMES & GOLGI ==================== -->
+<section class="slide" id="s19">
+  <div class="shead">
+    <div class="stag">Section E — Organelles</div>
+    <h2 class="st">Vacuoles, Lysosomes &amp; Golgi</h2>
+    <div class="ssub">Storage, digestion, and packaging</div>
+  </div>
+  <div class="sbody col">
+    <div class="tricard">
+      <div class="tcard">
+        <svg width="54" height="54" viewBox="0 0 54 54" style="margin:0 auto 8px">
+          <circle cx="27" cy="27" r="24" fill="rgba(96,165,250,0.1)" stroke="#60a5fa" stroke-width="2"/>
+          <circle cx="27" cy="27" r="18" fill="rgba(96,165,250,0.15)" stroke="#60a5fa" stroke-width="1.5" stroke-dasharray="4,2"/>
+          <text x="27" y="31" text-anchor="middle" font-family="'Fira Code',monospace" font-size="8" fill="#60a5fa">H₂O</text>
+        </svg>
+        <div class="tcn">Vacuoles</div>
+        <div class="tcd">Membrane-bound sacs. Plant cells: <strong>one large central vacuole</strong> (up to 90% of cell volume) storing water, sap, waste. Animal cells: many <strong>small vacuoles</strong>. Food vacuoles in Amoeba engulf food.</div>
+      </div>
+      <div class="tcard">
+        <svg width="54" height="54" viewBox="0 0 54 54" style="margin:0 auto 8px">
+          <circle cx="27" cy="27" r="24" fill="rgba(248,113,113,0.12)" stroke="#f87171" stroke-width="2"/>
+          <text x="27" y="23" text-anchor="middle" font-family="'Fira Code',monospace" font-size="16" fill="#f87171">✂</text>
+          <text x="27" y="40" text-anchor="middle" font-family="'Fira Code',monospace" font-size="8" fill="#f87171">enzymes</text>
+        </svg>
+        <div class="tcn" style="color:var(--red)">Lysosomes</div>
+        <div class="tcd"><strong>"Suicide bags"</strong> of the cell. Contain powerful digestive enzymes. Break down old organelles (autophagy), bacteria, worn-out cell parts. If they burst — cell digests itself. Formed by Golgi apparatus. Rare in plant cells.</div>
+      </div>
+      <div class="tcard">
+        <svg width="54" height="54" viewBox="0 0 54 54" style="margin:0 auto 8px">
+          <rect x="8" y="14" width="38" height="7" rx="3" fill="rgba(167,139,250,0.3)" stroke="#a78bfa" stroke-width="1.5"/>
+          <rect x="8" y="23" width="38" height="7" rx="3" fill="rgba(167,139,250,0.3)" stroke="#a78bfa" stroke-width="1.5"/>
+          <rect x="8" y="32" width="38" height="7" rx="3" fill="rgba(167,139,250,0.3)" stroke="#a78bfa" stroke-width="1.5"/>
+          <circle cx="46" cy="18" r="5" fill="rgba(167,139,250,0.6)" stroke="#a78bfa" stroke-width="1"/>
+          <circle cx="46" cy="36" r="5" fill="rgba(167,139,250,0.6)" stroke="#a78bfa" stroke-width="1"/>
+        </svg>
+        <div class="tcn" style="color:var(--purple)">Golgi Apparatus</div>
+        <div class="tcd">Stack of flat membrane sacs (<em>cisternae</em>). <strong>"Post office"</strong> of the cell — receives proteins from RER, modifies, labels, and packages them for export or lysosomes. Makes glycoproteins and lysosomes.</div>
+      </div>
+    </div>
+    <div class="dbox" style="margin-top:14px">
+      <div class="dlbl">Key Relationship</div>
+      Proteins are made on <strong style="color:var(--amber)">Ribosomes (on RER)</strong> → sent to <strong style="color:var(--purple)">Golgi apparatus</strong> for modification → packaged as <strong style="color:var(--red)">Lysosomes</strong> or secreted outside the cell.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 20: RIBOSOMES ==================== -->
+<section class="slide" id="s20">
+  <div class="shead">
+    <div class="stag">Section E — Organelles</div>
+    <h2 class="st">Ribosomes</h2>
+    <div class="ssub">Smallest organelle — site of protein synthesis</div>
+  </div>
+  <div class="sbody row" style="gap:32px">
+    <div class="c45" style="justify-content:center;align-items:center">
+      <svg viewBox="0 0 240 220" style="width:100%;max-width:240px">
+        <!-- Free ribosomes in cytoplasm -->
+        <text x="120" y="18" text-anchor="middle" font-family="'Fira Code',monospace" font-size="11" fill="#64748b">Free ribosomes</text>
+        <circle cx="60" cy="45" r="10" fill="rgba(251,191,36,0.6)" stroke="#fbbf24" stroke-width="1.5"/>
+        <circle cx="54" cy="37" r="7" fill="rgba(251,191,36,0.4)" stroke="#fbbf24" stroke-width="1"/>
+        <circle cx="120" cy="40" r="10" fill="rgba(251,191,36,0.6)" stroke="#fbbf24" stroke-width="1.5"/>
+        <circle cx="114" cy="32" r="7" fill="rgba(251,191,36,0.4)" stroke="#fbbf24" stroke-width="1"/>
+        <circle cx="180" cy="48" r="10" fill="rgba(251,191,36,0.6)" stroke="#fbbf24" stroke-width="1.5"/>
+        <circle cx="174" cy="40" r="7" fill="rgba(251,191,36,0.4)" stroke="#fbbf24" stroke-width="1"/>
+        <!-- Rough ER with ribosomes -->
+        <text x="120" y="85" text-anchor="middle" font-family="'Fira Code',monospace" font-size="11" fill="#64748b">Ribosomes on Rough ER</text>
+        <path d="M10,105 Q50,90 90,105 Q130,120 170,105 Q210,90 240,105" fill="none" stroke="#f87171" stroke-width="2.5"/>
+        <path d="M10,130 Q50,115 90,130 Q130,145 170,130 Q210,115 240,130" fill="none" stroke="#f87171" stroke-width="2.5"/>
+        <!-- Ribosomes on ER -->
+        <circle cx="20" cy="103" r="5" fill="#fbbf24"/>
+        <circle cx="50" cy="96" r="5" fill="#fbbf24"/>
+        <circle cx="80" cy="103" r="5" fill="#fbbf24"/>
+        <circle cx="110" cy="113" r="5" fill="#fbbf24"/>
+        <circle cx="140" cy="105" r="5" fill="#fbbf24"/>
+        <circle cx="170" cy="97" r="5" fill="#fbbf24"/>
+        <circle cx="200" cy="103" r="5" fill="#fbbf24"/>
+        <circle cx="228" cy="107" r="5" fill="#fbbf24"/>
+        <!-- Ribosome close-up -->
+        <text x="120" y="165" text-anchor="middle" font-family="'Fira Code',monospace" font-size="10" fill="#64748b">Ribosome structure</text>
+        <ellipse cx="120" cy="185" rx="22" ry="14" fill="rgba(251,191,36,0.5)" stroke="#fbbf24" stroke-width="2"/>
+        <ellipse cx="120" cy="175" rx="16" ry="10" fill="rgba(251,191,36,0.35)" stroke="#fbbf24" stroke-width="1.5"/>
+        <text x="160" y="180" font-family="'Fira Code',monospace" font-size="9" fill="#fbbf24">Large</text>
+        <text x="160" y="192" font-family="'Fira Code',monospace" font-size="9" fill="#fbbf24">subunit</text>
+        <text x="160" y="170" font-family="'Fira Code',monospace" font-size="9" fill="#f59e0b">Small</text>
+        <text x="160" y="163" font-family="'Fira Code',monospace" font-size="9" fill="#f59e0b">subunit</text>
+      </svg>
+    </div>
+    <div class="c55">
+      <ul class="bl">
+        <li><strong>Smallest</strong> organelle — not membrane-bound</li>
+        <li>Made of <strong>rRNA + proteins</strong> in two subunits</li>
+        <li class="sub"><strong>Eukaryotes</strong>: 80S (60S large + 40S small subunit)</li>
+        <li class="sub"><strong>Prokaryotes</strong>: 70S (50S + 30S) — also in mitochondria and chloroplasts</li>
+        <li>Location: <strong>free in cytoplasm</strong> (make proteins for cell use) or <strong>on Rough ER</strong> (make proteins for export)</li>
+        <li>Site of <strong>translation</strong> — reading mRNA to build protein chains</li>
+        <li>Present in <strong>all living cells</strong> — prokaryotic and eukaryotic</li>
+      </ul>
+      <div class="dbox" style="margin-top:14px">
+        <div class="dlbl">Key Fact</div>
+        Ribosomes are the <strong style="color:var(--amber)">only organelle found in both prokaryotes and eukaryotes</strong>. Their smaller size in prokaryotes (70S vs 80S) is exploited by antibiotics — drugs like streptomycin target 70S ribosomes, killing bacteria without harming our 80S ribosomes.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 21: CHECKPOINT 4 ==================== -->
+<section class="slide" id="s21">
+  <div class="shead">
+    <div class="stag">Section E — Checkpoint</div>
+    <h2 class="st">Test Yourself</h2>
+  </div>
+  <div class="sbody col">
+    <div class="cpbdg">✦ Checkpoint 4</div>
+    <div class="ql">
+      <div class="qi">
+        <div class="qlvl">Recall</div>
+        <div class="qtxt">1. Which organelle is called the "powerhouse of the cell"? Why?</div>
+        <button class="rbtn" onclick="ra('d1')">Reveal Answer</button>
+        <div class="ans" id="d1">Mitochondria. They are the site of cellular respiration, producing ATP (adenosine triphosphate) — the energy currency used for all cellular activities. High-energy cells like muscle cells have more mitochondria.</div>
+      </div>
+      <div class="qi">
+        <div class="qlvl">Understanding</div>
+        <div class="qtxt">2. Why are lysosomes called "suicide bags"?</div>
+        <button class="rbtn" onclick="ra('d2')">Reveal Answer</button>
+        <div class="ans" id="d2">Lysosomes contain powerful digestive (hydrolytic) enzymes. If the lysosome membrane ruptures inside the cell, these enzymes digest the cell's own contents — effectively killing the cell. Hence they are called suicide bags. This also happens during programmed cell death (apoptosis).</div>
+      </div>
+      <div class="qi">
+        <div class="qlvl">Analysis</div>
+        <div class="qtxt">3. A plant cell has chloroplasts but a liver cell does not. Explain why.</div>
+        <button class="rbtn" onclick="ra('d3')">Reveal Answer</button>
+        <div class="ans" id="d3">Chloroplasts are needed for photosynthesis — making food using sunlight and CO₂. Liver cells are animal cells; they cannot photosynthesise. They obtain energy by breaking down glucose through cellular respiration in mitochondria, not by making it in chloroplasts.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 22: PLANT vs ANIMAL CELL DIAGRAM ==================== -->
+<section class="slide" id="s22">
+  <div class="shead">
+    <div class="stag">Section F — Comparing Cells</div>
+    <h2 class="st">Plant Cell vs Animal Cell</h2>
+    <div class="ssub">Two types of eukaryotic cells compared</div>
+  </div>
+  <div class="sbody row" style="gap:20px">
+    <!-- Plant Cell SVG -->
+    <div class="half" style="align-items:center">
+      <div style="font-size:13px;color:var(--green);text-transform:uppercase;letter-spacing:2px;margin-bottom:8px">Plant Cell</div>
+      <svg viewBox="0 0 300 280" style="width:100%;max-height:260px">
+        <!-- Cell Wall -->
+        <rect x="8" y="8" width="284" height="264" rx="10" fill="none" stroke="#22c55e" stroke-width="6"/>
+        <!-- Plasma membrane -->
+        <rect x="14" y="14" width="272" height="252" rx="7" fill="rgba(16,185,129,0.05)" stroke="#10b981" stroke-width="1.5" stroke-dasharray="5,3"/>
+        <!-- Large central vacuole -->
+        <ellipse cx="150" cy="115" rx="96" ry="72" fill="rgba(96,165,250,0.12)" stroke="#60a5fa" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <text x="150" y="119" text-anchor="middle" font-family="'Fira Code',monospace" font-size="10" fill="#60a5fa">Central Vacuole</text>
+        <!-- Nucleus -->
+        <ellipse cx="150" cy="210" rx="42" ry="34" fill="rgba(30,58,138,0.55)" stroke="#93c5fd" stroke-width="2"/>
+        <circle cx="140" cy="205" r="11" fill="rgba(59,130,246,0.7)"/>
+        <!-- Chloroplasts -->
+        <ellipse cx="50" cy="70" rx="22" ry="12" fill="rgba(16,185,129,0.55)" stroke="#22c55e" stroke-width="1.5"/>
+        <ellipse cx="250" cy="70" rx="22" ry="12" fill="rgba(16,185,129,0.55)" stroke="#22c55e" stroke-width="1.5"/>
+        <ellipse cx="50" cy="210" rx="22" ry="12" fill="rgba(16,185,129,0.55)" stroke="#22c55e" stroke-width="1.5"/>
+        <ellipse cx="250" cy="210" rx="22" ry="12" fill="rgba(16,185,129,0.55)" stroke="#22c55e" stroke-width="1.5"/>
+        <!-- Mitochondria -->
+        <ellipse cx="240" cy="140" rx="16" ry="9" fill="rgba(251,191,36,0.4)" stroke="#fbbf24" stroke-width="1.5"/>
+        <!-- Labels -->
+        <text x="150" y="268" text-anchor="middle" font-family="'Fira Code',monospace" font-size="9" fill="#22c55e">Cell Wall (cellulose)</text>
+        <text x="50" y="54" text-anchor="middle" font-family="'Fira Code',monospace" font-size="9" fill="#22c55e">Chloroplast</text>
+        <text x="150" y="232" text-anchor="middle" font-family="'Fira Code',monospace" font-size="9" fill="#93c5fd">Nucleus</text>
+        <text x="244" y="126" text-anchor="middle" font-family="'Fira Code',monospace" font-size="9" fill="#fbbf24">Mitochondria</text>
+      </svg>
+    </div>
+    <!-- Animal Cell SVG -->
+    <div class="half" style="align-items:center">
+      <div style="font-size:13px;color:var(--blue);text-transform:uppercase;letter-spacing:2px;margin-bottom:8px">Animal Cell</div>
+      <svg viewBox="0 0 300 280" style="width:100%;max-height:260px">
+        <!-- Plasma membrane (irregular) -->
+        <path d="M150,15 C200,12 250,40 268,90 C285,140 275,195 240,230 C205,265 170,272 130,268 C90,264 45,240 28,195 C12,150 20,95 50,60 C80,25 120,18 150,15 Z" fill="rgba(96,165,250,0.06)" stroke="#60a5fa" stroke-width="2.5"/>
+        <!-- Nucleus (large, central) -->
+        <ellipse cx="150" cy="130" rx="50" ry="42" fill="rgba(30,58,138,0.55)" stroke="#93c5fd" stroke-width="2"/>
+        <circle cx="138" cy="120" r="14" fill="rgba(59,130,246,0.7)"/>
+        <!-- Centrioles -->
+        <rect x="55" y="100" width="20" height="8" rx="3" fill="rgba(248,113,113,0.5)" stroke="#f87171" stroke-width="1.5"/>
+        <rect x="55" y="110" width="20" height="8" rx="3" fill="rgba(248,113,113,0.5)" stroke="#f87171" stroke-width="1.5" transform="rotate(90 65 114)"/>
+        <!-- Lysosomes -->
+        <circle cx="240" cy="100" r="10" fill="rgba(248,113,113,0.4)" stroke="#f87171" stroke-width="1.5"/>
+        <circle cx="220" cy="175" r="8" fill="rgba(248,113,113,0.4)" stroke="#f87171" stroke-width="1.5"/>
+        <!-- Mitochondria -->
+        <ellipse cx="80" cy="185" rx="18" ry="10" fill="rgba(251,191,36,0.4)" stroke="#fbbf24" stroke-width="1.5"/>
+        <ellipse cx="230" cy="145" rx="16" ry="9" fill="rgba(251,191,36,0.4)" stroke="#fbbf24" stroke-width="1.5"/>
+        <!-- Small vacuoles -->
+        <circle cx="100" cy="70" r="8" fill="rgba(96,165,250,0.15)" stroke="rgba(96,165,250,0.4)" stroke-width="1" stroke-dasharray="3,2"/>
+        <circle cx="200" cy="55" r="6" fill="rgba(96,165,250,0.15)" stroke="rgba(96,165,250,0.4)" stroke-width="1" stroke-dasharray="3,2"/>
+        <!-- Labels -->
+        <text x="150" y="158" text-anchor="middle" font-family="'Fira Code',monospace" font-size="9" fill="#93c5fd">Nucleus</text>
+        <text x="58" y="96" font-family="'Fira Code',monospace" font-size="9" fill="#f87171">Centrioles</text>
+        <text x="245" y="91" font-family="'Fira Code',monospace" font-size="9" fill="#f87171">Lysosome</text>
+        <text x="78" y="174" text-anchor="middle" font-family="'Fira Code',monospace" font-size="9" fill="#fbbf24">Mito.</text>
+        <text x="100" y="60" text-anchor="middle" font-family="'Fira Code',monospace" font-size="9" fill="#60a5fa">Vacuoles</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 23: DIFFERENCES TABLE ==================== -->
+<section class="slide" id="s23">
+  <div class="shead">
+    <div class="stag">Section F — Comparing Cells</div>
+    <h2 class="st">Key Differences: Plant vs Animal</h2>
+    <div class="ssub">Learn this table for exams</div>
+  </div>
+  <div class="sbody col">
+    <table class="dt">
+      <tr><th>Feature</th><th style="color:#4ade80">Plant Cell</th><th style="color:#60a5fa">Animal Cell</th></tr>
+      <tr><td>Cell Wall</td><td style="color:#4ade80">Present (cellulose)</td><td style="color:#f87171">Absent</td></tr>
+      <tr><td>Shape</td><td style="color:#4ade80">Fixed, rectangular/regular</td><td style="color:#60a5fa">Irregular, flexible</td></tr>
+      <tr><td>Vacuole</td><td style="color:#4ade80">One large central vacuole</td><td style="color:#60a5fa">Many small vacuoles</td></tr>
+      <tr><td>Chloroplasts</td><td style="color:#4ade80">Present (photosynthesis)</td><td style="color:#f87171">Absent</td></tr>
+      <tr><td>Centrioles</td><td style="color:#f87171">Absent (in most)</td><td style="color:#60a5fa">Present (cell division)</td></tr>
+      <tr><td>Lysosomes</td><td style="color:#f87171">Usually absent</td><td style="color:#60a5fa">Present (common)</td></tr>
+      <tr><td>Plastids</td><td style="color:#4ade80">Present (chloro-, chromo-, leuco-)</td><td style="color:#f87171">Absent</td></tr>
+      <tr><td>Size</td><td style="color:#4ade80">Generally larger (10–100 µm)</td><td style="color:#60a5fa">Generally smaller (10–30 µm)</td></tr>
+    </table>
+    <div class="dbox" style="margin-top:12px">
+      <div class="dlbl">Common to Both</div>
+      Plasma membrane · Nucleus · Cytoplasm · Mitochondria · Ribosomes · Endoplasmic Reticulum · Golgi Apparatus
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 24: CHECKPOINT 5 ==================== -->
+<section class="slide" id="s24">
+  <div class="shead">
+    <div class="stag">Section F — Checkpoint</div>
+    <h2 class="st">Test Yourself</h2>
+  </div>
+  <div class="sbody col">
+    <div class="cpbdg">✦ Checkpoint 5</div>
+    <div class="ql">
+      <div class="qi">
+        <div class="qlvl">Recall</div>
+        <div class="qtxt">1. Name three structures present in plant cells but absent in animal cells.</div>
+        <button class="rbtn" onclick="ra('e1')">Reveal Answer</button>
+        <div class="ans" id="e1">① Cell wall (cellulose) ② Chloroplasts ③ Large central vacuole. Also accept: plastids (chromoplasts / leucoplasts).</div>
+      </div>
+      <div class="qi">
+        <div class="qlvl">Understanding</div>
+        <div class="qtxt">2. Why do plant cells have a rigid shape while animal cells are irregular?</div>
+        <button class="rbtn" onclick="ra('e2')">Reveal Answer</button>
+        <div class="ans" id="e2">Plant cells have a rigid cell wall made of cellulose that maintains their regular (box-like) shape. Animal cells lack a cell wall; they are bounded only by the flexible plasma membrane, which allows them to be irregular and change shape.</div>
+      </div>
+      <div class="qi">
+        <div class="qlvl">Application</div>
+        <div class="qtxt">3. A student observes a cell with a large vacuole occupying most of its volume. Is it a plant or animal cell?</div>
+        <button class="rbtn" onclick="ra('e3')">Reveal Answer</button>
+        <div class="ans" id="e3">Plant cell. A single large central vacuole (occupying up to 90% of cell volume) is a characteristic feature of mature plant cells. It stores water, sap, and waste, and maintains turgor pressure. Animal cells have only small, scattered vacuoles.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 25: OSMOSIS ==================== -->
+<section class="slide" id="s25">
+  <div class="shead">
+    <div class="stag">Section G — Cell Processes</div>
+    <h2 class="st">Osmosis &amp; Cell Transport</h2>
+    <div class="ssub">Movement of water through semi-permeable membranes</div>
+  </div>
+  <div class="sbody col">
+    <div style="display:flex;gap:16px;margin-bottom:14px">
+      <!-- Hypotonic -->
+      <div style="flex:1;background:var(--card);border:1px solid rgba(16,185,129,0.3);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:12px;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Hypotonic Solution</div>
+        <svg viewBox="0 0 100 100" style="width:80px;height:80px;margin:0 auto">
+          <ellipse cx="50" cy="50" rx="44" ry="38" fill="rgba(16,185,129,0.15)" stroke="#10b981" stroke-width="2.5"/>
+          <ellipse cx="50" cy="50" rx="26" ry="22" fill="rgba(16,185,129,0.3)" stroke="#10b981" stroke-width="1.5" stroke-dasharray="3,2"/>
+          <text x="50" y="54" text-anchor="middle" font-family="'Fira Code',monospace" font-size="8" fill="#10b981">Nucleus</text>
+          <text x="50" y="8" text-anchor="middle" font-family="'Fira Code',monospace" font-size="8" fill="#10b981">↑ water in</text>
+        </svg>
+        <div style="font-size:13px;font-weight:600;color:var(--green);margin-top:6px">Turgid / Swells</div>
+        <div style="font-size:12px;color:var(--sub);margin-top:4px">Water enters by osmosis. Plant cell — wall prevents bursting → turgor pressure. Animal cell → may burst (haemolysis).</div>
+      </div>
+      <!-- Isotonic -->
+      <div style="flex:1;background:var(--card);border:1px solid rgba(96,165,250,0.3);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:12px;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Isotonic Solution</div>
+        <svg viewBox="0 0 100 100" style="width:80px;height:80px;margin:0 auto">
+          <ellipse cx="50" cy="50" rx="36" ry="32" fill="rgba(96,165,250,0.15)" stroke="#60a5fa" stroke-width="2.5"/>
+          <ellipse cx="50" cy="50" rx="20" ry="17" fill="rgba(96,165,250,0.3)" stroke="#60a5fa" stroke-width="1.5" stroke-dasharray="3,2"/>
+          <text x="50" y="54" text-anchor="middle" font-family="'Fira Code',monospace" font-size="8" fill="#60a5fa">Nucleus</text>
+          <text x="50" y="8" text-anchor="middle" font-family="'Fira Code',monospace" font-size="8" fill="#60a5fa">⇌ balanced</text>
+        </svg>
+        <div style="font-size:13px;font-weight:600;color:var(--blue);margin-top:6px">Normal</div>
+        <div style="font-size:12px;color:var(--sub);margin-top:4px">Water moves equally in and out. No net change in cell volume. Cell is in equilibrium with surroundings.</div>
+      </div>
+      <!-- Hypertonic -->
+      <div style="flex:1;background:var(--card);border:1px solid rgba(248,113,113,0.3);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:12px;color:var(--red);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Hypertonic Solution</div>
+        <svg viewBox="0 0 100 100" style="width:80px;height:80px;margin:0 auto">
+          <ellipse cx="50" cy="50" rx="42" ry="38" fill="rgba(248,113,113,0.06)" stroke="#f87171" stroke-width="2" stroke-dasharray="5,3"/>
+          <ellipse cx="50" cy="50" rx="22" ry="18" fill="rgba(248,113,113,0.2)" stroke="#f87171" stroke-width="2"/>
+          <text x="50" y="54" text-anchor="middle" font-family="'Fira Code',monospace" font-size="8" fill="#f87171">Nucleus</text>
+          <text x="50" y="8" text-anchor="middle" font-family="'Fira Code',monospace" font-size="8" fill="#f87171">↓ water out</text>
+        </svg>
+        <div style="font-size:13px;font-weight:600;color:var(--red);margin-top:6px">Plasmolysis / Shrinks</div>
+        <div style="font-size:12px;color:var(--sub);margin-top:4px">Water exits by osmosis. Plant cell — cytoplasm pulls away from wall (plasmolysis). Animal cell — crenation (shrivelling).</div>
+      </div>
+    </div>
+    <div class="dbox">
+      <div class="dlbl">Definition</div>
+      <strong>Osmosis</strong> is the movement of water molecules from a region of <strong style="color:var(--green)">higher water concentration</strong> (dilute solution) to a region of <strong style="color:var(--red)">lower water concentration</strong> (concentrated solution) through a <strong style="color:var(--blue)">selectively permeable membrane</strong>.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 26: CELL DIVISION ==================== -->
+<section class="slide" id="s26">
+  <div class="shead">
+    <div class="stag">Section H — Cell Division</div>
+    <h2 class="st">Cell Division</h2>
+    <div class="ssub">How cells reproduce — mitosis and meiosis</div>
+  </div>
+  <div class="sbody row" style="gap:20px">
+    <div class="half">
+      <div style="background:var(--card);border:1px solid rgba(16,185,129,0.3);border-left:4px solid var(--green);border-radius:8px;padding:16px;height:100%;display:flex;flex-direction:column;justify-content:center">
+        <div style="font-size:16px;font-weight:700;color:var(--green);margin-bottom:12px">MITOSIS — Somatic Division</div>
+        <svg viewBox="0 0 260 90" style="width:100%;max-height:80px;margin-bottom:12px">
+          <!-- Parent cell -->
+          <ellipse cx="40" cy="45" rx="34" ry="28" fill="rgba(16,185,129,0.15)" stroke="#10b981" stroke-width="2"/>
+          <text x="40" y="49" text-anchor="middle" font-family="'Fira Code',monospace" font-size="9" fill="#10b981">2n</text>
+          <!-- Arrow -->
+          <line x1="78" y1="45" x2="108" y2="45" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+          <text x="93" y="38" text-anchor="middle" font-family="'Fira Code',monospace" font-size="8" fill="#64748b">division</text>
+          <!-- Two daughter cells -->
+          <ellipse cx="145" cy="30" rx="28" ry="22" fill="rgba(16,185,129,0.2)" stroke="#10b981" stroke-width="2"/>
+          <text x="145" y="34" text-anchor="middle" font-family="'Fira Code',monospace" font-size="9" fill="#10b981">2n</text>
+          <ellipse cx="145" cy="65" rx="28" ry="22" fill="rgba(16,185,129,0.2)" stroke="#10b981" stroke-width="2"/>
+          <text x="145" y="69" text-anchor="middle" font-family="'Fira Code',monospace" font-size="9" fill="#10b981">2n</text>
+          <text x="200" y="28" font-family="'Fira Code',monospace" font-size="9" fill="#22c55e">2 identical</text>
+          <text x="200" y="40" font-family="'Fira Code',monospace" font-size="9" fill="#22c55e">daughter cells</text>
+          <text x="200" y="56" font-family="'Fira Code',monospace" font-size="9" fill="#64748b">same chromosome</text>
+          <text x="200" y="68" font-family="'Fira Code',monospace" font-size="9" fill="#64748b">number (diploid)</text>
+        </svg>
+        <ul class="bl">
+          <li style="font-size:16px">Occurs in <strong>somatic (body) cells</strong></li>
+          <li style="font-size:16px">Produces <strong>2 genetically identical</strong> daughter cells</li>
+          <li style="font-size:16px">Chromosome number <strong>maintained</strong> (2n → 2n)</li>
+          <li style="font-size:16px">Purpose: <strong>growth, repair, replacement</strong></li>
+        </ul>
+      </div>
+    </div>
+    <div class="half">
+      <div style="background:var(--card);border:1px solid rgba(167,139,250,0.3);border-left:4px solid var(--purple);border-radius:8px;padding:16px;height:100%;display:flex;flex-direction:column;justify-content:center">
+        <div style="font-size:16px;font-weight:700;color:var(--purple);margin-bottom:12px">MEIOSIS — Reproductive Division</div>
+        <svg viewBox="0 0 260 90" style="width:100%;max-height:80px;margin-bottom:12px">
+          <!-- Parent cell -->
+          <ellipse cx="35" cy="45" rx="30" ry="26" fill="rgba(167,139,250,0.15)" stroke="#a78bfa" stroke-width="2"/>
+          <text x="35" y="49" text-anchor="middle" font-family="'Fira Code',monospace" font-size="9" fill="#a78bfa">2n</text>
+          <!-- Arrow -->
+          <line x1="68" y1="45" x2="95" y2="45" stroke="#94a3b8" stroke-width="1.5"/>
+          <!-- Four small cells -->
+          <ellipse cx="122" cy="22" rx="20" ry="16" fill="rgba(167,139,250,0.2)" stroke="#a78bfa" stroke-width="1.5"/>
+          <text x="122" y="26" text-anchor="middle" font-family="'Fira Code',monospace" font-size="8" fill="#a78bfa">n</text>
+          <ellipse cx="155" cy="22" rx="20" ry="16" fill="rgba(167,139,250,0.2)" stroke="#a78bfa" stroke-width="1.5"/>
+          <text x="155" y="26" text-anchor="middle" font-family="'Fira Code',monospace" font-size="8" fill="#a78bfa">n</text>
+          <ellipse cx="122" cy="62" rx="20" ry="16" fill="rgba(167,139,250,0.2)" stroke="#a78bfa" stroke-width="1.5"/>
+          <text x="122" y="66" text-anchor="middle" font-family="'Fira Code',monospace" font-size="8" fill="#a78bfa">n</text>
+          <ellipse cx="155" cy="62" rx="20" ry="16" fill="rgba(167,139,250,0.2)" stroke="#a78bfa" stroke-width="1.5"/>
+          <text x="155" y="66" text-anchor="middle" font-family="'Fira Code',monospace" font-size="8" fill="#a78bfa">n</text>
+          <text x="200" y="28" font-family="'Fira Code',monospace" font-size="9" fill="#a78bfa">4 haploid</text>
+          <text x="200" y="40" font-family="'Fira Code',monospace" font-size="9" fill="#a78bfa">cells (gametes)</text>
+          <text x="200" y="56" font-family="'Fira Code',monospace" font-size="9" fill="#64748b">half chromosome</text>
+          <text x="200" y="68" font-family="'Fira Code',monospace" font-size="9" fill="#64748b">number: 2n → n</text>
+        </svg>
+        <ul class="bl">
+          <li style="font-size:16px">Occurs in <strong>gonads</strong> (testes, ovaries)</li>
+          <li style="font-size:16px">Produces <strong>4 genetically varied</strong> daughter cells</li>
+          <li style="font-size:16px">Chromosome number <strong>halved</strong> (2n → n)</li>
+          <li style="font-size:16px">Purpose: <strong>sexual reproduction</strong> (gametes: sperm, egg)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 27: NCERT IMPORTANT QUESTIONS ==================== -->
+<section class="slide" id="s27">
+  <div class="shead">
+    <div class="stag">Section I — NCERT Practice</div>
+    <h2 class="st">NCERT Important Questions</h2>
+  </div>
+  <div class="sbody col">
+    <div class="cpbdg">✦ NCERT Exercises</div>
+    <div class="ql scroll">
+      <div class="qi">
+        <div class="qlvl">NCERT Q1</div>
+        <div class="qtxt">Make a comparison and write down ways in which plant cells are different from animal cells.</div>
+        <button class="rbtn" onclick="ra('n1')">Reveal Answer</button>
+        <div class="ans" id="n1">Plant cells have: cell wall (cellulose), chloroplasts, large central vacuole, plastids. Animal cells have: centrioles, lysosomes, many small vacuoles. Plant cells are regular/rigid; animal cells are irregular. Both have: nucleus, mitochondria, ER, Golgi, ribosomes, plasma membrane.</div>
+      </div>
+      <div class="qi">
+        <div class="qlvl">NCERT Q2</div>
+        <div class="qtxt">How does an Amoeba obtain its food?</div>
+        <button class="rbtn" onclick="ra('n2')">Reveal Answer</button>
+        <div class="ans" id="n2">Amoeba obtains food by the process of endocytosis (phagocytosis). It extends pseudopodia (false feet) around the food particle, engulfs it forming a food vacuole. Lysosomes fuse with the vacuole and digest the food. Nutrients are absorbed; waste is expelled.</div>
+      </div>
+      <div class="qi">
+        <div class="qlvl">NCERT Q3</div>
+        <div class="qtxt">What would happen to the life of a cell if there was no Golgi apparatus?</div>
+        <button class="rbtn" onclick="ra('n3')">Reveal Answer</button>
+        <div class="ans" id="n3">Without the Golgi apparatus: proteins synthesised on ER cannot be modified, packaged, or transported. Cell secretion would stop. Lysosomes would not be formed, so intracellular digestion would fail. Cell membranes could not be renewed. The cell would eventually die.</div>
+      </div>
+      <div class="qi">
+        <div class="qlvl">NCERT Q4</div>
+        <div class="qtxt">Which organelle is known as the powerhouse of the cell? Why?</div>
+        <button class="rbtn" onclick="ra('n4')">Reveal Answer</button>
+        <div class="ans" id="n4">Mitochondria. They carry out aerobic respiration and produce ATP (adenosine triphosphate) — the energy currency of the cell. ATP is used for all energy-requiring activities such as muscle contraction, active transport, and biosynthesis. Hence mitochondria are the powerhouse.</div>
+      </div>
+      <div class="qi">
+        <div class="qlvl">NCERT Q5</div>
+        <div class="qtxt">Where are proteins synthesised inside the cell?</div>
+        <button class="rbtn" onclick="ra('n5')">Reveal Answer</button>
+        <div class="ans" id="n5">Proteins are synthesised on ribosomes. Ribosomes may be free in the cytoplasm (produce proteins for internal use) or attached to the Rough Endoplasmic Reticulum (produce proteins for secretion or membrane use). The process of protein synthesis is called translation.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 28: KEY TERMS ==================== -->
+<section class="slide" id="s28">
+  <div class="shead">
+    <div class="stag">Section J — Key Terms</div>
+    <h2 class="st">Glossary — Must Know Terms</h2>
+    <div class="ssub">CBSE Chapter 5 essential vocabulary</div>
+  </div>
+  <div class="sbody col scroll">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="ocrd"><div class="onm">Cell</div><div class="ofn">Basic structural and functional unit of all living organisms.</div></div>
+      <div class="ocrd"><div class="onm">Organelle</div><div class="ofn">Specialised structure within a cell with a specific function (e.g. mitochondrion).</div></div>
+      <div class="ocrd"><div class="onm">Prokaryote</div><div class="ofn">Organism whose cells lack a membrane-bound nucleus (e.g. bacteria).</div></div>
+      <div class="ocrd"><div class="onm">Eukaryote</div><div class="ofn">Organism whose cells have a true nucleus with a nuclear membrane.</div></div>
+      <div class="ocrd"><div class="onm">Osmosis</div><div class="ofn">Movement of water from dilute to concentrated solution through a selectively permeable membrane.</div></div>
+      <div class="ocrd"><div class="onm">Plasmolysis</div><div class="ofn">Shrinkage of cytoplasm away from the cell wall when a plant cell loses water to hypertonic solution.</div></div>
+      <div class="ocrd"><div class="onm">Turgor Pressure</div><div class="ofn">Pressure of cell contents against cell wall; keeps plant cells firm/rigid.</div></div>
+      <div class="ocrd"><div class="onm">Chromosome</div><div class="ofn">Thread-like structure of DNA + histone proteins carrying hereditary information; visible during cell division.</div></div>
+      <div class="ocrd"><div class="onm">Selectively Permeable</div><div class="ofn">Property of plasma membrane — allows certain molecules to pass while blocking others.</div></div>
+      <div class="ocrd"><div class="onm">ATP</div><div class="ofn">Adenosine Triphosphate — the universal energy currency produced in mitochondria.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 29: CHAPTER SUMMARY ==================== -->
+<section class="slide" id="s29">
+  <div class="shead">
+    <div class="stag">Section K — Summary</div>
+    <h2 class="st">Chapter Summary</h2>
+    <div class="ssub">The Fundamental Unit of Life — Key Points</div>
+  </div>
+  <div class="sbody col scroll">
+    <div class="take"><div class="tnum">1</div><div class="ttxt">The <strong>cell</strong> is the fundamental structural and functional unit of all living organisms.</div></div>
+    <div class="take"><div class="tnum">2</div><div class="ttxt"><strong>Robert Hooke</strong> (1665) first observed cells in cork. <strong>Leeuwenhoek</strong> first saw living cells. <strong>Robert Brown</strong> discovered the nucleus (1831).</div></div>
+    <div class="take"><div class="tnum">3</div><div class="ttxt"><strong>Cell Theory</strong> (Schleiden &amp; Schwann, 1838–39): all organisms are made of cells. Virchow (1855) added: new cells arise only from pre-existing cells.</div></div>
+    <div class="take"><div class="tnum">4</div><div class="ttxt"><strong>Prokaryotic cells</strong> lack a membrane-bound nucleus. <strong>Eukaryotic cells</strong> have a true nucleus with double nuclear membrane.</div></div>
+    <div class="take"><div class="tnum">5</div><div class="ttxt">All cells have: <strong>plasma membrane, cytoplasm, and genetic material</strong>. Plant cells additionally have: cell wall, plastids, large central vacuole.</div></div>
+    <div class="take"><div class="tnum">6</div><div class="ttxt"><strong>Mitochondria</strong> produce ATP (energy). <strong>Chloroplasts</strong> carry out photosynthesis. Both have own DNA — endosymbiotic theory.</div></div>
+    <div class="take"><div class="tnum">7</div><div class="ttxt"><strong>Golgi apparatus</strong> packages proteins. <strong>Lysosomes</strong> ("suicide bags") digest waste. <strong>Ribosomes</strong> synthesise proteins. <strong>ER</strong> transports materials.</div></div>
+    <div class="take"><div class="tnum">8</div><div class="ttxt"><strong>Osmosis</strong>: water moves from dilute to concentrated solution through a selectively permeable membrane. Plant cells — turgor/plasmolysis. Animal cells — haemolysis/crenation.</div></div>
+    <div class="take"><div class="tnum">9</div><div class="ttxt">Cells divide by <strong>mitosis</strong> (growth/repair, 2 identical cells, 2n→2n) or <strong>meiosis</strong> (reproduction, 4 cells, 2n→n).</div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 30: EXAM TIPS ==================== -->
+<section class="slide" id="s30">
+  <div class="shead">
+    <div class="stag">Section K — Exam Preparation</div>
+    <h2 class="st">Exam Tips for Chapter 5</h2>
+    <div class="ssub">Score full marks in your CBSE examination</div>
+  </div>
+  <div class="sbody row" style="gap:24px">
+    <div class="half scroll">
+      <ul class="bl">
+        <li><strong>Draw &amp; label</strong> plant and animal cell diagrams — worth 3–5 marks</li>
+        <li>Know all <strong>differences</strong>: prokaryotic vs eukaryotic, plant vs animal</li>
+        <li>Memorise organelle nicknames: <strong>"Powerhouse"</strong> = Mitochondria · <strong>"Suicide bags"</strong> = Lysosomes · <strong>"Kitchen"</strong> = Chloroplast · <strong>"Post office"</strong> = Golgi · <strong>"Digestive system"</strong> = Lysosome</li>
+        <li>Osmosis definition must mention: <strong>water + semi-permeable membrane + concentration gradient</strong></li>
+        <li>Cell theory — 3 scientists: <strong>Schleiden</strong> (plants) · <strong>Schwann</strong> (animals) · <strong>Virchow</strong> (cells from cells)</li>
+        <li><strong>1-mark facts</strong>: Who discovered nucleus? → Robert Brown (1831)</li>
+        <li><strong>Largest cell</strong>: Ostrich egg · <strong>Longest cell</strong>: Nerve cell · <strong>Smallest cell</strong>: Mycoplasma</li>
+        <li>For numericals: <strong>1 µm = 10⁻⁶ m</strong>; typical cell = 10–100 µm</li>
+      </ul>
+    </div>
+    <div class="half">
+      <div class="dbox" style="border-color:var(--amber);border-left-color:var(--amber)">
+        <div class="dlbl" style="color:var(--amber)">★ Exam Favourite — 3 Marks</div>
+        <div style="font-size:18px;color:var(--text);margin-top:6px">"Explain why plant cells do not burst when placed in a hypotonic solution, but animal cells do."</div>
+        <div style="font-size:15px;color:var(--sub);margin-top:10px">Plant cells have a <strong style="color:var(--green)">rigid cell wall</strong> (cellulose) outside the plasma membrane. When water enters by osmosis, the cell wall exerts an equal and opposite <strong style="color:var(--green)">wall pressure / turgor pressure</strong>, preventing the cell from bursting. Animal cells lack a cell wall, so the plasma membrane cannot withstand excess water pressure and the cell bursts (<strong style="color:var(--red)">haemolysis</strong>).</div>
+      </div>
+      <div class="dbox" style="margin-top:14px;border-color:var(--purple);border-left-color:var(--purple)">
+        <div class="dlbl" style="color:var(--purple)">★ Common 5-Mark Question</div>
+        <div style="font-size:18px;color:var(--text);margin-top:6px">"Describe the structure and function of mitochondria with a labelled diagram."</div>
+        <div style="font-size:15px;color:var(--sub);margin-top:8px">Include: double membrane, cristae, matrix, own DNA, ribosome, ATP production, equation of respiration.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 31: END ==================== -->
+<section class="slide title-slide" id="s31">
+  <div style="display:flex;flex-direction:column;align-items:flex-start;justify-content:center;height:100%">
+    <div class="tgrade">Grade 9 Science — CBSE · Chapter 5</div>
+    <div class="tmain" style="font-size:46px">Chapter Complete!</div>
+    <div class="tchap">The Fundamental Unit of Life</div>
+    <div style="display:flex;gap:20px;margin-bottom:32px">
+      <div class="dbox" style="margin:0;min-width:180px">
+        <div class="dlbl">Slides Covered</div>
+        <div style="font-size:28px;color:var(--green);font-weight:700">31</div>
+      </div>
+      <div class="dbox" style="margin:0;min-width:180px">
+        <div class="dlbl">Subject</div>
+        <div style="font-size:20px;color:var(--blue)">CBSE Biology</div>
+      </div>
+    </div>
+    <div class="gq" style="max-width:580px">"Understanding cells is understanding life itself. Every organism — from the smallest bacterium to the largest whale — is made of the same remarkable unit: the cell."</div>
+    <div style="margin-top:22px;display:flex;gap:14px;flex-wrap:wrap">
+      <div style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);border-radius:6px;padding:6px 14px;font-size:13px;color:var(--green)">Cell Theory</div>
+      <div style="background:rgba(96,165,250,0.1);border:1px solid rgba(96,165,250,0.3);border-radius:6px;padding:6px 14px;font-size:13px;color:var(--blue)">Prokaryote vs Eukaryote</div>
+      <div style="background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.3);border-radius:6px;padding:6px 14px;font-size:13px;color:var(--purple)">Organelles</div>
+      <div style="background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.3);border-radius:6px;padding:6px 14px;font-size:13px;color:var(--amber)">Osmosis</div>
+      <div style="background:rgba(45,212,191,0.1);border:1px solid rgba(45,212,191,0.3);border-radius:6px;padding:6px 14px;font-size:13px;color:var(--teal)">Cell Division</div>
+    </div>
+  </div>
+  <!-- Decorative cell -->
+  <svg style="position:absolute;right:60px;top:60px;opacity:0.1" width="280" height="280" viewBox="0 0 280 280">
+    <ellipse cx="140" cy="140" rx="128" ry="110" fill="none" stroke="#10b981" stroke-width="3"/>
+    <ellipse cx="130" cy="130" rx="44" ry="38" fill="none" stroke="#60a5fa" stroke-width="2"/>
+    <circle cx="122" cy="124" r="12" fill="rgba(96,165,250,0.3)"/>
+    <ellipse cx="195" cy="165" rx="26" ry="13" fill="none" stroke="#f87171" stroke-width="2"/>
+    <ellipse cx="80" cy="175" rx="20" ry="11" fill="rgba(16,185,129,0.3)" stroke="#22c55e" stroke-width="1.5"/>
+    <ellipse cx="80" cy="100" rx="20" ry="11" fill="rgba(16,185,129,0.3)" stroke="#22c55e" stroke-width="1.5"/>
+  </svg>
+</section>
+
+</div><!-- /presentation -->
+
+<div id="nav">
+  <button class="nbtn" id="prev" onclick="go(-1)" disabled>&#9664; Prev</button>
+  <span id="sc">1 / 31</span>
+  <button class="nbtn" id="next" onclick="go(1)">Next &#9654;</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+let cur = 0;
+function show(n) {
+  slides[cur].classList.remove('active');
+  cur = Math.max(0, Math.min(n, total - 1));
+  slides[cur].classList.add('active');
+  document.getElementById('sc').textContent = (cur + 1) + ' / ' + total;
+  document.getElementById('prev').disabled = cur === 0;
+  document.getElementById('next').disabled = cur === total - 1;
+  document.getElementById('pbar').style.width = ((cur + 1) / total * 100) + '%';
+}
+function go(d) { show(cur + d); }
+function ra(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('show');
+  const btn = el.previousElementSibling;
+  btn.textContent = el.classList.contains('show') ? 'Hide Answer' : 'Reveal Answer';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') go(1);
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') go(-1);
+});
+// Initialise progress bar
+document.getElementById('pbar').style.width = (1 / total * 100) + '%';
+</script>
+</body>
+</html>
